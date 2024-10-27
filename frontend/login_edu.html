@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <!-- 必要的元標籤 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EduAi</title>
+
+    <!-- 圖標 -->
+    <link rel="icon" href="assets/images/favicon.ico">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- 自訂 CSS -->
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- 主容器 -->
+    <div class="container right-panel-active">
+      <!-- 註冊表單 -->
+      <div class="form-container sign-up-container">
+        <form action="#" id="signUpForm">
+          <img class="login-logo" src="assets/images/logo.svg" alt="logo">
+          <h6 class="mt-1">EduAi</h6>
+          <!-- 註冊表單內容 -->
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/user.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="text" placeholder="姓名" />
+          </div>
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/Scan_alt_2_light.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="text" placeholder="學號、教師證號" />
+          </div>
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/Message_light.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="text" placeholder="電子郵件" />
+          </div>
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/lock.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="password" placeholder="設定密碼" />
+          </div>
+          <div class="row my-3">
+            <input type="checkbox" id="memorizeMeSignUp" class="form-check-input col-1 align-self-center" />
+            <label class="align-self-center col-3" for="memorizeMeSignUp">記住我</label>
+            <a class="col-6"></a>
+            <a class="forget-password col align-self-center text-end" href="#">忘記密碼？</a>
+          </div>
+          <button class="signButton">註冊</button>
+        </form>
+      </div>
+
+      <!-- 登入表單 -->
+      <div class="form-container sign-in-container">
+        <form action="#" id="signInForm">
+          <img class="login-logo" src="assets/images/logo.svg" alt="logo">
+          <h6 class="mt-1">EduAi</h6>
+          <!-- 登入表單內容 -->
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/Message_light.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="text" placeholder="使用者名稱" />
+          </div>
+          <div class="input-group">
+            <span class="icon">
+              <img src="assets/images/login/lock.svg" alt="icon" class="textIcon">
+            </span>
+            <input type="password" placeholder="密碼" />
+          </div>
+          <div class="row my-3">
+            <input type="checkbox" id="memorizeMeSignIn" class="form-check-input col-1 align-self-center" />
+            <label class="align-self-center col-3" for="memorizeMeSignIn">記住我</label>
+            <a class="col-6"></a>
+            <a class="forget-password col align-self-center text-end" href="#">忘記密碼？</a>
+          </div>
+          <button class="signButton">登入</button>
+        </form>
+      </div>
+
+      <!-- 覆蓋層 -->
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left login-page-background">
+            <div class="sign-in-content">
+              <h1 class="pb-4">Welcome back !</h1>
+              <h2>
+                <span>
+                  <img src="assets/images/login/Bell_pin.svg" alt="icon" class="pb-1 pe-1">
+                </span>
+                此次版本更新內容：
+              </h2>
+              <p id="updateContent" class="pb-2">
+                版本更新內容版本更新內容版本更新內容版本 <br>
+                版本更新內容版本更新內容版本更新內容版本 <br>
+                版本更新內容版本更新內容版本更新內容版本 <br>
+              </p>
+              <span>還沒有帳號嗎？</span>
+              <button class="ghost w-100 signButton mt-3" id="signUp">註冊新帳號</button>
+            </div>
+          </div>
+          <div class="overlay-panel overlay-right login-page-background">
+            <div class="sign-up-content">
+              <h1 class="pb-4">Sign up !</h1>
+              <h2>
+                <span>
+                  <img src="assets/images/login/Bell_pin.svg" alt="icon" class="pb-1 pe-1">
+                </span>
+                此次版本更新內容：
+              </h2>
+              <p id="updateContent" class="pb-2">
+                版本更新內容版本更新內容版本更新內容版本 <br>
+                版本更新內容版本更新內容版本更新內容版本 <br>
+                版本更新內容版本更新內容版本更新內容版本 <br>
+              </p>
+              <span>已經有帳號了嗎？</span>
+              <button class="ghost w-100 signButton mt-3" id="signIn">登入</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 引入必要的 JavaScript -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+    <!-- 自訂 JS -->
+    <script src="assets/js/login.js"></script>
+  </body>
+</html>

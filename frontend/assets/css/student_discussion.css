@@ -1,0 +1,661 @@
+@media screen and (max-width : 3000px){
+    html{
+        font-size: 150%;
+    }
+}
+
+
+@media screen and (max-width : 2700px){
+    html{
+        font-size: 130%;
+    }
+}
+
+@media screen and (max-width : 2400px){
+    html{
+        font-size: 115%;
+    }
+}
+
+@media screen and (max-width : 2100px){
+    html{
+        font-size: 100%;
+    }
+}
+
+@media screen and (max-width : 1800px){
+    html{
+        font-size: 85%;
+    }
+}
+
+
+@media screen and (max-width : 1650px){
+    html{
+        font-size: 70%;
+    }
+}
+
+@media screen and (max-width : 1450px){
+    html{
+        font-size: 60%;
+    }
+}
+
+@media screen and (max-width : 1200px){
+    html{
+        font-size: 45%;
+    }
+}
+
+
+
+
+body {
+
+    font-family: 'Noto Sans TC', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    height: 100%;
+
+}
+
+.dialog {
+
+    margin: .5rem 1rem;
+
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1rem;
+
+    background-color: white;
+
+}
+
+.top-notice {
+
+    width: 95%;
+    background-color: rgba(243, 240, 247, 1);
+    height: 10rem;
+    margin: 2rem 2.5%;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+.top-notice .chat-icon {
+
+    background: url("../images/student_discussion/student_discussion_chat-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    margin: 1.25rem 1.5rem;
+
+    height: 3.5rem; width: 3.5rem;
+
+}
+
+.time-left-label .time-icon {
+
+    background: url("../images/student_discussion/student_discussion_time-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    color: rgba(255, 255, 255, 1);
+
+    margin: 0.3rem 1rem;
+    margin-right: 0.4rem;
+
+    height: 1.7rem; width: 1.5rem;
+
+}
+
+.time-left-label span {
+
+    color: var(--pri_white, #FFF);
+
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.25rem;
+
+    
+
+
+}
+
+.time-left-label {
+
+    background-color: rgba(13, 189, 9, 1);
+    margin: 1.5rem 2rem;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+
+    color: rgba(255, 255, 255, 1);
+
+    width: 30%; height: 2.3rem;
+    border-radius: 3rem;
+
+
+}
+
+.botton-tip {
+
+    width: 75%;
+    background-color: rgba(255, 255, 255, 1);
+    
+    height: 16rem;
+
+    margin: 0rem 12.5%;
+    margin-top: auto;
+    display: flex;
+    
+
+}
+.tip-box {
+
+    display: flex;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.tip-box .box{
+
+    border-radius: 1rem;
+    margin: 1rem;
+    width: 33%;
+    height: 100%;
+
+}
+
+.tip-content{
+    width:78%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 1rem;
+    color: var(--sec_gray500, #8E8E93);
+
+
+    font-family: "Noto Sans TC";
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 185.714% */
+    letter-spacing: 0.1rem;
+}
+
+.tip-logo {
+
+    background: url("../images/logo.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem; width: 3rem;
+    margin: 2rem 2rem;
+
+    border-radius: 1.5rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
+
+}
+
+.notice-content .question {
+
+    color: var(--sec_gray900, #363636);
+
+    font-family: "Noto Sans TC";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
+
+    margin: 5rem 0rem;
+    margin-right: 1.5rem;
+
+}
+
+.notice-footer .question-label {
+
+    color: rgba(142, 142, 147, 1);
+    margin: 1.5rem 0rem;
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+
+
+}
+
+.notice-footer {
+
+    width: 100%;
+    height: 0;
+    display: flex;
+
+}
+
+
+.top-notice .notice-content {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.course-list {
+
+    outline: none;
+    border-color: transparent;
+    width: 90%; height: 3rem;
+    margin: .3rem 5%;
+    border-radius: .5rem;
+    background: var(--bgcolor, #F2F2F7);
+
+    color: var(--sec_gray500, #8E8E93);
+
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+
+
+}
+.course-list:hover {
+
+    background: var(--bgcolor, #F2F2F7);
+    color: var(--sec_gray500, #8E8E93);
+    outline: none;
+    border-color: transparent;
+
+}
+
+
+
+.sep-line {
+
+    width: 90%;
+    height: 0.1rem;
+    margin: 1rem 5%;
+
+    background-color: rgba(229, 229, 234, 1);
+
+}
+
+.invite-code {
+
+    border-radius: .6rem;
+
+    display:flex;
+
+
+    
+    margin: 1rem 5%;
+    margin-top: 5.5rem;
+
+
+    width: 90%;
+
+    height: 2.5rem;
+    
+
+    background-color: rgba(242, 242, 247, 1);
+
+
+}
+
+.send-code {
+
+    border-radius: 3rem;
+
+    display:flex;
+    
+    margin: 0rem 5%;
+    bottom: 1rem;
+    width: 90%;
+    height: 2.5rem;
+
+    background-color: rgba(134, 101, 205, 1);
+    border-color: transparent;
+    align-items: center;
+
+    outline: none;
+
+
+}
+
+.send-code .link-icon {
+
+    background: url("../images/student_discussion/student_discussion_link-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 1.5rem; width: 1.5rem;
+    
+    margin-left: 5vw;
+
+}
+
+.send-code .content {
+
+    color: rgba(255, 255, 255, 1);
+    text-align: left;
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+
+
+
+}
+
+.invite-code .code {
+
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+    text-align: center;
+
+    margin: 0rem 1.25rem;
+
+
+    border-radius: 1.5rem;
+
+}
+
+.send-message {
+
+    border-radius: 3rem;
+    justify-content: flex-start;
+    align-self: center;
+    display:flex;
+
+    
+    margin: 1.5rem 2.5%;
+    margin-top: 3rem;
+
+
+    bottom: 1rem;
+
+    width: 95%;
+
+    height: 3.5rem;
+    
+
+    background-color: rgba(242, 242, 247, 1);
+
+}
+
+.send-message .message {
+
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+
+    margin: 0rem 1.25rem;
+
+
+    border-radius: 1.5rem;
+
+}
+
+.send-message .send-button {
+
+    background: url("../images/student_discussion/student_discussion_send-message-button.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
+
+
+}
+
+.left-side-bar{
+
+    display: flex;
+    flex-direction: column;
+
+    width: 25%;
+    margin: .5rem 1rem;
+
+    background-color: transparent;
+
+}
+
+.speech-upload {
+
+    top: 0;
+    height: 17.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+
+
+    border-radius: .5rem;
+
+    background-color: white;
+
+}
+
+.footer {
+
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 0;
+
+}
+
+.speech-upload .footer{
+
+    height : 4rem;
+}
+
+.speech-upload .file {
+
+    border-style: dashed;
+    border-color: gray;
+    border-width: .1rem;
+
+    border-radius: 1rem;
+    
+    height: 6.5rem;
+
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1rem;
+
+    margin-bottom: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+}
+
+.speech-upload .upload-file-button {
+
+    width: 90%;
+    border-radius: 2rem;
+    height: 3rem;
+    border-color: transparent;
+    background: var(--sec_gray50, #E5E5EA);
+    display: flex;
+    align-items: center;
+
+    margin-left: 5%;
+    margin-top: .0rem;
+    margin-bottom: .0rem;
+    outline: none;
+
+}
+
+.speech-upload .upload-file-button .upload-icon {
+
+    background: url("../images/student_discussion/student_discussion_upload-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 1.5rem; width: 1.5rem;
+    
+    margin-left: 38%;
+
+}
+
+.speech-upload .upload-file-button .content {
+
+    color: var(--sec_gray500, #8E8E93);
+    text-align: left;
+
+
+    font-family: "Noto Sans TC";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+
+
+}
+
+
+.speech-upload .file .file-name {
+
+    color: var(--sec_gray500, #8E8E93);
+    text-align: center;
+
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: .1rem;
+
+}
+
+.footer .mic-icon {
+
+    background: url("../images/student_discussion/student_discussion_mic-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 3rem; height: 3rem;
+    margin: 1rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+    
+
+
+
+}
+
+.footer .book-icon {
+
+    background: url("../images/student_discussion/student_discussion_book-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 3rem; height: 3rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+    
+
+
+
+}
+
+.footer .intro {
+
+    font-size: 1.25vw;
+    
+    font: bold;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem;
+    letter-spacing: 1px;
+    margin-bottom: auto;
+    height: 1.25rem;
+    text-align: left;
+    
+    margin: 2rem 0rem;
+    margin-right: 2rem;
+    margin-bottom: 0.75rem;
+
+}
+
+.speech-upload .upload-button {
+
+    background-color: rgba(134, 101, 205, 1);
+    display: inline-flex;
+       
+
+    height: 3rem;
+    width: 35%;
+    margin: 1rem 1.25rem;
+    margin-left: auto;
+    border-radius: 3rem;
+    border-color: transparent;
+    outline: none;
+
+}
+
+.speech-upload .upload-button .plus-icon {
+
+    background: url("../images/student_discussion/student_discussion_plus-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 1.25rem;
+    width: 1.25rem; 
+    margin-left: .5rem;
+    align-self: center;
+
+}
+
+.speech-upload .upload-button .add {
+
+    color: var(--white, var(--pri_white, #FFF));
+    text-align: left;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.25rem; /* 157.143% */
+    margin-left: 1rem;
+    align-self: center;
+    
+    
+
+}
+
+.select-course {
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+    border-radius: .5rem;
+
+    background-color: white;
+
+}
