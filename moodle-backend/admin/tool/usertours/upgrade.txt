@@ -1,0 +1,26 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in the tool_usertours code.
+
+=== 4.4 ===
+* New hooks have been provided to allow plugins to define their own server-side, and client-side user tour filters.
+  The new hooks are named:
+  - \tool_usertours\hook\before_serverside_filter_fetch
+  - \tool_usertours\hook\before_clientside_filter_fetch
+  These hooks allow addition, and removal, of filters.
+
+=== 4.0 ===
+* The `tourconfig` property returned by the `tool_usertours_fetch_and_start_tour`
+  external method has also an `endtourlabel` property that contains the label to be used
+  for the end tour button.
+
+=== 3.9 ===
+* The `tourconfig` property returned by the `tool_usertours_fetch_and_start_tour`
+  external method is now optional, and will be omitted if the tour shouldn't be
+  shown to the current user
+
+=== 3.5 ===
+* Third party library Popper.js was moved from this plugin into core (core/popper)

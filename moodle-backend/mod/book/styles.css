@@ -1,0 +1,118 @@
+/* == Fake toc block == */
+.path-mod-book .book_toc .action-list img.smallicon {
+    margin: 0 3px;
+}
+
+/* toc style INDENTED*/
+.path-mod-book .book_toc ul {
+    display: flex;
+    flex-direction: column;
+}
+.path-mod-book .book_toc li {
+    flex: 1 1 100%;
+}
+.path-mod-book .book_toc_indented > ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.path-mod-book .book_toc_indented li {
+    list-style: none;
+}
+
+/* toc style BULLETED*/
+.path-mod-book .book_toc_bullets > ul {
+    margin-left: 0;
+    padding-left: 1.3rem;
+}
+.path-mod-book .book_toc_bullets li {
+    list-style: disc;
+}
+
+/* toc style NUMBERED*/
+.path-mod-book .book_toc_numbered > ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.path-mod-book .book_toc_numbered li {
+    list-style: none;
+}
+
+/* toc style NONE*/
+.path-mod-book .book_toc_none ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.path-mod-book .book_toc_none li {
+    list-style: none;
+}
+
+.path-mod-book #mod_book-chaptersnavigation {
+    top: 80px;
+    width: inherit;
+    margin: 0 -35px;
+    position: sticky; /* Make navigation sticky. */
+}
+
+.path-mod-book #mod_book-chaptersnavigation .tertiary-navigation .navitem {
+    margin-bottom: -52px;
+}
+
+.path-mod-book .book_content {
+    margin: 0 5px;
+    padding-right: 15px;
+    padding-left: 15px;
+    position: relative; /* Chapter navigation should not float on top of content. */
+}
+
+.path-mod-book .btn-previous,
+.path-mod-book .btn-next {
+    background: #dee2e6;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 0.075);
+    padding: 13px 10px;
+}
+
+.path-mod-book .btn-previous {
+    border-radius: 200px 0 0 200px;
+}
+
+.path-mod-book .btn-next {
+    border-radius: 0 200px 200px 0;
+}
+
+.path-mod-book.dir-rtl .btn-previous .icon,
+.path-mod-book.dir-rtl .btn-next .icon {
+    transform: scale(-1, -1); /* Flip the icons in RTL languages */
+}
+
+.path-mod-book .btn-previous .icon,
+.path-mod-book .btn-next .icon {
+    font-size: 24px;
+    width: auto;
+    height: auto;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .path-mod-book #mod_book-chaptersnavigation {
+        top: calc(100% - 250px);
+        margin: 0 -0.5rem;
+        z-index: 1;
+    }
+
+    .path-mod-book .btn-previous,
+    .path-mod-book .btn-next {
+        opacity: 0.85;
+        border-radius: 25px;
+        padding: 10px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .path-mod-book .book_content {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+}

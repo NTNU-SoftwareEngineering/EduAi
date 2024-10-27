@@ -1,0 +1,53 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_grades/edit_tree
+
+    Edit tree template.
+
+    Context variables required for this template:
+    * actionurl - string - Form action URL.
+    * sesskey - string - The session key.
+    * notification - object - Context data for the notification.
+    * table - string - HTML content of the grade items table.
+    * movingmodeenabled - string - Whether moving mode is enabled.
+    * courseid - int - The course id.
+    * stickyfooter - string - HTML content of the sticky footer.
+
+    Example context (json):
+    {
+        "actionurl": "#",
+        "sesskey": "fakesesskey",
+        "notification": "",
+        "table": "<table class='generaltable simple setup-grades' id='grade_edit_tree_table'><thead> <tr><th>Name</th><th>Weights</th><th>Max grade</th><th>Actions</th> </tr></thead><tbody></tbody></table>",
+        "movingmodeenabled": "false",
+        "courseid": 1,
+        "stickyfooter": "<div id='gradetreesubmit'></div>"
+    }
+}}
+{{#notification}}
+    {{>core/notification_info}}
+{{/notification}}
+<div class="gradetree-wrapper d-none">
+    <form id="gradetreeform" method="post" action="{{actionurl}}" >
+        <div class="position-relative">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            {{{table}}}
+            {{{stickyfooter}}}
+        </div>
+    </form>
+</div>

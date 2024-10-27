@@ -1,0 +1,16 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in /files/*,
+information provided here is intended especially for developers.
+
+=== 2.9 ===
+
+ * External function core_files_external::get_files returns additional optional fields:
+    - timecreated: Time created.
+    - filesize: File size.
+    - author: File owner.
+    - license: File license.
+

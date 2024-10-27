@@ -1,0 +1,49 @@
+services:
+  frontend:
+    build:
+      context: ./frontend           # Dockerfile 位於 frontend 資料夾
+    ports:
+      - "3000:80"                   # 將主機的 3000 端口映射到容器的 80 端口
+    volumes:
+      - ./frontend:/usr/share/nginx/html  # 掛載本地 frontend 資料夾到 nginx 的靜態文件目錄
+    networks:
+      - moodle-network
+
+  backend:
+    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 資料夾
+    ports:
+      - "8080:80"                         # 將主機的 8080 端口映射到容器的 80 端口
+    volumes:
+      - ./moodle-backend:/var/www/html/moodle         # 掛載本地 Moodle 應用程式代碼
+      - ./apache2.conf:/etc/apache2/apache2.conf      # 將 Apache 配置掛載到容器中
+      - ./moodle-data:/var/moodledata                 # 確保 Moodle 資料目錄持久化
+    depends_on:
+      - db
+    networks:
+      - moodle-network
+    environment:
+      MOODLE_DB_HOST: db
+      MOODLE_DB_NAME: moodle_db
+      MOODLE_DB_USER: moodleuser
+      MOODLE_DB_PASSWORD: yourpassword
+      MOODLE_URL: http://localhost:8080
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: moodle_db
+      MYSQL_USER: moodleuser
+      MYSQL_PASSWORD: yourpassword
+    volumes:
+      - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 腳本
+      - db_data:/var/lib/mysql                          # 持久化數據
+    networks:
+      - moodle-network
+
+networks:
+  moodle-network:
+
+volumes:
+  db_data:
+  moodle-data:

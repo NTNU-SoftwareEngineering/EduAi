@@ -1,0 +1,17 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in /comment/* ,
+information provided here is intended especially for developers.
+
+=== 4.2 ===
+  * The comment manager `print_comments` method has been deprecated, in favour of new system report class for listing
+    comment data
+
+=== 3.8 ===
+  * External function get_comments now returns the total count of comments and the number of comments per page.
+    It also has a new parameter to indicate the sorting direction (defaulted to DESC).
+  * The external function core_comment_get_comments now indicates if the current user can post comments in the requested
+    area.

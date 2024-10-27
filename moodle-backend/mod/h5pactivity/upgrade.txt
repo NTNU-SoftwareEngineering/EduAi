@@ -1,0 +1,23 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in /mod/h5pactivity/*,
+information provided here is intended especially for developers.
+
+=== 4.2 ===
+
+* The WebService mod_h5pactivity_get_h5pactivities_by_courses now returns a `h5pglobalsettings` property that includes the global settings for H5P activities.
+
+=== 4.1 ===
+
+* The following methods now accept an optional `$currentgroup` parameter in order to better support groups:
+  - `\mod_h5pactivity\local\manager::get_active_users_join`
+  - `\mod_h5pactivity\local\manager::get_report`
+  - `\mod_h5pactivity\local\report\participants` constructor
+
+=== 3.11 ===
+
+* Added mod_h5pactivity\local\manager::get_active_users_join method to query all active
+  users from a specific activity, even in a freeze context.

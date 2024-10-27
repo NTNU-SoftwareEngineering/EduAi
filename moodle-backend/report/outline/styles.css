@@ -1,0 +1,8 @@
+#page-report-outline-user table tr td {
+    padding: 10px 3px;
+    min-width: 20px;
+}
+
+#page-report-outline-user .subsection .icon {
+    padding-left: 10px;
+}

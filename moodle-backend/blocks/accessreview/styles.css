@@ -1,0 +1,41 @@
+.block_accessreview_success,
+.block_accessreview.block_accessreview_success.hasinfo {
+    color: #1e451e;
+    background: #eff5ef;
+    box-shadow: 0 0 2px 2px #619a61;
+}
+
+.block_accessreview_danger,
+.block_accessreview.block_accessreview_danger.hasinfo {
+    color: #6e211e;
+    background: #fdf7f7;
+    box-shadow: 0 0 2px 2px #da6960;
+}
+
+.block_accessreview_warning,
+.block_accessreview.block_accessreview_warning.hasinfo {
+    color: #694b21;
+    background: #fdf2e3;
+    box-shadow: 0 0 2px 2px #c97a0e;
+}
+
+.block_accessreview_table {
+    border-bottom: 1px solid;
+    border-color: #eee8e8;
+}
+
+.block_accessreview_links {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.block_accessreview_link {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.block_accessreview_analysisbutton {
+    text-align: center;
+}

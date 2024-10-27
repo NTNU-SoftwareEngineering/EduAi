@@ -1,0 +1,11 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in the lti code.
+
+=== 4.1 ===
+
+* The update_coupled_gradebookservices function now accept 2 additional optional parameters
+  to update the newly added properties related to submission review support (url and custom params).

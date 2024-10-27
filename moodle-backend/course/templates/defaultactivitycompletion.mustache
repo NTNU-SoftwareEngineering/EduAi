@@ -1,0 +1,88 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_course/defaultactivitycompletion
+
+    Activity completion selector.
+
+    Example context (json):
+    {
+        "courseid": "2",
+        "sesskey": "AAAAAA",
+        "modules": [{
+            "id": "10",
+            "formattedname": "Assignment",
+            "canmanage": true,
+            "icon": "https://raw.githubusercontent.com/moodle/moodle/master/mod/assign/pix/monologo.svg",
+            "completionstatus": {
+                "string": "Manual",
+                "icon": "https://raw.githubusercontent.com/moodle/moodle/master/pix/i/completion-manual-enabled.png"
+            }
+        }],
+        "issite": true
+    }
+}}
+<div class="container-fluid">
+    <div class="row my-5 defaultactivitycompletion-header">
+        <div class="col">
+            {{#issite}}{{#str}}defaultactivitycompletionsite, core_completion{{/str}}{{/issite}}
+            {{^issite}}{{#str}}defaultactivitycompletioncourse, core_completion{{/str}}{{/issite}}
+        </div>
+
+    </div>
+
+    <div class="modules pt-3">
+        {{#modules}}
+            {{#canmanage}}
+                <div class="defaultactivitycompletion-item d-flex"
+                    id="activitycompletion-{{id}}"
+                >
+                    <a data-toggle="collapse"
+                        href="#activitycompletioncollapse-{{id}}"
+                        class="icons-collapse-expand {{#modulecollapsed}}collapsed{{/modulecollapsed}}"
+                        aria-expanded="{{^modulecollapsed}}true{{/modulecollapsed}}{{#modulecollapsed}}false{{/modulecollapsed}}"
+                        role="button"
+                    >
+                        <span class="collapsed-icon icon-no-margin me-1"
+                            title="{{#str}} expandcategory, core, {{formattedname}} {{/str}}">
+                            <span class="dir-rtl-hide">{{#pix}} t/collapsedchevron, core {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} t/collapsedchevron_rtl, core {{/pix}}</span>
+                            <span class="sr-only">{{#str}} expandcategory, core, {{formattedname}} {{/str}}</span>
+                        </span>
+                        <span class="expanded-icon icon-no-margin me-1"
+                            title="{{#str}} collapsecategory, core, {{formattedname}} {{/str}}">
+                            {{#pix}} t/expandedchevron, core {{/pix}}
+                            <span class="sr-only">{{#str}} collapsecategory, core, {{formatedname}} {{/str}}</span>
+                        </span>
+                        <img class="activityicon ms-4" src="{{icon}}" alt="" aria-hidden="true">
+                        <h2 class="activityname ms-3 mb-0">{{{formattedname}}}</h2>
+                    </a>
+                </div>
+                <div id="activitycompletioncollapse-{{id}}"
+                    class="defaultactivitycompletion-item-content collapse multi-collapse {{^modulecollapsed}}show{{/modulecollapsed}}"
+                    aria-labelledby="activitycompletion-{{id}}" role="group"
+                    data-region="activitycompletion-{{name}}"
+                >
+                    <hr class="row">
+                    <div class="py-3">{{{formhtml}}}</div>
+                </div>
+
+                <hr class="row">
+            {{/canmanage}}
+        {{/modules}}
+    </div>
+</div>

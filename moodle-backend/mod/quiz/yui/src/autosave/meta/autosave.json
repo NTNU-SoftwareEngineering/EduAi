@@ -1,0 +1,13 @@
+{
+    "moodle-mod_quiz-autosave": {
+        "requires": [
+            "base",
+            "node",
+            "event",
+            "event-valuechange",
+            "node-event-delegate",
+            "io-form",
+            "datatype-date-format"
+        ]
+    }
+}

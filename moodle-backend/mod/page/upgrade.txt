@@ -1,0 +1,10 @@
+=== 4.5 Onwards ===
+
+This file has been replaced by UPGRADING.md. See MDL-81125 for further information.
+
+===
+This files describes API changes in the mod_page code.
+
+=== 4.0 ===
+
+* Removed printheading from page and admin settings. This will now be handled by the activity header and/or theme.
