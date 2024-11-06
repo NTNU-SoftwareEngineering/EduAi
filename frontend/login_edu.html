@@ -1,12 +1,10 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
   <head>
-    <!-- 必要的元標籤 -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EduAi</title>
 
-    <!-- 圖標 -->
     <link rel="icon" href="assets/images/favicon.ico">
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
 
@@ -14,19 +12,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- 自訂 CSS -->
+    <!-- Nav Drawer CSS -->
     <link rel="stylesheet" href="assets/css/login.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <!-- Login Resize CSS -->
+    <link rel="stylesheet" href="assets/css/login_resize.css">
+
+    <title>EduAi</title>
   </head>
   <body>
-    <!-- 主容器 -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
     <div class="container right-panel-active">
-      <!-- 註冊表單 -->
-      <div class="form-container sign-up-container">
-        <form action="#" id="signUpForm">
+      <div class="form-container article-container">
+        <!-- <form action="#">
           <img class="login-logo" src="assets/images/logo.svg" alt="logo">
           <h6 class="mt-1">EduAi</h6>
-          <!-- 註冊表單內容 -->
           <div class="input-group">
             <span class="icon">
               <img src="assets/images/login/user.svg" alt="icon" class="textIcon">
@@ -37,59 +42,68 @@
             <span class="icon">
               <img src="assets/images/login/Scan_alt_2_light.svg" alt="icon" class="textIcon">
             </span>
-            <input type="text" placeholder="學號、教師證號" />
+            <input type="id" placeholder="學號、教師證號" />
           </div>
           <div class="input-group">
             <span class="icon">
               <img src="assets/images/login/Message_light.svg" alt="icon" class="textIcon">
             </span>
-            <input type="text" placeholder="電子郵件" />
+            <input type="email" placeholder="電子郵件" />
           </div>
           <div class="input-group">
             <span class="icon">
               <img src="assets/images/login/lock.svg" alt="icon" class="textIcon">
             </span>
             <input type="password" placeholder="設定密碼" />
+            <span class="icon">
+              <img src="assets/images/login/View_alt_light.svg" alt="icon" class="textIcon">
+            </span>
           </div>
           <div class="row my-3">
-            <input type="checkbox" id="memorizeMeSignUp" class="form-check-input col-1 align-self-center" />
-            <label class="align-self-center col-3" for="memorizeMeSignUp">記住我</label>
+            <input type="checkbox" id="memorizeMe" class="form-check-input col-1 align-self-center" />
+            <label class="align-self-center col-3" for="memorizeMe">記住我</label>
             <a class="col-6"></a>
             <a class="forget-password col align-self-center text-end" href="#">忘記密碼？</a>
           </div>
           <button class="signButton">註冊</button>
-        </form>
+        </form> -->
+        <div class="article-content">
+          <img class="login-logo" src="assets/images/logo.svg" alt="logo">
+          <h6 class="mt-3">關於 EduAi</h6>
+          <p class="article mt-4">
+            <span class="keypoint" >EduAi</span>
+            是一個現代教育設計的平台，專為學生與教師提供有效的反饋機制。透過語音識別和大型語言模型的分析，本系統能夠自動收集並解讀學生的討論內容，提供個性化的回饋，幫助教師更好地了解學生的理解情況，從而提升教學質量。
+          </p>
+        </div>  
       </div>
-
-      <!-- 登入表單 -->
       <div class="form-container sign-in-container">
-        <form action="#" id="signInForm">
+        <form action="#">
           <img class="login-logo" src="assets/images/logo.svg" alt="logo">
           <h6 class="mt-1">EduAi</h6>
-          <!-- 登入表單內容 -->
           <div class="input-group">
             <span class="icon">
               <img src="assets/images/login/Message_light.svg" alt="icon" class="textIcon">
             </span>
-            <input type="text" placeholder="使用者名稱" />
+            <input type="email" id="email" placeholder="電子郵件" />
           </div>
           <div class="input-group">
             <span class="icon">
               <img src="assets/images/login/lock.svg" alt="icon" class="textIcon">
             </span>
-            <input type="password" placeholder="密碼" />
+            <input type="password" id="pwd" placeholder="密碼" />
+            <span class="openPw align-self-end">
+              <img src="assets/images/login/View_alt_light.svg" alt="icon" class="openPwIcon opened" id="showPwd">
+            </span>
           </div>
           <div class="row my-3">
-            <input type="checkbox" id="memorizeMeSignIn" class="form-check-input col-1 align-self-center" />
-            <label class="align-self-center col-3" for="memorizeMeSignIn">記住我</label>
+            <input type="checkbox" id="memorizeMe" class="form-check-input col-1 align-self-center" />
+            <label class="align-self-center col-3" for="memorizeMe">記住我</label>
             <a class="col-6"></a>
             <a class="forget-password col align-self-center text-end" href="#">忘記密碼？</a>
           </div>
-          <button class="signButton">登入</button>
+          <button id="login" class="signButton" type="submit">登入</button>
         </form>
       </div>
-
-      <!-- 覆蓋層 -->
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left login-page-background">
@@ -106,8 +120,8 @@
                 版本更新內容版本更新內容版本更新內容版本 <br>
                 版本更新內容版本更新內容版本更新內容版本 <br>
               </p>
-              <span>還沒有帳號嗎？</span>
-              <button class="ghost w-100 signButton mt-3" id="signUp">註冊新帳號</button>
+              <span>不知道這是哪裡？</span>
+              <button class="ghost w-100 signButton mt-3" id="about">關於 EduAi</button>
             </div>
           </div>
           <div class="overlay-panel overlay-right login-page-background">
@@ -124,7 +138,7 @@
                 版本更新內容版本更新內容版本更新內容版本 <br>
                 版本更新內容版本更新內容版本更新內容版本 <br>
               </p>
-              <span>已經有帳號了嗎？</span>
+              <span>要開始使用了嗎？</span>
               <button class="ghost w-100 signButton mt-3" id="signIn">登入</button>
             </div>
           </div>
@@ -132,13 +146,7 @@
       </div>
     </div>
 
-    <!-- 引入必要的 JavaScript -->
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-
-    <!-- 自訂 JS -->
     <script src="assets/js/login.js"></script>
+    
   </body>
 </html>

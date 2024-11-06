@@ -1,0 +1,606 @@
+body {
+
+    font-family: 'Noto Sans TC', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    height: 100%;
+
+}
+
+.left-side-bar{
+
+    display: flex;
+    flex-direction: column;
+
+    width: 20%;
+    height: 100%;
+    /* height: 786px; */
+    /* top: 810px;
+    left: 228px; */
+    margin: .5rem 1rem;
+
+    background-color: transparent;
+
+}
+
+/* select class */
+
+.select-class {
+
+    top: 0;
+    height:  20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    border-radius: .5rem;
+
+    background-color: var(--pri_p300, #9879DA);
+
+}
+
+.select-class select{
+    outline: none;
+    width: 100%;
+    color: var(--sec_gray500, #8E8E93);
+}
+
+.select-class .intro {
+    
+    color: var(--pri_white, #FFFFFF);
+
+}
+
+.footer {
+
+    margin-top: .2rem;
+    margin-bottom: .5rem;
+    width: 100%;
+    display: flex;
+    height: 0;
+
+}
+
+.footer .book-icon {
+
+    background: url("../images/teacher_management/teacher_management_book.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 1.5rem; height: 1.5rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.select-class select {
+
+    border-radius: .5rem;
+    height: 100%;
+
+}
+
+.select-class .class-selector {
+    display: flex;
+    align-items: center;
+    
+    width: 90%;
+    height: 35%;
+    
+    margin-top: 3.5rem;
+
+}
+
+.select-class .course-selector {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 35%;
+    margin-top: .5rem;
+}
+
+.footer .intro {
+
+    font-size: 1.25vw;
+    
+    font: bold;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem;
+    letter-spacing: 1px;
+    margin-bottom: auto;
+    height: 1.25rem;
+    text-align: left;
+    
+    margin: 1.25rem 0rem;
+    margin-right: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+/* teams num */
+
+.teams-num {
+
+
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.footer .teams-num-icon {
+
+    background: url("../images/teacher_management/teacher_management_add_user.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+
+    width: 1.5rem; height: 1.5rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.teams-num input{
+    display: flex;
+    align-items: center;
+    outline: none;
+    
+    text-align: center;
+    border: 1px solid var(--light-border---el-border-color-light, #E4E7ED);
+    background: var(--pri_white, #FFF);
+
+    height: 2.5rem;
+    width: 100%;
+    margin: 1rem 0rem;
+    margin-top: 3.5rem;
+}
+
+.group-button, .send-button {
+
+    
+    height: 2rem;
+    width: 90%;
+    margin: 1rem 0rem;
+
+    outline: none;
+    border-radius: 1.25rem;
+    border-color: transparent;
+    background-color: var(--sec_gray50, #E5E5EA);
+    color: var(--sec_gray500, #8E8E93);
+    font: bold;
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.group-button .group-icon {
+
+    background: url("../images/teacher_management/teacher_management_group_share_light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 16px;
+    width: 16px; 
+    align-self: center;
+
+}
+
+.group-button .group, .send-button .send, .create-button .create {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 1rem; */
+
+}
+
+/* question */
+
+.question {
+
+    height: 60%;
+    margin-top: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    border-radius: 8px;
+    background-color: white;
+    align-items: center;
+}
+
+.footer .question-icon {
+
+    background: url("../images/teacher_management/teacher_management_question.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+
+    width: 1.5rem; height: 1.5rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.question .discuss-time{
+
+    width: 90%;
+    height: 20%;
+    background: #F2F2F7;
+    margin-top: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: .5rem;
+    display: flex;
+
+}
+
+.question select {
+    
+    height: 100%;
+    width: 90%;
+    outline: none;
+    
+    
+    background-color: transparent;
+    border: none;
+    color: var(--sec_gray500, #8E8E93);
+    
+
+}
+
+.question .question-content{
+
+    width: 90%;
+    height: 65%;
+    margin: 1rem 1rem;
+    margin-bottom: .5rem;
+    background-color: #F2F2F7;
+    border-radius: .5rem;
+
+}
+
+.question .question-content input{
+    
+    
+
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border-color: transparent;
+    background-color: transparent;
+
+    
+}
+
+.send-button .send-icon {
+
+    background: url("../images/teacher_management/teacher_management_Paper_light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 16px;
+    width: 16px; 
+    align-self: center;
+}
+
+/* teams */
+
+
+
+.teams {
+    margin: .5rem .5rem;
+
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1rem;
+
+    background-color: white;
+}
+
+.teams .class-info {
+
+    width: 100%;
+    height: 8%;
+    display: inline-flex;
+
+}
+
+.teams .class-info .footer {
+
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 0;
+
+}
+
+.footer .class-info-icon {
+    
+        background: url("../images/teacher_management/teacher_management_class_info.svg") no-repeat;
+        background-position: 0 0;
+        background-size: 100% 100%;
+    
+        width: 1.5rem; height: 1.5rem;
+        margin: 1.25rem 1.25rem;
+    
+        margin-right: .5rem;
+    
+        margin-bottom: 0;
+}
+
+.create-button {
+    width: 160px;
+    height: 32px;
+    outline: none;
+    border-radius: 20px;
+    border-color: transparent;
+    background-color: var(--sec_gray50, #E5E5EA);
+    color: var(--sec_gray500, #8E8E93);
+    font: bold;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.create-button .chat-icon {
+    
+    background: url("../images/teacher_management/teacher_management_create_chat.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 16px;
+    width: 16px; 
+    margin-left: 1rem;
+    align-self: center;
+
+}
+
+.create-button .create {
+
+    display: flex;
+    align-items: center;
+    /* margin-top: 1rem; */
+
+}
+
+.teams .info-content {
+
+    
+    height: 8%;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--bgcolor, #F2F2F7);
+    margin: 1rem;
+    border-radius: 8px;
+
+}
+
+.info-content .class, .info-content .class-count, .info-content .course {
+
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1rem;
+    padding-right: 2rem;
+
+}
+
+.info-content .class .class-icon {
+    
+        background: url("../images/teacher_management/teacher_management_class.svg") no-repeat;
+        background-position: 0 0;
+        background-size: 100% 100%;
+        background-color: var(--bgcolor, #F2F2F7);
+        border-radius: 2rem;
+    
+        width: 1.5rem; height: 1.5rem;
+        /* margin: 1.25rem 1.25rem; */
+    
+        margin-right: .5rem;
+    
+        margin-bottom: 0;
+        
+}
+
+.info-content .class-count .count-icon {
+    
+    background: url("../images/teacher_management/teacher_management_Component.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+
+    width: 1.5rem; height: 1.5rem;
+    /* margin: 1.25rem 1.25rem; */
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+    
+}
+
+.info-content .course .course-icon {
+    
+    background: url("../images/teacher_management/teacher_management_class.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+
+    width: 1.5rem; height: 1.5rem;
+    /* margin: 1.25rem 1.25rem; */
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+    
+}
+
+.teams hr {
+    width: 97%;
+    margin: 0 1rem .5rem 1rem;
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+}
+
+.group-info .footer {
+    
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 5%;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.group-info .footer .group-info-icon {
+    
+    background: url("../images/teacher_management/teacher_management_group_bg.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+    
+    width: 1.5rem; height: 1.5rem;
+    margin: .5rem 1.25rem;
+    
+    margin-right: .5rem;
+    
+    margin-bottom: 0;
+}
+
+.group-info .footer .intro {
+    margin-top: .5rem;
+}
+
+.group-info .footer .group-count {
+    
+        font-size: 1.25vw;
+        
+        /* font: bold; */
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.75rem;
+        letter-spacing: 1px;
+        margin-bottom: auto;
+        height: 100%;
+        width: 80%;
+        text-align: right;
+        align-items: center;
+        float: right;
+
+        margin-top: .5rem;
+        color: var(--sec_gray500, #8E8E93);
+        /* margin: 1.25rem 10rem;
+        margin-right: 2rem;
+        margin-bottom: 0.75rem; */
+}
+
+.group-info {
+
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/teacher_management/teacher_management_empty.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+
+}
+
+.teams .group-content {
+    width: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.group-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.student {
+    width: 20%;
+    height: 2.5rem;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 100px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student .info {
+    margin-left: 10px;
+}
+
+.student .purple {
+    width: 1.5rem; height: 1.5rem;
+    background-color: rgba(194, 165, 240, 0.3);
+    border-radius: 100%;
+    background-image: url("../images/teacher_management/user_purple.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.student .blue {
+    width: 1.5rem; height: 1.5rem;
+    background-color: rgba(75, 183, 255, 0.2);
+    /* opacity: 20%; */
+    border-radius: 100%;
+    background-image: url("../images/teacher_management/user_blue.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.student .green {
+    width: 1.5rem; height: 1.5rem;
+    background-color: #D9F8D9;
+    border-radius: 100%;
+    background-image: url("../images/teacher_management/user_green.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.student .yellow {
+    width: 1.5rem; height: 1.5rem;
+    background-color: rgba(255, 220, 168, 0.5);
+    border-radius: 100%;
+    background-image: url("../images/teacher_management/user_yellow.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.group-content .group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}

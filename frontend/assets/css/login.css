@@ -29,9 +29,10 @@ h2 {
 
 h6 {
 	color: #502F96;
-	font-size: 1.1rem;
+	font-size: 1.25rem;
 	font-weight: 900;
-	line-height: 2.1rem;
+	line-height: 2.125rem;
+	letter-spacing: 0.0125rem;
 }
 
 p {
@@ -55,7 +56,7 @@ span {
 	letter-spacing: 0.06rem;
 }
 
-span.icon {
+.icon {
 	position: absolute;
 	display: flex;
 	align-items: center;
@@ -63,9 +64,22 @@ span.icon {
 	height: 3rem;
 }
 
+.openPw {
+	position: absolute;
+	top: 35%;
+	right: 0.75rem;
+	align-items: center;
+}
+
 .textIcon {
 	width: 0.875rem;
 	height: 0.875rem;
+}
+
+.openPwIcon {
+	display: block;
+	padding-left: 0rem;
+	cursor: pointer;
 }
 
 button.signButton {
@@ -78,7 +92,6 @@ button.signButton {
 	width: 60%;
 	padding: 0.75rem 2.8rem;
 	letter-spacing: 0.06rem;
-	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 }
 
@@ -112,11 +125,12 @@ form {
 }
 
 input {
-	background-color: #eee;
+	background-color: #F2F2F7;
 	border: none;
 	width: 100%;
 	padding: 0.75rem 0.94rem;
 	border-radius: 0.5rem !important;
+	padding-left: 2.64rem;
 }
 
 .form-check-input[type="checkbox"] {
@@ -127,9 +141,19 @@ input {
 	margin: 0;
 }
 
+.form-check-input[type="checkbox"]:checked {
+	background-color: #363636;
+	border-color: #363636;
+}
+
+.form-check-input[type="checkbox"]:hover {
+	cursor: pointer;
+}
+
 .input-group {
 	padding: 0.75rem 0;
 	width: 60%;
+	flex-direction: column;
 }
 
 ::placeholder {
@@ -138,7 +162,7 @@ input {
 	line-height: 1.6rem;
 	letter-spacing: 0.06rem;
 	text-align: left;
-	padding-left: 1.7rem;
+	position: relative;
 }
 
 label {
@@ -160,14 +184,23 @@ label {
 	transition: all 0.6s ease-in-out;
 }
 
-.sign-up-container {
+.article-container {
 	left: 0;
 	width: 50%;
 	z-index: 1;
-	opacity: 0;
+	opacity: 1;
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 0.3rem;
+	height: 100%;
+	text-align: left;
+    border-radius: 0.5rem;
 }
 
-.container.right-panel-active .sign-up-container {
+.container.right-panel-active .article-container {
 	transform: translateX(100%);
 }
 
@@ -182,6 +215,7 @@ label {
 	left: 0;
 	width: 50%;
 	z-index: 2;
+	opacity: 0;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -190,22 +224,6 @@ label {
 	z-index: 5;
 
 }
-
-@keyframes show {
-
-	0%,
-	49.99% {
-		opacity: 0;
-		z-index: 1;
-	}
-
-	50%,
-	100% {
-		opacity: 1;
-		z-index: 2;
-	}
-}
-
 
 .forget-password {
 	color: #F25A5A;
@@ -237,11 +255,11 @@ label {
 
 .login-page-background {
 
-	background: url("../images/login_page_bg.png") no-repeat center center;
-	-webkit-background-size: 89.78% 98.8%;
+	background: url("../images/login/bg.svg") repeat center center;
+	/* -webkit-background-size: 89.78% 98.8%;
 	-moz-background-size: 89.78% 98.8%;
 	-o-background-size: 89.78% 98.8%;
-	background-size: 89.78% 98.8%;
+	background-size: 89.78% 98.8%; */
 
 }
 
@@ -261,12 +279,6 @@ label {
 
 .container.right-panel-active .overlay {
 	transform: translateX(50%);
-}
-
-.login-page-background {
-	background: url("../images/login/login_page_bg.png");
-	background-position: center center;
-	background-repeat: no-repeat;
 }
 
 .overlay-panel {
@@ -307,4 +319,23 @@ label {
 
 .sign-up-content {
 	text-align: right;
+}
+
+.article-content {
+	width: 23.75rem;
+	height: 20.5625rem;
+}
+
+.article {
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 2.125rem;
+	letter-spacing: 0.0125rem;
+	text-align: left;
+}
+
+.keypoint {
+	font-size: 1.25rem;
+	font-weight: 900;
+	color: #502F96;
 }

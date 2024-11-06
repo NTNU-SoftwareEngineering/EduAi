@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0,maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" href="assets/images/favicon.ico">
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
@@ -18,22 +18,19 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Student Discussion Page CSS-->
-    <link rel="stylesheet" href="assets/css/student_discussion.css">
+    <!-- User data CSS -->
+    <link rel="stylesheet" href="assets/css/user_data.css">
 
     <!-- Rem Resize CSS-->
     <link rel="stylesheet" href="assets/css/rem_resize.css">
 
     <title>EduAi</title>
   </head>
-  <body>
+  <body onload="getData()">
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-
-    <!-- Scale Prevent JS -->
-    <!-- just for testing <script src="assets/js/scale.js"></script>-->
 
     <div class="wrapper">
         <aside id="sidebar" class="expand">
@@ -84,7 +81,7 @@
                
             </ul>
             <div class="sidebar-footer">
-                <a href="#" class="sidebar-link">
+                <a href="login_edu.html" class="sidebar-link">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M8 18.9282C9.21615 19.6303 10.5957 20 12 20C13.4043 20 14.7838 19.6303 16 18.9282C17.2162 18.2261 18.2261 17.2162 18.9282 16C19.6303 14.7838 20 13.4043 20 12C20 10.5957 19.6303 9.21615 18.9282 8C18.2261 6.78385 17.2162 5.77394 16 5.0718C14.7838 4.36965 13.4043 4 12 4C10.5957 4 9.21615 4.36965 8 5.0718" stroke="#363636"/>
                     <path d="M2 12L1.60957 11.6877L1.35969 12L1.60957 12.3123L2 12ZM11 12.5C11.2761 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.2761 11.5 11 11.5V12.5ZM5.60957 6.68765L1.60957 11.6877L2.39043 12.3123L6.39043 7.31235L5.60957 6.68765ZM1.60957 12.3123L5.60957 17.3123L6.39043 16.6877L2.39043 11.6877L1.60957 12.3123ZM2 12.5H11V11.5H2V12.5Z" fill="#363636"/>
@@ -94,128 +91,45 @@
             </div>
         </aside>
       <div class="main p-3">
-
-        <div class = "dialog">
-
-          <div class="top-notice">
-            <div class="chat-icon"></div>
-            <div class="notice-content">
-              <div class="notice-footer">
-                <div class="question-label">本次討論題目</div>
-                <div class="time-left-label">
-                  <div class="time-icon"></div>
-                  <span>剩餘討論時間：30分鐘</span>
+        <div class="main-page">
+            <div class="main-content">
+                <div class="title-area">    
+                    <h6>會員資料</h6>
+                    <span class="subtitle">請勿向他人公開個人詳細資訊。</span>
                 </div>
-              </div>
-              <div class="question">
-                題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題
-                題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題
-              </div>
+                <div class="avatar-area mt-5 d-flex align-items-center">
+                    <div class="avatar d-flex align-items-center justify-content-center ms-5">
+                        <img src="assets/images/user_data/User_fill.svg" alt="avatar">
+                    </div>
+                    <div class="flex-grow-1"></div>
+                    <button class="me-5" id="changePhoto">
+                        <img src="assets/images/user_data/Refresh_2_light.svg" class="change-icon">
+                        <span class="change-image-text">變更相片</span>
+                    </button>
+                </div>
+                <div class="data-content mt-5 d-grid gap-4">
+                    <span class="subtitle">身份</span>
+                    <input type="text" id="identity" disabled>
+                    <span class="subtitle">姓名</span>
+                    <input type="text" id="fullName" disabled>
+                    <span class="subtitle">學號</span>
+                    <input type="text" id="studentId" disabled>
+                    <span class="subtitle">電子信箱</span>
+                    <input type="text" id="email" disabled>
+                    <span class="subtitle">設定密碼</span>
+                    <div class="pwd-area d-flex justify-content-center">
+                        <input type="password" id="password" disabled>
+                        <span class="openPw align-self-end mt-1 me-2">
+                            <img src="assets/images/user_data/View_alt_light.svg" alt="icon" class="openPwIcon opened" id="showPwd">
+                        </span>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="botton-tip">
-            <div class="tip-logo"></div>
-            <div class="tip-content">
-              XXX,您好！需要什麼幫忙嗎？<br>建議
-              <div class="tip-box">
-                <div class="box" style="background-color: #F3F0F7;"></div>
-                <div class="box" style="background-color: var(--status_y_50, #FFF6E8);"></div>
-                <div class="box" style="background-color: var(--status_50, #F0FFF0);"></div>  
-              </div>
-            </div>
-          </div>
-
-          <div class="conversation">
-            
-            <!--這個 div 是給 JS 自動生成 html 的-->
-
-          </div>
-
-          
-
-          
-
-          <div class="send-message">
-            <input onkeydown="detectEnter(this)" id="message" class= "message" type="text" placeholder="輸入訊息"/>
-            <button class="send-button" onclick="SendMessage()"></button>
-          </div>
-
         </div>
-
-        <div class = "left-side-bar">
-
-          <div class = "speech-upload">
-            <div class="footer">
-              <div class="mic-icon"></div>
-              <span class="intro">錄音上傳</span>
-              <button class="upload-button">
-                <div class="plus-icon"></div>
-                <span class="add">新增</span>
-              </button>
-            </div>
-            
-
-            <div class="file">
-              <span class="file-name">暫無錄音檔</span>
-            </div>
-
-            <button class="upload-file-button">
-              <div class="upload-icon"></div>
-              <span class="content">上傳</span>
-            </button>
-
-          </div>
-
-          <div class = "select-course mt-4">
-
-            <div class="footer">
-              <div class="book-icon"></div>
-              <span class="intro">選擇課程</span>
-            </div>
-            <div class="invite-code">
-              <input class= "code" type="text" placeholder="輸入邀請碼"/>
-            </div>
-            <button class="send-code">
-              <div class="link-icon"></div>
-                <span class="content">送出邀請碼</span>
-            </button>
-            <div class="sep-line"></div>
-            <div class="flex" style="width: 90%; margin: .3rem 5%;">
-              <button onclick="dropdownMenuCSSModify()" class="btn btn-secondary course-list">
-                請選擇課程
-              </button>
-              
-              <div class="flex course-dropdown-menu">
-
-                <!-- 這邊的內容之後應該可以直接串後端 獲得各個課程的 title 後
-                用 js 自動在這裡加 innerHTML -->
-
-                <a class="course-dropdown-item" href="#">09/30 課程</a>
-                <a class="course-dropdown-item" href="#">10/07 課程</a>
-                <a class="course-dropdown-item" href="#">10/14 課程</a>
-                <a class="course-dropdown-item" href="#">10/21 課程</a>
-                <a class="course-dropdown-item" href="#">10/28 課程</a>
-                <a class="course-dropdown-item" href="#">11/05 課程</a>
-
-              </div>
-               
-
-              
-            </div>
-
-          </div>
-
-        </div>
-
-       
-
       </div>
     </div>
 
-    <!--student_discussion page JS-->
-    <script src="assets/js/student_discussion.js"></script>
-
+    <script src="assets/js/user_data.js"></script>
     
   </body>
 </html>
