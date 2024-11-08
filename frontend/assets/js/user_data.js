@@ -6,8 +6,22 @@ const password = document.getElementById('password');
 const showPwdButton = document.getElementById('showPwd');
 let s = location.href.split('/');
 let user = s[s.length-1].split('_')[0]
-
-function getData(){
+const wstoken = localStorage.getItem('token')
+const wsfunction='core_webservice_get_site_info'
+async function getData(){
+	const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction  // API 對應的服務名稱，需確認
+		}),
+	});
+	const data = await response.json()
+	console.log(data)
+	localStorage.setItem('userid', data.userid);
 	if(user === 'teacher'){
 		identity.value = '教師';
 	}else if(user === 'student'){
@@ -15,9 +29,10 @@ function getData(){
 	}else{
 		identity.value = '未知';
 	}
-    fullname.value = '王小明';
+
+    fullname.value = data.fullname;
     id.value = '11011111';
-    email.value = 'ming111@gmail.com';
+    email.value = data.username;
     password.value = '12345678';
 }
 
