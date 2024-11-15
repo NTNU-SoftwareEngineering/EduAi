@@ -132,19 +132,10 @@ docker-compose down
    在容器內使用 `mysqldump` 命令來備份你的 Moodle 資料庫。你的資料庫名稱是 `moodle_db`，資料庫用戶是 `moodleuser`，密碼是 `yourpassword`。
 
    ```bash
-   mysqldump -u moodleuser -p moodle_db > /docker-entrypoint-initdb.d/moodle_db_backup.sql
-   ```
-
-   系統會提示你輸入 `yourpassword`，輸入後會將資料庫備份到你指定的資料夾。
-
-3. **將備份文件拷貝到本地機器**：
-   備份完成後，你可以使用 `docker cp` 命令將備份文件拷貝到本地檔案夾中。
-
-   ```bash
    mysqldump -u moodleuser -p --no-tablespaces moodle_db > /docker-entrypoint-initdb.d/moodle_db_backup.sql
    ```
 
-   這會將資料庫備份文件拷貝到本地的 `moodle-db-backup` 資料夾中。
+   系統會提示你輸入 `yourpassword`，輸入後會將資料庫備份到你指定的資料夾。
 
 ### 目前的bug
 
