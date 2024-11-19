@@ -1,4 +1,3 @@
-
 ::after,
 ::before {
     box-sizing: border-box;
@@ -50,11 +49,11 @@ body {
 }
 
 .button-style {
-
     display: flex;
     margin-left: 5%;
+    
     width: 100%;
-    height: 5rem;
+    height: 100%;
     background-color: transparent;
     border-color: transparent;
     border: 0;
@@ -88,6 +87,10 @@ body {
 }
 
 .summary{
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding-left:1rem;
     display: flex;
 }
@@ -115,7 +118,7 @@ body {
 
     display: flex;
     flex-direction: column;
-
+    max-height: 100vh;
     width: 25%;
     margin: .5rem 1rem;
 
@@ -128,7 +131,7 @@ body {
     position: relative;
     border-radius: 8px;
     background-color: #9879da;
-    height: 14rem;
+    height: 30%;
     transform-origin: 0 0;
     /* margin: 3rem;; */
 }
@@ -138,6 +141,7 @@ body {
 }
 
 .course-select{
+
     display: flex;
     width: 87%; 
     height: 4.5rem; 
@@ -147,7 +151,7 @@ body {
     border-radius: 8px;
     align-items: center;
     background: var(--pri_white, #FFF);
-    margin: 0rem 1.6rem 0rem 1.25rem;
+    margin: 1rem 1.6rem 1rem 1.25rem;
     color:grey;
     background-image: url("../images/student_feedback/down.svg") ;
     background-repeat: no-repeat;
@@ -157,6 +161,123 @@ body {
     appearance: none;
     outline: none;
 }
+
+
+
+
+
+
+.student-list {
+    background-color: #fff;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    width: 100%;
+    height: 38rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+}
+
+/* 標題樣式 */
+.student-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.student-header h2 {
+    color: var(--grey900, #303133);
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+
+
+/* 圖示樣式 */
+.student-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b2b7f;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 學生項目樣式 */
+.student-item {
+    display: flex;
+    align-items: center;
+    background-color: #F2F2F7;
+    border-radius: 10px;
+    padding: 1rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s;
+}
+.student-container{
+    max-height: 20rem;
+    overflow-y: scroll;
+    scrollbar-width: none; 
+
+}
+.student-item:hover {
+    background-color: #E4DBF5;
+}
+
+/* 學生圖示 */
+.student-icon {
+    background-color: #c7b8ff;
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+/* 學生資訊 */
+.student-info {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.student-info .name {
+    /* margin-top: 1.5rem; */
+    font-size: 1.22rem;
+    font-weight: bold;
+    color: #8665CD;
+    margin-bottom: 0px;
+    margin-left: 1rem;
+}
+
+.student-info .class {
+    font-size: 1.22rem;
+    color: #8E8E93;
+    margin-bottom: 0px;
+    margin-left: 1rem;
+
+}
+
+
+
+
+
+
 
 
 .footer .book-icon {
@@ -191,7 +312,7 @@ body {
 }
 
 .select-course {
-    padding-top: 1.9rem;
+    padding-top: 1rem;
     height: 100%;
     width: 110%;
     display: flex;
@@ -212,6 +333,7 @@ body {
     height: 50%;
     width: 100%;
 }
+
 
 
 
@@ -484,125 +606,4 @@ body {
     width: 2px;
     height: 80%;
     background-color: #aa92de;
-}
-
-
-
-h4 {
-    font-size: 1.46rem;
-    color: var(--sec_gray900, #363636);
-    letter-spacing: 1px;
-    position: relative;
-    top: .7rem;
-    /* margin-top: 10px; */
-}
-
-
-
-.interaction-cards {
-    overflow-x: auto;
-    scrollbar-width: none;
-    background: #ffffff;
-    display: flex;
-    gap: 20px;
-    height: 60%;
-    margin-top: 10px;
-    border-radius: 16px;
-    border: .5px dashed #C7C7CC;
-    z-index: 3;
-    /* max-height: 194px; */
-}
-
-.interaction-cards .card {
-    background: #ffffff;
-    padding: 0px 10px;
-    border-radius: 16px;
-    flex: 0 0 auto;
-    border: 0px;
-    min-width: 192.591px;
-    max-height: 194px;
-    max-width: 289px;
-    z-index: 0;
-    display : none;
-}
-
-.interaction-cards span {
-    color: var(--sec_gray500, #8E8E93);
-    /* text-align: center;
-    justify-content: center; */
-    font-family: "Noto Sans TC";
-    font-size: 1.46rem;
-    margin-top: 9rem;
-    margin-left: 45%;
-}
-
-.card .date {
-    padding-left: 10%;
-    width: 70%;
-    /* color: #4BB7FF; */
-    font-weight: bold;
-    border-radius: 16px;
-    /* background-color: #E8F6FF; */
-    /* margin-top: 1.5rem; */
-    margin-left: 1.5rem;
-    margin-bottom: 0px;
-    position: relative;
-    top: 1.5rem;
-    right: .5rem;
- }
-
-.date.blue{
-    color: #4BB7FF;
-    background-color: #E8F6FF;
-}
-
-.date.orange{
-    color: #ffbc57;
-    background-color: #FFF6E8;
-} 
-
-.date.purple{
-    color: #8665CD;
-    background-color: #F3F0F7;
-} 
-
-.custom-shape{
-    height: 3.6rem;
-    width: 50%;
-    background: #f9fafc;
-    border-radius: 30px 50px 0px 0px;
-    clip-path: polygon(0 0, 80% 0, 100% 180%, 100% 100%, 0 100%, 0% 0%);
-}
-
-
-.card-container{
-    background: #f9fafc;
-    width: 100%;
-    height: 78%;
-    border-radius: 0px 16px 16px 16px ;
-    padding: 1rem;
-    /* max-height: 150px; */
-
-}
-
-.card-container h5{
-    color: var(--sec_gray900, #363636);
-    font-family: "PingFang TC";
-    font-size: 1.46rem;
-    font-weight : bold;
-    margin-top: 1rem;
-    /* line-height: normal; */
-    letter-spacing: 0.5px;
-}
-
-.card-container p{
-    font-family: "Noto Sans TC";
-    font-size: 1.3rem;
-    /* font-weight : bold; */
-    margin-top: 1rem;
-    letter-spacing: 0.5px;
-    max-height: 6.1rem; /* 固定高度，可以根據需要調整 */
-    overflow-y: auto; /* 允許垂直滾動 */
-    scrollbar-width: none;
-
 }
