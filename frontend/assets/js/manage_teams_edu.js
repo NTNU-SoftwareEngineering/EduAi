@@ -5,7 +5,7 @@ document.querySelector("body > div > div > div.left-side-bar > div.teams-num > d
 
 selectClassList.addEventListener('change', updateStudent);
 selectClassList.addEventListener('change', updateInfo);
-
+const temp_courseid = 2;
 // test class 1
 class1 = {
     "1": "Andy",
@@ -19,7 +19,116 @@ class1 = {
     "9": "Ivy",
     "10": "Jack",
 };
+async function get_group_from_course(courseid){
+    // change class information
+    const wsfunction = 'core_group_get_course_groups'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+            courseid:courseid
+        }),
+	});
+    const data = await response.json()
+    // console.log(data.length)
+    return data;
+}
 
+async function get_group_member(groupids){
+    // change class information
+    const wsfunction = 'core_group_get_group_members'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupids}`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+		}),
+	});
+    const data = await response.json()
+    // console.log(data)
+    return data
+}
+async function get_user_fullname_by_id(userid){
+    // change class information
+    const wsfunction = 'core_user_get_users_by_field'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+		}),
+	});
+    const data = await response.json()
+    // console.log(data)
+    return data.fullname
+}
+async function get_student_from_course(courseid){
+    // change class information
+    const wsfunction = 'core_enrol_get_enrolled_users'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+            courseid:courseid
+		}),
+	});
+    const data = await response.json()
+    if (data.exception) {
+        throw new Error(`Error fetching course participants: ${data.message}`);
+    }
+
+    // Filter out users with the "Teacher" role
+    const participants = data.filter(user => {
+        // Check if the user does NOT have a "Teacher" role (roleid typically 3)
+        return !user.roles.some(role => role.roleid === 3); // Adjust roleid if necessary
+    });
+
+    console.log("Filtered Participants (Without Teachers):", participants);
+    return participants;
+}
+async function show_group_info(){
+    try {
+        // Step 1: Get groups from the course
+        const groups = await get_group_from_course(temp_courseid);
+        console.log("Groups:", groups);
+    
+        // Step 2: Fetch members for each group
+        const groupMembers = [];
+        for (const group of groups) {
+            console.log(group.id)
+            console.log(group.name)
+            const members = await get_group_member(group.id); // Pass group.id to the function
+            console.log(members)
+
+            groupMembers.push({ groupId: group.id, userids: members[0].userids });
+            
+        }
+        
+        console.log("Group Members:", groupMembers);
+        return groupMembers; // Return the JSON structure
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+show_group_info()
 function updateInfo(){
     // change class information
     let classInfo = document.querySelector(".info-content > .class > .intro");
@@ -39,11 +148,11 @@ function updateInfo(){
     let classList = document.querySelector(".group-info");
     classList.style.backgroundImage = "none";
 }
-
 const color_code = ["#F3F0F7", "#FFF6E8", "#F0FFF0", "#E8F6FF"];
 const colors = ["purple", "yellow", "green", "blue"];
 
-function updateStudent(){
+async function updateStudent(){
+    
     let studentList = document.querySelector(".group-content");
     studentList.innerHTML = "";
     if(selectClassList.value == "class1"){
@@ -72,8 +181,6 @@ function updateStudent(){
     }
 }
 
-//update course information
-
 selectCourseList.addEventListener('change', updateCourseInfo);
 
 function updateCourseInfo(){
@@ -84,7 +191,6 @@ function updateCourseInfo(){
 }
 
 //change button color
-
 const teamsNumInput = document.querySelector(".teams-num-selector > input");
 teamsNumInput.addEventListener('input', function(){
     const teamsNumButton = document.querySelector(".teams-num > button");
