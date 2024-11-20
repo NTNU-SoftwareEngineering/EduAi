@@ -30,9 +30,9 @@ $CFG->corsalloweddomains = array('http://localhost:3000');  // 允许的 CORS �
 
 // 调试设置（已关闭）
 @error_reporting(0);
-@ini_set('display_errors', '0');
-$CFG->debug = 0;
-$CFG->debugdisplay = 0;
+@ini_set('display_errors', '1');
+$CFG->debug = 32767;
+$CFG->debugdisplay = 1;
 
 require_once(__DIR__ . '/lib/setup.php');
 
