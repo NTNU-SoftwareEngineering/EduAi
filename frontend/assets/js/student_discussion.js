@@ -2,6 +2,60 @@ let dropdown_expand = 0
 let didSendMessage = 0
 let username = "王小明" //backend should modify and offer the username of the account
 
+function fetchData() {
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login.html';
+    
+    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_webservice_get_site_info',
+            moodlewsrestformat: 'json'
+        })
+    })
+    .then( response => response.json() )
+    .then( (data) => {
+        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                wstoken: token,
+                wsfunction: 'core_enrol_get_users_courses',
+                moodlewsrestformat: 'json',
+                userid: data.userid
+            })
+        });
+    })
+    .then( response => response.json() )
+    .then( data => {
+        console.log("取得用戶註冊的課程列表");
+        return data.map( j => j.fullname );
+    })
+    .then( courses => {
+        // 更改 course-dropdown-menu 下拉選單的值
+        const course_select_ele = document.getElementById('course-select');
+        console.log(course_select_ele);
+        
+        // 將靜態網頁預填的選項清空
+        course_select_ele.innerHTML = '';
+        
+        courses.forEach ( course => {
+            course_select_ele.innerHTML += `<a class="course-dropdown-item" href="#">${course}</a>`;
+        });
+    })
+    .catch( error => {
+        console.error('錯誤:', error);
+    });
+}
+document.addEventListener("DOMContentLoaded", fetchData);
+
+
 function detectEnter(ele){
 
     if(event.key == 'Enter'){
