@@ -1,17 +1,33 @@
-# 使用 nginx 作為基礎鏡像
+# 使用 nginx 作为基础镜像
+
 FROM nginx:latest
 
-# 設定工作目錄
+
+
+# 设置工作目录
+
 WORKDIR /usr/share/nginx/html
 
-# 刪除預設的 nginx 靜態文件
+
+
+# 删除默认的 nginx 静态文件
+
 RUN rm -rf ./*
 
-# 複製前端的所有文件到 nginx 的靜態服務目錄
+
+
+# 复制前端的所有文件到 nginx 的静态服务目录
+
 COPY . .
 
-# 開放 nginx 的預設端口
+
+
+# 暴露 nginx 的默认端口
+
 EXPOSE 80
 
-# 啟動 nginx
+
+
+# 启动 nginx
+
 CMD ["nginx", "-g", "daemon off;"]
