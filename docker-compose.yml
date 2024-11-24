@@ -1,11 +1,19 @@
 services:
-  frontend:
-    build:
-      context: ./frontend           # Dockerfile 位於 frontend 資料夾
+  nginx:
+    build: ./nginx
+    links:
+      - frontend:frontend
     ports:
-      - "3000:80"                   # 將主機的 3000 端口映射到容器的 80 端口
+      - "3000:80"
+    networks:
+      - moodle-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8081:80"
     volumes:
-      - ./frontend:/usr/share/nginx/html  # 掛載本地 frontend 資料夾到 nginx 的靜態文件目錄
+      - ./frontend:/usr/src/app
     networks:
       - moodle-network
 
