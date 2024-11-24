@@ -16,6 +16,7 @@ services:
       - ./frontend:/usr/src/app
     networks:
       - moodle-network
+    env_file: ".env"
 
   backend:
     build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 資料夾
