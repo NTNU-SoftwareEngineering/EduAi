@@ -16,7 +16,7 @@ h6 {
 
 .change-image-text {
 	color: #502F96;
-	font-size: 1.875rem;
+	font-size: 1.46rem;
 	font-weight: normal;
 	line-height: 2.7rem;
 	letter-spacing: 1px;
@@ -84,8 +84,12 @@ input {
     border-radius: 4rem;
 }
 
+.avatar-icon {
+    width: 40%;
+}
+
 .data-content {
-    width: 21.875rem;
+    width: 25rem;
 }
 
 .pwd-area {

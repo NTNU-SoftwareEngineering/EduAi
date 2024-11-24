@@ -349,7 +349,7 @@ body {
     
 }
 .main-content h2{
-    font-family: 'Noto Sans TC';
+    font-family: 'Noto Sans TC', sans-serif;
     color: #502f96;
     font-weight : bold;
     font-size: 1.9rem;
@@ -357,7 +357,7 @@ body {
 
 .main-content p,
 .main-content p span{
-    font-family: 'Noto Sans TC';
+    font-family: 'Noto Sans TC', sans-serif;
     color: #8e8e93;
     font-size: 1.46rem;
 }
