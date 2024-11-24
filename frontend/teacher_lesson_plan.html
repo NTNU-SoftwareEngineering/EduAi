@@ -18,11 +18,12 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <!-- manage teams Page CSS-->
-    <link rel="stylesheet" href="assets/css/manage_teams_edu.css">
-
     <!-- Rem Resize CSS-->
     <link rel="stylesheet" href="assets/css/rem_resize.css">
+
+    <!-- Lesson Plan CSS -->
+    <link rel="stylesheet" href="assets/css/lesson_plan.css">
+    
 
     <title>EduAi</title>
   </head>
@@ -37,7 +38,7 @@
     <div class="wrapper">
       <aside id="sidebar" class="expand">
           <div class="d-flex justify-content-center">
-              <div class="mt-5 sidebar-logo">
+              <div class="mt-4 sidebar-logo">
                   <img class="sidebar-logo-img" src="assets/images/logo.svg" alt="logo">
                   <a class="mt-2 " href="login_edu.html">EduAi</a>
               </div>
@@ -121,110 +122,209 @@
         <!-- main part of the page -->
         <div class="left-side-bar">
 
-            <div class="select-class">
-                <div class="footer">
-                   <div class="book-icon"></div>
-                   <span class="intro">選擇班級</span>
-                </div>
-                <div class="class-selector">
-                  <select name="class" id="select-class">
-                    <option value="">請選擇班級</option>
-                    <option value="class1">class1</option>
-                    <option value="class2">class2</option>
-                    <option value="class3">class3</option>
-                  </select>
-                </div>
-                <div class="course-selector">
-                  <select name="class" id="select-course">
-                    <option value="course1">請選擇課程</option>
-                    <option value="course1">course 1</option>
-                    <option value="course2">course 2</option>
-                    <option value="course3">course 3</option>
-                  </select>
-                </div>
-            </div>
-
-            <div class="teams-num">
-              <div class="footer">
-                <div class="teams-num-icon"></div>
-                <span class="intro">選擇分組組數</span>
+          <div class="select-class">
+              <div class="footer" style="height: 20%;">
+                 <div class="book-icon"></div>
+                 <span class="intro">選擇班級</span>
               </div>
-              <div class="teams-num-selector">
-                <input type="number">
-              </div>
-              <button class="group-button">
-                <div class="group-icon"></div>
-                <span class="group">開始分組</span>
-              </button>
-            </div>
-
-            <div class="question">
-              <div class="footer">
-                <div class="question-icon"></div>
-                <span class="intro">出題</span>
-              </div> 
-              <div class="discuss-time">
-                <select name="time-selector">
-                  <option value="">請選擇討論時間</option>
-                  <option value="5">5分鐘</option>
-                  <option value="10">10分鐘</option>
-                  <option value="15">15分鐘</option>
-                  <option value="20">20分鐘</option>
+              <div class="class-selector">
+                <select id="class" onChange="select_class(this.options[this.selectedIndex].value)">
+                  <option value="">請選擇班級</option>
+                  <option value="102">102</option>
+                  <option value="204">204</option>
+                  <option value="307">307</option>
                 </select>
               </div>
-              <div class="question-content">
-                <input type="text" placeholder="輸入題目內容">
-              </div>
-              <button class="send-button">
-                <div class="send-icon"></div>
-                <span class="send">送出題目</span>
-              </button>
+              
+          </div>
+
+
+          <div class="student_list flex">
+            <div class="footer">
+              <div class="student-icon"></div>
+              <span class="intro">學生列表</span>
+              <div class="switch-icon"></div>
             </div>
+            <div class="student_content">
+              <div class="class_empty_hint">
+                <div>請先選擇班級</div>
+              </div>
+              <div class="selected-class_student_list" style="display: none;">
+
+              </div>
+            </div>
+
+          </div>
 
         </div>
-
-        <div class="teams">
-            <div class="class-info">
-              <div class="footer">
-                <div class="class-info-icon"></div>
-                <span class="intro">班級資訊</span>
-              </div>
-              <button class="create-button">
-                <div class="chat-icon"></div>
-                <span class="create">生成聊天室</span>
-              </button>
+        <div class="lesson_plan flex">
+          <div class="footer" style="height: 5rem;">
+            <div class="plan-icon"></div>
+            <span class="intro">教案檔案輸入</span>
+            <div class="save-btn">
+              <div class="save-icon"></div>
+              <div class="label">儲存</div>
             </div>
-            <div class="info-content">
-              <div class="class">
-                <div class="class-icon"></div>
-                <span class="intro">班級: </span>
+          </div>
+          <div class="sep-line"></div>
+          <div class="content row m-3" style=" height: 3rem; justify-content: center; align-items: center;">
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>教案名稱</div>
               </div>
-              <div class="class-count">
-                <div class="count-icon"></div>
-                <span class="intro">班級人數: </span>
-              </div>
-              <div class="course">
-                <div class="course-icon"></div>
-                <span class="intro">課程名稱: </span>
-              </div>
+              <input class="form-input" id="lesson-plan-name" placeholder="請輸入教案名稱" />
             </div>
-
-            <hr>
-
-            <div class="group-info">
-              <div class="footer">
-                <div class="group-info-icon"></div>
-                <span class="intro">分組名單</span>
-                <div class="group-count">共0組</div>
+            
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>設計者</div>
               </div>
+              <input class="form-input" id="lesson-plan-author" placeholder="請輸入設計者" />
             </div>
+          </div>
+          <div class="content row m-3 mt-4" style=" height: 3rem; justify-content: center; align-items: center;">
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>實施對象</div>
+              </div>
+              <input class="form-input" id="lesson-plan-target" placeholder="請輸入實施對象" />
+            </div>
+            
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>總節數</div>
+              </div>
+              <input class="form-input" id="lesson-plan-time" placeholder="請輸入總節數" />
+            </div>
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 7.5rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>教學設計動機與理念</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-motivation" placeholder="請輸入教學設計動機與理念" />
+            
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 7.5rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>教學場域分析</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-place" placeholder="請輸入教學場域分析" />
+            
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>總綱核心素養</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row">
+              <button class="core-btn" id="core-A1"></button>
+              <div class="core-label">A1 身心素質與自我精進</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+              <button class="core-btn" id="core-A2"></button>
+              <div class="core-label">A2 系統思考與解決問題</div>
+            </div>
+            <button class="core-expand-btn" onclick="core_expand_toggle()"></button>
+          </div>
+          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="rounded_selectBox d-flex flex-row">
+              <button class="core-btn" id="core-A3"></button>
+              <div class="core-label">A3 規劃執行與創新應變</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row">
+              <button class="core-btn" id="core-B1"></button>
+              <div class="core-label">B1 符號運用與溝通表達</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;"> 
+              <button class="core-btn" id="core-B2"></button>
+              <div class="core-label">B2 科技資訊與媒體素養</div>
+            </div>
+          </div>
+          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="rounded_selectBox d-flex flex-row">
+              <button class="core-btn" id="core-B3"></button>
+              <div class="core-label">B3 藝術涵養與美感素養</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row">
+              <button class="core-btn" id="core-C1"></button>
+              <div class="core-label">C1 道德實踐與公民意識</div>
+            </div>
+            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+              <button class="core-btn" id="core-C2"></button>
+              <div class="core-label">C2 人際關係與團隊合作</div>
+            </div>
+          </div>
+          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+              <button class="core-btn" id="core-C3" ></button>
+              <div class="core-label">C3 多元文化與國際理解</div>
+            </div>
+          </div>
+
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 7.5rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>領域核心素養</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-core_value" placeholder="請輸入領域核心素養" />
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>領域學習重點</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-core_importance" placeholder="請輸入領域學習重點" />
+          </div>
+          <div class="content row m-3 mt-4" style=" height: 3rem; justify-content: center; align-items: center;">
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>教材來源</div>
+              </div>
+              <input class="form-input" id="lesson-plan-source" placeholder="請輸入教材來源" />
+            </div>
+            
+            <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
+              <div class="form-label">
+                <div>教材設備</div>
+              </div>
+              <input class="form-input" id="lesson-plan-facilities" placeholder="請輸入教材設備" />
+            </div>
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>學習目標</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-goal" placeholder="請輸入學習目標" />
+          </div>
+          <div class="sep-line"></div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>學習活動設計</div>
+            </div>
+            <button class="event-btn">
+              <div class="event-icon"></div>
+              <div class="label">新增活動</div>
+            </button>
+          </div>
+          <div class="sep-line"></div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>教學回饋省思</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-thought" placeholder="請輸入教學回饋省思" />
+          </div>
+          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+            <div class="form-label-large">
+              <div>教學回饋提醒</div>
+            </div>
+            <input class="form-input-large" id="lesson-plan-remind" placeholder="請輸入教學回饋提醒" />
+          </div>
+          
         </div>
+
+
       </div>
     </div>
 
-
+  <script src="assets/js/lesson_plan.js"></script>
 
     
   </body>
-  <script src="assets/js/manage_teams_edu.js"></script>
 </html>
