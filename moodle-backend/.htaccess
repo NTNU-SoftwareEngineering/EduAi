@@ -3,3 +3,6 @@
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
     Header set Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization"
 </IfModule>
+
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
