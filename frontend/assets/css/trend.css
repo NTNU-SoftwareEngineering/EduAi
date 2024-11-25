@@ -1,10 +1,9 @@
-
-::after,
-::before {
+/* ::after, */
+/* ::before {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
+} */
 
 a {
     text-decoration: none;
@@ -253,7 +252,7 @@ body {
 
     
     background-image: 
-        url('/assets/images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
+        url('../images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
         linear-gradient(90deg, #FFF6E8 0%, #E6E1F0 100%); /* 漸層在下層 */
     background-repeat: no-repeat, no-repeat;
     background-size: 19%, cover; /* 圖片設為 19%，漸層填滿容器 */
