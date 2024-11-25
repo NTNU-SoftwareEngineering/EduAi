@@ -1,37 +1,7 @@
 function fetchCourses() {
     const token = localStorage.getItem('token');
-    if ( !token ) window.location.href = 'login.html';
-    console.log(token);
-
-    //core_enrol_get_course_enrolment_methods
+    if ( !token ) window.location.href = 'login_edu.html';
     
-    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            wstoken: token,
-            wsfunction: 'core_webservice_get_site_info',
-            moodlewsrestformat: 'json'
-        })
-    })
-    .then( response => response.json() )
-    .then( data => {
-        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                wstoken: token,
-                wsfunction: 'core_enrol_get_course_enrolment_methods',
-                moodlewsrestformat: 'json',
-                userid: data.userid
-            })
-        });
-    })
-
     fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',
         headers: {

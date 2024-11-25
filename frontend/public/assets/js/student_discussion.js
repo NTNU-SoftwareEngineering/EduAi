@@ -1,10 +1,13 @@
 let dropdown_expand = 0
 let didSendMessage = 0
 let username = "王小明" //backend should modify and offer the username of the account
+let courseList = [] 
+
+let course_status = new Array(courseList.length)
 
 function fetchData() {
     const token = localStorage.getItem('token');
-    if ( !token ) window.location.href = 'login.html';
+    if ( !token ) window.location.href = 'login_edu.html';
     
     fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',
@@ -44,16 +47,43 @@ function fetchData() {
         
         // 將靜態網頁預填的選項清空
         course_select_ele.innerHTML = '';
+
+        courseList = courses
+        course_status = new Array(courseList.length)
+        for(var i=0;i<courseList.length;i++) course_status[i] = 0
         
-        courses.forEach ( course => {
-            course_select_ele.innerHTML += `<a class="course-dropdown-item" href="#">${course}</a>`;
-        });
+        for(var i=0;i<courseList.length;i++){
+            course_select_ele.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'    
+        }
     })
     .catch( error => {
         console.error('錯誤:', error);
     });
 }
 document.addEventListener("DOMContentLoaded", fetchData);
+
+function select_course(index){
+    for(var i=0;i<courseList.length;i++) course_status[i] = 0
+    course_status[index] = 1
+
+    const dropdown_menu = document.querySelector("body > div > div > div.left-side-bar > div.select-course.mt-4 > div.flex > div");
+
+    dropdown_menu.innerHTML = ''
+    for(var i=0;i<courseList.length;i++){
+        if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+        else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><div class=check_icon></div></a>'
+    }
+
+    const record_btn = document.querySelector("body > div > div > div.left-side-bar > div.speech-upload > button")
+    record_btn.style.backgroundColor = '#502F96'
+    document.getElementsByClassName('upload-icon')[0].style.backgroundImage = 'url(./assets/images/student_discussion/upload-light.svg)'
+    document.getElementsByClassName('upload-icon')[1].style.backgroundImage = 'url(./assets/images/student_discussion/upload-light.svg)'
+    document.getElementsByClassName('file-name')[0].innerHTML = ''
+    document.getElementsByClassName('file')[0].style.display = 'none'
+    document.getElementById("audio").style.display = 'block'
+    document.querySelector("body > div > div > div.left-side-bar > div.speech-upload > button > span").style.color = '#FFF'
+    document.querySelector("#record-stop > span").style.color = '#FFF'
+}   
 
 
 function detectEnter(ele){
@@ -72,6 +102,17 @@ function dropdownMenuCSSModify(){
 
 
     dropdown_expand = dropdown_expand ? 0 : 1;
+
+    dropdown_menu.innerHTML = ''
+
+    if(dropdown_expand){
+
+        for(var i=0;i<courseList.length;i++){
+            if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+            else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><div class=check_icon></div></a>'
+        }
+
+    }
 
 }
 

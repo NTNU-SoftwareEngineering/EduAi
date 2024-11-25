@@ -34,7 +34,7 @@ span {
 
     padding-left: .2rem;
     color: var(--sec_gray900, #363636);
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
