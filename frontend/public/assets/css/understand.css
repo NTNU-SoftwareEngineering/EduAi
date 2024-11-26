@@ -253,7 +253,7 @@ body {
 
     
     background-image: 
-        url('/assets/images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
+        url('../images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
         linear-gradient(90deg, #FFF6E8 0%, #E6E1F0 100%); /* 漸層在下層 */
     background-repeat: no-repeat, no-repeat;
     background-size: 19%, cover; /* 圖片設為 19%，漸層填滿容器 */
@@ -323,7 +323,7 @@ body {
 .section.A{
     border-radius: 8px;
     background: var(--status_y_50, #FFF6E8);
-    background-image: url('/assets/images/student_feedback/Mask_group.svg');
+    background-image: url('../images/student_feedback/Mask_group.svg');
     background-repeat: no-repeat;
     background-size: 20%;
     background-position: top right;
@@ -333,7 +333,7 @@ body {
 .section.B{
     border-radius: 8px;
     background: #F3F0F7;
-    background-image: url('/assets/images/student_feedback/mask_group_purple.svg');
+    background-image: url('../images/student_feedback/mask_group_purple.svg');
     background-repeat: no-repeat;
     background-size: 20%;
     background-position: top right;

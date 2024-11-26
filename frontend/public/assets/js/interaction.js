@@ -101,26 +101,39 @@ document.addEventListener("DOMContentLoaded", function() {
        
     // });
 
-    fetch('assets/data/response.txt')
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('無法讀取檔案');
-        }
-        return response.text();
-    })
-    .then(text => {
-        const lines = text.split('\n'); 
-        const data = {};
-        lines.forEach(line => {
-        const [key, value] = line.split(':');
-        if (key && value) {
-            data[key.trim()] = value.trim();
-        }
-        });
-        updateInfoCards(data);
-    })
-    .catch(error => {
-        console.error('讀取檔案時發生錯誤:', error);
+    const courseSelect = document.getElementById("course-select");
+    const selectedCourseName = document.getElementById("selected-course-name");
+
+    courseSelect.addEventListener("change", function() {
+        const selectedCourse = courseSelect.value;
+        console.log("selectedCourse",selectedCourse)
+        selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
+            // const data = datas[selectedCourse];
+            // console.log("data:",data)
+            // console.log("理解度:",data.理解度評語)
+            // updateInfoCards(data);
+            fetch('assets/data/response.txt')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('無法讀取檔案');
+                }
+                return response.text();
+            })
+            .then(text => {
+                const data = {};
+                text.split('\n').forEach(line => {
+                const [key, value] = line.split(':');
+                if (key && value) {
+                    data[key.trim()] = value.trim();
+                }
+                });
+                updateInfoCards(data);
+            })
+            .catch(error => {
+                console.error('讀取檔案時發生錯誤:', error);
+            });
+       
+       
     });
 
 
