@@ -1,5 +1,5 @@
 # 使用 Node.js 作為基礎鏡像
-FROM node:alpine
+FROM node:23-alpine
 
 # 設定工作目錄
 WORKDIR /usr/src/app
