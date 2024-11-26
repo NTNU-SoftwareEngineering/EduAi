@@ -125,6 +125,8 @@ async function SendMessage() {
         "</div>" +
         "</div>";
 
+    conversation_box.scrollTop = conversation_box.scrollHeight;
+
     const response = await fetch("/student_conversation", {
         method: "POST",
         headers: {
