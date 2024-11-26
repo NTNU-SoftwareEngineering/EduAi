@@ -144,14 +144,14 @@ body {
 
     display: flex;
     width: 87%; 
-    height: 4.5rem; 
+    height: 25%; 
     padding: 5% 10% 5% 10% ; 
     font-size:1.3rem;
     border: none;
     border-radius: 8px;
     align-items: center;
     background: var(--pri_white, #FFF);
-    margin: 1rem 1.6rem 1rem 1.25rem;
+    margin: 0rem 1.6rem 1rem 1.25rem;
     color:grey;
     background-image: url("../images/student_feedback/down.svg") ;
     background-repeat: no-repeat;
@@ -172,7 +172,7 @@ body {
     border-radius: 10px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     width: 100%;
-    height: 38rem;
+    height: 35%;
     margin-top: 1.5rem;
     padding: 1rem;
 }
@@ -221,7 +221,7 @@ body {
     background-color: #F2F2F7;
     border-radius: 10px;
     padding: 1rem;
-    height: 5rem;
+    height: 35%;
     margin-bottom: 1rem;
     transition: background-color 0.3s;
 }
@@ -229,6 +229,7 @@ body {
     max-height: 20rem;
     overflow-y: scroll;
     scrollbar-width: none; 
+    height: 80%;
 
 }
 .student-item:hover {
@@ -375,7 +376,7 @@ body {
 
     
     background-image: 
-        url('/assets/images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
+        url('../images/student_feedback/logo_1.svg'), /* 圖片先寫，放在上層 */
         linear-gradient(90deg, #FFF6E8 0%, #E6E1F0 100%); /* 漸層在下層 */
     background-repeat: no-repeat, no-repeat;
     background-size: 19%, cover; /* 圖片設為 19%，漸層填滿容器 */
@@ -445,7 +446,7 @@ body {
 .section.A{
     border-radius: 8px;
     background: var(--status_y_50, #FFF6E8);
-    background-image: url('/assets/images/student_feedback/Mask_group.svg');
+    background-image: url('../images/student_feedback/Mask_group.svg');
     background-repeat: no-repeat;
     background-size: 20%;
     background-position: top right;
@@ -455,7 +456,7 @@ body {
 .section.B{
     border-radius: 8px;
     background: #F3F0F7;
-    background-image: url('/assets/images/student_feedback/mask_group_purple.svg');
+    background-image: url('../images/student_feedback/mask_group_purple.svg');
     background-repeat: no-repeat;
     background-size: 20%;
     background-position: top right;
@@ -504,9 +505,9 @@ body {
 }
 .scores {
     /* margin-top: 1rem; */
-    font-size: 3rem;
+    font-size: 1.5rem;
     color: #8E8E93;
-    font-size: 20px;
+    /* font-size: 20px; */
     /* font-style: normal; */
     font-weight: 400;
 
@@ -516,7 +517,7 @@ body {
     font-size: 50px;
     font-weight: bold;
     color: #363636;
-    margin-right: 12px;
+    /* margin-right: 12px; */
 }
 .description {
     color: #8E8E93;
