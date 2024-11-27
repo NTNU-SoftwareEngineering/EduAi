@@ -81,25 +81,47 @@ document.addEventListener("DOMContentLoaded", function() {
     //     selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
     // });
 
-    fetch('assets/data/response.txt')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('無法讀取檔案');
-        }
-        return response.text();
-        })
-        .then(text => {
-        const data = {};
-        text.split('\n').forEach(line => {
-            const [key, value] = line.split(':');
-            if (key && value) {
-            data[key.trim()] = value.trim();
-            }
+    
+    const courseSelect = document.getElementById("course-select");
+    const selectedStuName = document.getElementById("selected-student-name");
+
+    const selectedCourseName = document.getElementById("selected-course-name");
+
+    const studentItems = document.querySelectorAll('.student-item');
+
+    studentItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const studentName = item.querySelector('.name').innerText;
+            selectedStuName.textContent = studentName;
+            
+            fetch('assets/data/response.txt')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('無法讀取檔案');
+                }
+                return response.text();
+            })
+            .then(text => {
+                const lines = text.split('\n'); 
+                const data = {};
+                lines.forEach(line => {
+                const [key, value] = line.split(':');
+                if (key && value) {
+                    data[key.trim()] = value.trim();
+                }
+                });
+                updateInfoCards(data);
+            })
+            .catch(error => {
+                console.error('讀取檔案時發生錯誤:', error);
+            });
+
         });
-        updateInfoCards(data);
-    })
-    .catch(error => {
-        console.error('讀取檔案時發生錯誤:', error);
+    });
+
+    courseSelect.addEventListener("change", function() {
+        const selectedCourse = courseSelect.value;
+        selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
     });
 
     function updateInfoCards(data) {
