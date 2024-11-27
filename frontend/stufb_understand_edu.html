@@ -284,26 +284,6 @@
     </div>
     <script src="assets/js/understand.js"></script>
     <script src="assets/js/fetch_course.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // 從 localStorage 讀取已選擇的課程
-        var selectedCourse = localStorage.getItem('selectedCourse');
-        if (selectedCourse) {
-          var courseSelect = document.getElementById('course-select');
-          courseSelect.value = selectedCourse;
-          document.getElementById('selected-course-name').textContent = selectedCourse;
-          // 如需要，觸發課程變更的相關函數
-          // courseSelect.dispatchEvent(new Event('change'));
-        }
-  
-        // 當下拉選單變化時，儲存選擇的課程
-        document.getElementById('course-select').addEventListener('change', function() {
-          var course = this.value;
-          localStorage.setItem('selectedCourse', course);
-          document.getElementById('selected-course-name').textContent = course;
-          // ...existing code...
-        });
-      });
-    </script>
+    
   </body>
 </html>
