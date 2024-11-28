@@ -11,7 +11,70 @@
 
 }
 
+.event-label{
 
+    padding: 1rem 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+}
+
+.event-row{
+
+    width: 100%;
+    height: 5rem;
+    background: var(--bg, #F9FAFC);
+    display: flex;
+    align-items: center;
+
+}
+
+.event-row-title{
+    color: var(--light-text---el-text-color-secondary, #909399);
+    background: var(--bg, #F9FAFC);
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.375rem; /* 137.5% */
+    padding-left: 1rem;
+    border: none;
+    outline: none;
+
+}
+
+.event-row-title-input{
+
+    color: var(--light-text---el-text-color-secondary, #909399);
+    text-align: center;
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.375rem; /* 137.5% */
+    width: 60%;
+    margin-left: 20%;
+    outline: none;
+    border: none;
+
+}
+
+.event-delete-btn{
+
+    background: url("../images/teacher_lesson_plan/delete.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    outline: none;
+    border: none;
+
+}
 
 .rounded_selectBox{
     width: 30%;
@@ -227,6 +290,8 @@
     border: none;
     justify-content: center;
     align-items: center;
+    border: none;
+    outline: none;
 
     
     gap: .5rem;
@@ -350,6 +415,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: 1.375rem; /* 157.143% */
+    
 }
 
 .save-icon {
