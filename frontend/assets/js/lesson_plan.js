@@ -2,7 +2,7 @@ let core_toggle = 0;
 let core_select = -1;
 
 let core_select_btns = document.getElementsByClassName("core-btn");
-
+let eventList  = [0 , 0 , 0 , 0 , 0]
 let student_list = [{number : 3 , name:"王小明"} , {number : 12 , name:"小美"}] // 這邊留給後端之後抓班級回傳用
 
 //console.log(core_select_btns)
@@ -97,5 +97,43 @@ function core_expand_toggle(){
         }
         btn.style.backgroundImage = "url('./assets/images/teacher_lesson_plan/Expand_up_light.svg')";
     }
+
+}
+
+
+function eventDelete(idx){
+    eventList[idx] = 0
+    toDelete = document.querySelectorAll("#event" + idx)
+    for(var i=0;i<toDelete.length;i++) toDelete[i].remove()
+
+    var cnt = 0
+    for(var i=0;i<5;i++) if(eventList[i]) cnt += 1
+    if(cnt == 0) document.querySelector(".event-row").style.display = "flex"
+    
+}
+
+function eventAdd(){
+
+    var idx = 0 
+    while(idx < 5 && eventList[idx] == 1) idx += 1
+    if(idx == 5) return
+
+    eventList[idx] = 1
+
+    document.querySelector(".event-row").style.display = "flex"
+
+    const parentEle = document.querySelector(".event-label")
+    parentEle.innerHTML += 
+    `
+    <div class="event-row" id="event${idx}" style="background: #FFF;">
+              <input class="event-row-title-input" placeholder="請輸入活動名稱">
+              <button class="event-delete-btn" onclick="eventDelete(${idx})"></button>
+            </div>
+            <div class="event-row" id="event${idx}">
+              <input class="event-row-title" style="width: 45%;" placeholder="請輸入學習內容及實施方式"></input>
+              <input class="event-row-title" style="width: 17.5%;" placeholder="請輸入時間"></input>
+              <input class="event-row-title" style="width: 37.5%;" placeholder="請輸入標準答案"></input>
+            </div>
+    `
 
 }

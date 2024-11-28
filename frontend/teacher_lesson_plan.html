@@ -264,13 +264,13 @@
             <div class="form-label-large">
               <div>領域核心素養</div>
             </div>
-            <input class="form-input-large" id="lesson-plan-core_value" placeholder="請輸入領域核心素養" />
+            <input class="form-input-large" id="lesson-plan-core_value" placeholder="請輸入核心素養" />
           </div>
           <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
             <div class="form-label-large">
               <div>領域學習重點</div>
             </div>
-            <input class="form-input-large" id="lesson-plan-core_importance" placeholder="請輸入領域學習重點" />
+            <input class="form-input-large" id="lesson-plan-core_importance" placeholder="請輸入領域學習表現與內容" />
           </div>
           <div class="content row m-3 mt-4" style=" height: 3rem; justify-content: center; align-items: center;">
             <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
@@ -282,39 +282,37 @@
             
             <div class="col d-flex flex-row" style="align-items: center; height: 100%;">
               <div class="form-label">
-                <div>教材設備</div>
+                <div>教學設備</div>
               </div>
-              <input class="form-input" id="lesson-plan-facilities" placeholder="請輸入教材設備" />
+              <input class="form-input" id="lesson-plan-facilities" placeholder="請輸入教學設備" />
             </div>
           </div>
           <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
             <div class="form-label-large">
               <div>學習目標</div>
             </div>
-            <input class="form-input-large" id="lesson-plan-goal" placeholder="請輸入學習目標" />
+            <input class="form-input-large" id="lesson-plan-goal" placeholder="請輸入領域單元學習目標與生涯學習目標" />
           </div>
           <div class="sep-line"></div>
           <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
             <div class="form-label-large">
               <div>學習活動設計</div>
             </div>
-            <button class="event-btn">
+            <button class="event-btn" onclick="eventAdd()">
               <div class="event-icon"></div>
               <div class="label">新增活動</div>
             </button>
           </div>
-          <div class="sep-line"></div>
-          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="form-label-large">
-              <div>教學回饋省思</div>
+          <!--
+            <div class="sep-line"></div>
+              !-->
+          <div class="event-label">
+            <div class="event-row" style="display: none;">
+              <div class="event-row-title" style="width: 45%;">學習內容及實施方式</div>
+              <div class="event-row-title" style="width: 17.5%;">時間</div>
+              <div class="event-row-title" style="width: 37.5%;">標準答案</div>
             </div>
-            <input class="form-input-large" id="lesson-plan-thought" placeholder="請輸入教學回饋省思" />
-          </div>
-          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="form-label-large">
-              <div>教學回饋提醒</div>
-            </div>
-            <input class="form-input-large" id="lesson-plan-remind" placeholder="請輸入教學回饋提醒" />
+            
           </div>
           
         </div>
@@ -322,6 +320,7 @@
 
       </div>
     </div>
+
 
   <script src="assets/js/lesson_plan.js"></script>
 
