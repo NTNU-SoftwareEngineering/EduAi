@@ -1,79 +1,90 @@
 import whisper
 from pyannote.audio import Pipeline
-import re
 import logging
 import torch
+import opencc  # 將簡體轉換為繁體
+import os
 
-# Set up logging
+# 設置日誌
 logging.basicConfig(level=logging.INFO)
 
-# Check for available GPU
+# 檢查設備
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(f"Using device: {device}")
+print(f"使用設備: {device}")
 
-# Initialize Hugging Face access token
-use_auth_token = "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"  # Replace with your actual token
+# 初始化 Hugging Face 授權令牌
+use_auth_token = "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"  # 替換為您的令牌
 
-# Initialize speaker diarization pipeline and move it to GPU
+# 加載說話人分離模型
 try:
     pipeline = Pipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1",
         use_auth_token=use_auth_token
     )
-    pipeline.to(device)  # Move pipeline to GPU
+    pipeline.to(device)  # 移動模型到設備
 except Exception as e:
-    logging.error(f"Error loading models: {e}")
+    logging.error(f"加載模型時出錯: {e}")
     raise e
 
-# Initialize Whisper speech recognition model
-speech_to_text_model = whisper.load_model("small", device=device)
+# 加載 Whisper 語音識別模型
+speech_to_text_model = whisper.load_model("tiny", device=device)
 
-# Function: Transcribe audio segment to text
-def transcribe_audio(audio_file, start, end):
+# 初始化 OpenCC（簡體轉繁體）
+converter = opencc.OpenCC('s2t.json')
+
+# 函數：將音頻轉錄為文本
+def transcribe_audio(audio_data, start, end):
     try:
-        audio = whisper.load_audio(audio_file)
-        # Extract audio segment
         start_samples = int(start * whisper.audio.SAMPLE_RATE)
         end_samples = int(end * whisper.audio.SAMPLE_RATE)
-        audio_segment = audio[start_samples:end_samples]
+        audio_segment = audio_data[start_samples:end_samples]
 
-        # Pad or trim the audio segment
         audio_segment = whisper.pad_or_trim(audio_segment)
+        audio_segment = torch.from_numpy(audio_segment).to(device)
+        mel = whisper.log_mel_spectrogram(audio_segment)
 
-        # Convert audio to model input format
-        mel = whisper.log_mel_spectrogram(audio_segment).to(device)
-
-        # Decode with the model
         options = whisper.DecodingOptions(
-            language='zh',
+            language='en',
             task='transcribe',
             fp16=torch.cuda.is_available()
         )
         result = whisper.decode(speech_to_text_model, mel, options)
+        traditional_text = converter.convert(result.text)
 
-        return result.text
+        return traditional_text
     except Exception as e:
-        logging.error(f"Error transcribing audio segment from {start} to {end}: {e}")
+        logging.error(f"從 {start} 到 {end} 的音頻片段轉錄時出錯: {e}")
         return ""
 
-# Function: Extract name from transcribed text
-def extract_name(text):
-    match = re.search(r"(我叫|我是)\s*(\S+)", text)
-    if match:
-        return match.group(2)
-    return None
+# 函數：合併相鄰語音片段
+def merge_segments(segments, time_threshold=1.0):
+    if not segments:
+        return segments
 
-# Function: Perform speaker diarization and label speakers
-def diarize_and_label(audio_file):
-    global pipeline  # Ensure we're using the global pipeline instance
+    merged = []
+    current = segments[0].copy()
 
-    # Adjust clustering threshold or specify number of speakers
-    pipeline.num_speakers = 1  # Since there's only one speaker
+    for next_segment in segments[1:]:
+        if (next_segment['speaker'] == current['speaker'] and
+            next_segment['start'] - current['end'] <= time_threshold):
+            current['text'] = current['text'] + ' ' + next_segment['text']
+            current['end'] = next_segment['end']
+        else:
+            merged.append(current)
+            current = next_segment.copy()
 
-    diarization = pipeline(audio_file)
-    known_speakers = {}
+    merged.append(current)
+    return merged
+
+# 函數：說話人分離與標記
+def diarize_and_label(audio_file, audio_data):
+    global pipeline
+
+    diarization = pipeline(audio_file, num_speakers=None)
     results = []
-    min_duration = 0.5
+    speaker_map = {}
+    speaker_id = 1
+    min_duration = 0.1
 
     for segment, _, speaker in diarization.itertracks(yield_label=True):
         start = segment.start
@@ -82,34 +93,41 @@ def diarize_and_label(audio_file):
 
         if duration >= min_duration:
             try:
-                # Transcribe segment
-                text = transcribe_audio(audio_file, start, end)
-                name = extract_name(text)
+                text = transcribe_audio(audio_data, start, end)
 
-                if name and name not in known_speakers:
-                    known_speakers[name] = speaker
-
-                identified_speaker = name if name else f"Speaker {speaker}"
+                # 為說話者分配唯一標籤
+                if speaker not in speaker_map:
+                    speaker_map[speaker] = f"說話者 {speaker_id}"
+                    speaker_id += 1
 
                 results.append({
                     "start": start,
                     "end": end,
-                    "speaker": identified_speaker,
-                    "text": text
+                    "speaker": speaker_map[speaker],
+                    "text": text.strip()
                 })
             except Exception as e:
-                logging.error(f"Error processing segment from {start} to {end}: {e}")
+                logging.error(f"處理片段 {start:.2f}-{end:.2f} 時出錯: {e}")
         else:
-            logging.warning(f"Segment from {start:.2f}s to {end:.2f}s is too short ({duration:.2f}s) and will be skipped.")
+            logging.warning(f"片段 {start:.2f}-{end:.2f} 太短（{duration:.2f}秒），已跳過。")
 
+    # 合併相近片段
+    results = merge_segments(results, time_threshold=0.01)
     return results
 
-# Main program
+# 主程式
 if __name__ == "__main__":
-    audio_file = "1.wav"  # Ensure the audio file path is correct
-    results = diarize_and_label(audio_file)
+    audio_files = ["1.wav"]  # 替換為實際音頻文件路徑
+    merged_audio_file = audio_files[0]
 
-    # Output results
+    audio_data = whisper.load_audio(merged_audio_file)
+    results = diarize_and_label(merged_audio_file, audio_data)
+
+    # 輸出結果
+    current_speaker = None
     for segment in results:
-        print(f"From {segment['start']:.1f}s to {segment['end']:.1f}s: {segment['speaker']}")
-        print(f"  Text: {segment['text']}")
+        if current_speaker != segment['speaker']:
+            print(f"\n=== {segment['speaker']} ===")
+            current_speaker = segment['speaker']
+        print(f"從 {segment['start']:.1f} 秒到 {segment['end']:.1f} 秒:")
+        print(f"  內容: {segment['text']}")
