@@ -2,7 +2,7 @@ import whisper
 from pyannote.audio import Pipeline
 import logging
 import torch
-import opencc  # 將簡體轉換為繁體
+import opencc
 import os
 
 # 設置日誌
@@ -13,7 +13,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"使用設備: {device}")
 
 # 初始化 Hugging Face 授權令牌
-use_auth_token = "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"  # 替換為您的令牌
+use_auth_token = "token"  # 替換為您的令牌
 
 # 加載說話人分離模型
 try:
@@ -21,13 +21,15 @@ try:
         "pyannote/speaker-diarization-3.1",
         use_auth_token=use_auth_token
     )
+    if pipeline is None:
+        raise ValueError("模型加載失敗，請檢查您的授權令牌和模型名稱。")
     pipeline.to(device)  # 移動模型到設備
 except Exception as e:
     logging.error(f"加載模型時出錯: {e}")
     raise e
 
 # 加載 Whisper 語音識別模型
-speech_to_text_model = whisper.load_model("tiny", device=device)
+speech_to_text_model = whisper.load_model("base", device=device)
 
 # 初始化 OpenCC（簡體轉繁體）
 converter = opencc.OpenCC('s2t.json')
@@ -57,7 +59,7 @@ def transcribe_audio(audio_data, start, end):
         return ""
 
 # 函數：合併相鄰語音片段
-def merge_segments(segments, time_threshold=1.0):
+def merge_segments_with_overlap(segments, time_threshold=0.5):
     if not segments:
         return segments
 
@@ -65,7 +67,9 @@ def merge_segments(segments, time_threshold=1.0):
     current = segments[0].copy()
 
     for next_segment in segments[1:]:
+        # 檢查是否為同一說話者且沒有時間重疊
         if (next_segment['speaker'] == current['speaker'] and
+            current['end'] <= next_segment['start'] and
             next_segment['start'] - current['end'] <= time_threshold):
             current['text'] = current['text'] + ' ' + next_segment['text']
             current['end'] = next_segment['end']
@@ -111,8 +115,8 @@ def diarize_and_label(audio_file, audio_data):
         else:
             logging.warning(f"片段 {start:.2f}-{end:.2f} 太短（{duration:.2f}秒），已跳過。")
 
-    # 合併相近片段
-    results = merge_segments(results, time_threshold=0.01)
+    # 不合併重疊片段
+    results = merge_segments_with_overlap(results, time_threshold=0.5)
     return results
 
 # 主程式
