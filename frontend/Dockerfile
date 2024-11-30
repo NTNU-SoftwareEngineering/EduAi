@@ -1,33 +1,18 @@
-# 使用 nginx 作为基础镜像
+# 使用 Node.js 作為基礎鏡像
+FROM node:23-alpine
 
-FROM nginx:latest
+# 設定工作目錄
+WORKDIR /usr/src/app
 
+# 复制 package.json 和 package-lock.json
+COPY package*.json ./
 
+# 安装前端依赖
+RUN npm install
 
-# 设置工作目录
-
-WORKDIR /usr/share/nginx/html
-
-
-
-# 删除默认的 nginx 静态文件
-
-RUN rm -rf ./*
-
-
-
-# 复制前端的所有文件到 nginx 的静态服务目录
-
+# 复制剩余的前端代码
 COPY . .
 
+EXPOSE 8081
 
-
-# 暴露 nginx 的默认端口
-
-EXPOSE 80
-
-
-
-# 启动 nginx
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD node index.js

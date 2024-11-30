@@ -31,11 +31,13 @@ function fetchCourses() {
     .then( response => response.json() )
     .then( data => {
         console.log("取得用戶註冊的課程列表");
+        console.log(data);
         return data.map( j => j.fullname );
     })
     .then( courses => {
         // 更改 sourse-select 下拉選單的值
         const course_select_ele = document.getElementById('course-select');
+        console.log(courses);
         
         // 將靜態網頁預填的選項清空
         course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';

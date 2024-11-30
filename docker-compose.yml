@@ -3,20 +3,31 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:80"
+      - "3000:80"  # 映射端口 3000
     volumes:
-      - ./frontend:/usr/share/nginx/html
+      - ./frontend:/usr/src/app           # 工作目錄挂载到容器中
+      - /usr/src/app/node_modules         # 防止 node_modules 被覆盖
+    networks:
+      - moodle-network
+    env_file: ".env"                      # 使用環境變數文件
+
+  nginx:
+    build: ./nginx                        # 添加 Nginx 配置，提供反向代理
+    links:
+      - frontend:frontend                 # 與前端容器連接
+    ports:
+      - "8081:80"                         # Nginx 提供服務的端口
     networks:
       - moodle-network
 
   backend:
-    build: ./moodle-backend
+    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 文件夾
     ports:
-      - "8080:80"
+      - "8080:80"                         # 對外暴露 8080 端口
     volumes:
-      - moodle_app:/var/www/html/moodle
-      - ./apache2.conf:/etc/apache2/apache2.conf
-      - moodle-data:/var/moodledata
+      - moodle_app:/var/www/html/moodle         # 使用命名卷持久化 Moodle 應用數據
+      - ./apache2.conf:/etc/apache2/apache2.conf # Apache 配置文件
+      - moodle-data:/var/moodledata             # Moodle 數據目錄持久化
     depends_on:
       - db
     networks:
@@ -36,20 +47,20 @@ services:
       MYSQL_USER: moodleuser
       MYSQL_PASSWORD: yourpassword
     volumes:
-      - ./moodle-db-backup:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
+      - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 腳本
+      - db_data:/var/lib/mysql                          # 數據持久化
     networks:
       - moodle-network
 
-  flask-txt:
+  flask-txt:                               # 保留 Flask 應用服務
     build:
-      context: ./flask-txt  # Flask 應用程式的 Dockerfile 位於 flask-txt 文件夾
+      context: ./flask-txt                 # Flask Dockerfile
     ports:
-      - "5000:5000"         # 映射 Flask 的 5000 端口
+      - "5000:5000"                        # Flask 端口映射
     volumes:
-      - ./data:/data        # 持久化文字檔的資料夾
+      - ./data:/data                       # 持久化資料夾
     networks:
-      - moodle-network      # 與現有服務保持同一網路
+      - moodle-network                     # 與現有服務保持同一網路
 
 networks:
   moodle-network:
