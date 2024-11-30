@@ -1,19 +1,20 @@
-import whisper
+from faster_whisper import WhisperModel
 from pyannote.audio import Pipeline
 import logging
 import torch
 import opencc
-import os
+import numpy as np
+import librosa
 
 # 設置日誌
 logging.basicConfig(level=logging.INFO)
 
 # 檢查設備
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"使用設備: {device}")
 
 # 初始化 Hugging Face 授權令牌
-use_auth_token = "token"  # 替換為您的令牌
+use_auth_token = "hugging_face_token"  # 替換為您的令牌
 
 # 加載說話人分離模型
 try:
@@ -23,42 +24,59 @@ try:
     )
     if pipeline is None:
         raise ValueError("模型加載失敗，請檢查您的授權令牌和模型名稱。")
-    pipeline.to(device)  # 移動模型到設備
+    pipeline.to(torch.device(device))  # 將模型移動到指定設備
 except Exception as e:
     logging.error(f"加載模型時出錯: {e}")
     raise e
 
-# 加載 Whisper 語音識別模型
-speech_to_text_model = whisper.load_model("base", device=device)
+# 加載 Faster Whisper 語音識別模型
+model_size = "medium"
+try:
+    speech_to_text_model = WhisperModel(model_size, device=device, compute_type="float16")
+except Exception as e:
+    logging.error(f"加載 Faster Whisper 模型時出錯: {e}")
+    raise e
 
 # 初始化 OpenCC（簡體轉繁體）
-converter = opencc.OpenCC('s2t.json')
+converter = opencc.OpenCC('s2t')
+
+# 采樣率
+SAMPLE_RATE = 16000
+
+# 函數：加載音頻文件
+def load_audio(file, sample_rate=SAMPLE_RATE):
+    data, sr = librosa.load(file, sr=sample_rate, mono=True)
+    return data
 
 # 函數：將音頻轉錄為文本
 def transcribe_audio(audio_data, start, end):
     try:
-        start_samples = int(start * whisper.audio.SAMPLE_RATE)
-        end_samples = int(end * whisper.audio.SAMPLE_RATE)
+        start_samples = int(start * SAMPLE_RATE)
+        end_samples = int(end * SAMPLE_RATE)
         audio_segment = audio_data[start_samples:end_samples]
 
-        audio_segment = whisper.pad_or_trim(audio_segment)
-        audio_segment = torch.from_numpy(audio_segment).to(device)
-        mel = whisper.log_mel_spectrogram(audio_segment)
+        # 確保音頻段是 float32 類型
+        audio_segment = audio_segment.astype(np.float32)
 
-        options = whisper.DecodingOptions(
-            language='en',
+        # 使用 Faster Whisper 轉錄音頻段
+        segments, info = speech_to_text_model.transcribe(
+            audio_segment,
+            beam_size=5,
+            language='zh',
             task='transcribe',
-            fp16=torch.cuda.is_available()
         )
-        result = whisper.decode(speech_to_text_model, mel, options)
-        traditional_text = converter.convert(result.text)
+
+        # 收集轉錄的文本
+        text = ''.join([segment.text for segment in segments])
+
+        traditional_text = converter.convert(text)
 
         return traditional_text
     except Exception as e:
         logging.error(f"從 {start} 到 {end} 的音頻片段轉錄時出錯: {e}")
         return ""
 
-# 函數：合併相鄰語音片段
+# 函數：合併相鄰的語音片段
 def merge_segments_with_overlap(segments, time_threshold=0.5):
     if not segments:
         return segments
@@ -115,16 +133,16 @@ def diarize_and_label(audio_file, audio_data):
         else:
             logging.warning(f"片段 {start:.2f}-{end:.2f} 太短（{duration:.2f}秒），已跳過。")
 
-    # 不合併重疊片段
+    # 合併重疊的片段
     results = merge_segments_with_overlap(results, time_threshold=0.5)
     return results
 
-# 主程式
+# 主程序
 if __name__ == "__main__":
     audio_files = ["1.wav"]  # 替換為實際音頻文件路徑
     merged_audio_file = audio_files[0]
 
-    audio_data = whisper.load_audio(merged_audio_file)
+    audio_data = load_audio(merged_audio_file, sample_rate=SAMPLE_RATE)
     results = diarize_and_label(merged_audio_file, audio_data)
 
     # 輸出結果
