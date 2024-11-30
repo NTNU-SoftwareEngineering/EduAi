@@ -3,7 +3,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:80"  # 映射端口 3000
+      - "3000:8081"  # 修正為映射容器的 8081 埠
     volumes:
       - ./frontend:/usr/src/app           # 工作目錄挂载到容器中
       - /usr/src/app/node_modules         # 防止 node_modules 被覆盖
@@ -16,7 +16,7 @@ services:
     links:
       - frontend:frontend                 # 與前端容器連接
     ports:
-      - "8081:80"                         # Nginx 提供服務的端口
+      - "80:80"                           # 將 Nginx 的 80 埠映射到主機的 80 埠
     networks:
       - moodle-network
 
