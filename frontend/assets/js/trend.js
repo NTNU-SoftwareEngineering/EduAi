@@ -50,11 +50,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const courseSelect = document.getElementById("course-select");
     const selectedCourseName = document.getElementById("selected-course-name");
+    
+    const savedTime = localStorage.getItem("savedTime");
+    const currentTime = Date.now();
+
+    const savedCourse = localStorage.getItem("selectedCourse");
+    //頁面每10分鐘刷新一次(=頁面變成預設尚未選擇課程狀態)
+    if (savedCourse && savedTime && currentTime - savedTime > 10 * 60 * 1000) {
+        
+        localStorage.removeItem("selectedCourse");
+        localStorage.removeItem("savedTime");
+    } else if (savedCourse) {
+        selectedCourseName.textContent = savedCourse;
+        courseSelect.value = savedCourse;
+        fetch('assets/data/response.txt')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('無法讀取檔案');
+                }
+                return response.text();
+            })
+            .then(text => {
+                const data = {};
+                text.split('\n').forEach(line => {
+                const [key, value] = line.split(':');
+                if (key && value) {
+                    data[key.trim()] = value.trim();
+                }
+                });
+                updateInfoCards(data);
+            })
+            .catch(error => {
+                console.error('讀取檔案時發生錯誤:', error);
+            });
+
+    }
+
 
     courseSelect.addEventListener("change", function() {
         const selectedCourse = courseSelect.value;
         console.log("selectedCourse",selectedCourse)
+        localStorage.setItem("selectedCourse", selectedCourse);
         selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
+        localStorage.setItem("savedTime", Date.now());
+
             // const data = datas[selectedCourse];
             // console.log("data:",data)
             // console.log("理解度:",data.理解度評語)
