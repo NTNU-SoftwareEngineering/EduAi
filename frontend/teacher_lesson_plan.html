@@ -36,14 +36,13 @@
     crossorigin="anonymous"></script>
 
     <div class="wrapper">
-      <aside id="sidebar" class="expand">
-          <div class="d-flex justify-content-center">
-              <div class="mt-4 sidebar-logo">
-                  <img class="sidebar-logo-img" src="assets/images/logo.svg" alt="logo">
-                  <a class="mt-2 " href="login_edu.html">EduAi</a>
-              </div>
-          </div>
+      <aside id="sidebar" >
           <ul class="sidebar-nav">
+              <li class="sidebar-item">
+                <a href="#"">
+                  <img class="sidebar-logo-img" src="assets/images/logo.svg" alt="logo">
+                </a>
+              </li>
               <li class="sidebar-item">
                   <a href="#" class="sidebar-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -161,10 +160,11 @@
           <div class="footer" style="height: 5rem;">
             <div class="plan-icon"></div>
             <span class="intro">教案檔案輸入</span>
-            <div class="save-btn">
-              <div class="save-icon"></div>
+            <!-- 將 div 改為 role="button"  -->
+            <button class="event-btn" id="submitButton">
+              <div class="event-icon"></div>
               <div class="label">儲存</div>
-            </div>
+            </button>
           </div>
           <div class="sep-line"></div>
           <div class="content row m-3" style=" height: 3rem; justify-content: center; align-items: center;">
@@ -323,7 +323,8 @@
 
 
   <script src="assets/js/lesson_plan.js"></script>
-
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/teacher_lesson_plan.js"></Script>
     
   </body>
 </html>
