@@ -15,6 +15,15 @@ student_nav = '<aside id="sidebar" >\
             </a>\
         </li>\
         <li class="sidebar-item">\
+        <a href="#" class="sidebar-link">\
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\
+            <circle cx="12" cy="8" r="3.5" stroke="#363636" stroke-linecap="round"/>\
+            <path d="M4.84913 16.9479C5.48883 14.6034 7.91473 13.5 10.345 13.5H13.655C16.0853 13.5 18.5112 14.6034 19.1509 16.9479C19.282 17.4287 19.3868 17.9489 19.4462 18.5015C19.5052 19.0507 19.0523 19.5 18.5 19.5H5.5C4.94772 19.5 4.49482 19.0507 4.55382 18.5015C4.6132 17.9489 4.71796 17.4287 4.84913 16.9479Z" stroke="#363636" stroke-linecap="round"/>\
+          </svg>\
+            <span>會員資料</span>\
+        </a>\
+    </li>\
+        <li class="sidebar-item">\
           <a href="student_discussion.html" class="sidebar-link">\
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\
               <path d="M4 12C4 7.58172 7.58172 4 12 4V4C16.4183 4 20 7.58172 20 12V17.0909C20 17.9375 20 18.3608 19.8739 18.6989C19.6712 19.2425 19.2425 19.6712 18.6989 19.8739C18.3608 20 17.9375 20 17.0909 20H12C7.58172 20 4 16.4183 4 12V12Z" stroke="#363636"/>\
@@ -41,15 +50,6 @@ student_nav = '<aside id="sidebar" >\
                 <path d="M9 8L15 8" stroke="#363636" stroke-linecap="round"/>\
               </svg>\
                 <span>學生課後回饋</span>\
-            </a>\
-        </li>\
-        <li class="sidebar-item">\
-            <a href="#" class="sidebar-link">\
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\
-                <circle cx="12" cy="8" r="3.5" stroke="#363636" stroke-linecap="round"/>\
-                <path d="M4.84913 16.9479C5.48883 14.6034 7.91473 13.5 10.345 13.5H13.655C16.0853 13.5 18.5112 14.6034 19.1509 16.9479C19.282 17.4287 19.3868 17.9489 19.4462 18.5015C19.5052 19.0507 19.0523 19.5 18.5 19.5H5.5C4.94772 19.5 4.49482 19.0507 4.55382 18.5015C4.6132 17.9489 4.71796 17.4287 4.84913 16.9479Z" stroke="#363636" stroke-linecap="round"/>\
-              </svg>\
-                <span>會員資料</span>\
             </a>\
         </li>\
     </ul>\
