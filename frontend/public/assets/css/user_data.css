@@ -22,10 +22,6 @@ h6 {
 	letter-spacing: 1px;
 }
 
-.data-content input {
-    font-size: 180%;
-}
-
 button {
     width: 15rem;
     padding: .3rem 1rem;
@@ -45,8 +41,9 @@ input {
     border: 1px solid #E5E5EA;
     border-radius: 0.8rem;
     padding: 0.9375rem 1.25rem;
-    font-size: 1.2rem;
+    font-size: 1.46rem;
     font-weight: 500;
+    color: black;
     line-height: 2.1rem;
     letter-spacing: 1px;
 }
@@ -67,6 +64,7 @@ input {
 .subtitle {
     line-height: 2.5rem;
     letter-spacing: 1px;
+    font-size: 1.46rem;
     color: #8E8E93;
 }
 
