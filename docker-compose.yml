@@ -1,99 +1,71 @@
 services:
-
   frontend:
-
     build:
-
-      context: ./frontend           # Dockerfile 位于 frontend 文件夹
-
+      context: ./frontend
     ports:
-
-      - "3000:80"                   # 将主机的 3000 端口映射到容器的 80 端口
-
+      - "3000:8081"  # 修正為映射容器的 8081 埠
     volumes:
-
-      - ./frontend:/usr/share/nginx/html  # 挂载本地 frontend 文件夹到 nginx 的静态文件目录
-
+      - ./frontend:/usr/src/app           # 工作目錄挂载到容器中
+      - /usr/src/app/node_modules         # 防止 node_modules 被覆盖
     networks:
-
       - moodle-network
+    env_file: ".env"                      # 使用環境變數文件
 
-
+  nginx:
+    build: ./nginx                        # 添加 Nginx 配置，提供反向代理
+    links:
+      - frontend:frontend                 # 與前端容器連接
+    ports:
+      - "80:80"                           # 將 Nginx 的 80 埠映射到主機的 80 埠
+    networks:
+      - moodle-network
 
   backend:
-
-    build: ./moodle-backend               # 后端的 Dockerfile 位于 moodle-backend 文件夹
-
+    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 文件夾
     ports:
-
-      - "8080:80"                         # 将主机的 8080 端口映射到容器的 80 端口
-
+      - "8080:80"                         # 對外暴露 8080 端口
     volumes:
-
-      - moodle_app:/var/www/html/moodle         # 使用命名卷替代绑定挂载
-
-      - ./apache2.conf:/etc/apache2/apache2.conf      # 将 Apache 配置挂载到容器中
-
-      - moodle-data:/var/moodledata                 # 确保 Moodle 数据目录持久化
-
+      - moodle_app:/var/www/html/moodle         # 使用命名卷持久化 Moodle 應用數據
+      - ./apache2.conf:/etc/apache2/apache2.conf # Apache 配置文件
+      - moodle-data:/var/moodledata             # Moodle 數據目錄持久化
     depends_on:
-
       - db
-
     networks:
-
       - moodle-network
-
     environment:
-
       MOODLE_DB_HOST: db
-
       MOODLE_DB_NAME: moodle_db
-
       MOODLE_DB_USER: moodleuser
-
       MOODLE_DB_PASSWORD: yourpassword
-
       MOODLE_URL: http://localhost:8080
 
-
-
   db:
-
     image: mysql:8.0
-
     environment:
-
       MYSQL_ROOT_PASSWORD: rootpassword
-
       MYSQL_DATABASE: moodle_db
-
       MYSQL_USER: moodleuser
-
       MYSQL_PASSWORD: yourpassword
-
     volumes:
-
-      - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 脚本
-
-      - db_data:/var/lib/mysql                          # 持久化数据
-
+      - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 腳本
+      - db_data:/var/lib/mysql                          # 數據持久化
     networks:
-
       - moodle-network
 
-
+  flask-txt:                               # 保留 Flask 應用服務
+    build:
+      context: ./flask-txt                 # Flask Dockerfile
+    ports:
+      - "5000:5000"                        # Flask 端口映射
+    volumes:
+      - ./data:/data                       # 持久化資料夾
+    networks:
+      - moodle-network                     # 與現有服務保持同一網路
 
 networks:
-
   moodle-network:
 
-
-
 volumes:
-
   db_data:
-
   moodle-data:
-
   moodle_app:

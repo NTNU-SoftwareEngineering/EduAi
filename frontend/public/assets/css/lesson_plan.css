@@ -1,0 +1,553 @@
+.left-side-bar{
+
+    display: flex;
+    flex-direction: column;
+
+    width: 20%;
+    height: 120vh;
+    margin: 1rem .5rem;
+
+    background-color: transparent;
+
+}
+
+.event-label{
+
+    padding: 1rem 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+}
+
+.event-row{
+
+    width: 100%;
+    height: 5rem;
+    background: var(--bg, #F9FAFC);
+    display: flex;
+    align-items: center;
+
+}
+
+.event-row-title{
+    color: var(--light-text---el-text-color-secondary, #909399);
+    background: var(--bg, #F9FAFC);
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.375rem; /* 137.5% */
+    padding-left: 1rem;
+    border: none;
+    outline: none;
+
+}
+
+.event-row-title-input{
+
+    color: var(--light-text---el-text-color-secondary, #909399);
+    text-align: center;
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.375rem; /* 137.5% */
+    width: 60%;
+    margin-left: 20%;
+    outline: none;
+    border: none;
+
+}
+
+.event-delete-btn{
+
+    background: url("../images/teacher_lesson_plan/delete.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    outline: none;
+    border: none;
+
+}
+
+.rounded_selectBox{
+    width: 30%;
+    align-items: center;
+}
+
+.core-btn{
+    border-radius: 50%;
+    outline: none;
+    border: solid 1px;
+    border-color: var(--sec_gray50, #E5E5EA);
+    background: no repeat;
+    background-position: 0 0;
+    background-size: 100% 100%; 
+    background-color: transparent;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.core-expand-btn{
+    outline: none;
+    border: none;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 2rem;
+    
+
+    background: url("../images/teacher_lesson_plan/Expand_down_light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+}
+
+.core-label{
+    color: var(--sec_gray900, #363636);
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 171.429% */
+    letter-spacing: 1px;
+}
+
+
+.student_content{
+    width: 100%;
+    height: 90%;
+    
+    padding: 2rem 1rem;
+    padding-top: 0;
+    margin-top: 25%;
+}
+
+.class_empty_hint {
+
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
+    border: 1px dashed var(--sec_gray100, #C7C7CC);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.selected-class_student_list{
+
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.selected-class_student_list div{
+    border-radius: .5rem;
+    background: var(--bgcolor, #F2F2F7);
+    width: 100%;
+    height: 10%;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.selected-class_student_list div div{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin: 0;
+}
+
+.selected-class_student_list div .image{
+
+    background: url("../images/teacher_lesson_plan/people.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+
+}
+
+.selected-class_student_list div div .name{
+    color: var(--pri_p500, #8665CD);
+
+    text-align: left;
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 171.429% */
+    letter-spacing: 1px;
+    height: 2rem;
+    margin-top: 2rem;
+}
+
+.selected-class_student_list div div .info{
+    color: var(--sec_gray500, #8E8E93);
+
+    text-align: left;
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 171.429% */
+    letter-spacing: .5px;
+    margin-top: .5rem;
+}
+
+.class_empty_hint div{
+    color: var(--sec_gray500, #8E8E93);
+    text-align: center;
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 171.429% */
+}
+
+.student_list {
+
+    margin-top: .5rem;
+    flex-direction: column;
+
+    width: 100%;
+    height: 80%;
+    border-radius: .5rem;
+    background: var(--pri_white, #FFF);
+
+}
+
+.select-class {
+
+    top: 0;
+    height:  15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    border-radius: .5rem;
+
+    background-color: var(--pri_p300, #9879DA);
+
+}
+
+
+
+.select-class select{
+    outline: none;
+    width: 100%;
+    color: var(--sec_gray500, #8E8E93);
+    border-radius: .5rem;
+    font-size: 1.25rem;
+    height: 100%;
+    padding: 1rem;
+}
+
+.select-class .intro {
+    
+    color: var(--pri_white, #FFFFFF);
+
+}
+
+.lesson_plan{
+
+    width: 80%;
+    height: 98%;
+    margin: 1rem 1rem;
+    border-radius: 1rem;
+    background: var(--pri_white, #FFF);
+    justify-content: center;
+
+}
+
+.event-btn {
+
+    display: flex;
+    outline: none;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+
+    
+    gap: .5rem;
+    border-radius: 3.75rem;
+
+    background: var(--pri_p500, #8665CD);
+    margin-left: auto;
+    margin-right: 2rem;
+    
+
+    height: 3rem;
+    width: 11rem;
+
+}
+
+.save-btn {
+
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+
+    
+    gap: .5rem;
+    border-radius: 3.75rem;
+
+    background: var(--pri_p500, #8665CD);
+    margin-left: auto;
+    margin-right: 2rem;
+    margin-top: 1rem;
+
+    height: 3rem;
+    width: 8rem;
+
+}
+
+
+.form-label{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form-label-large{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form-label div , .form-label-large div{
+
+    color: var(--grey900, #303133);
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1.25rem;
+    font-style: normal;
+    text-align: left;
+    margin: auto 0;
+
+    font-weight: 400;
+    line-height: 2rem; /* 171.429% */
+    letter-spacing: 1px;
+    
+}
+
+.form-input{
+
+    border-radius: .5rem;
+    background: var(--bgcolor, #F2F2F7);
+    outline: none;
+    border: none;
+    color: var(--light-text---el-text-color-placeholder, #A8ABB2);
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 157.143% */
+    width: 70%;
+    height: 100%;
+    padding-left: 1rem;
+}
+
+.form-input-large{
+
+    border-radius: .5rem;
+    background: var(--bgcolor, #F2F2F7);
+    outline: none;
+    border: none;
+    color: var(--light-text---el-text-color-placeholder, #A8ABB2);
+    font-family: "Noto Sans TC";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 157.143% */
+    width: 84%;
+    height: 100%;
+    padding-left: 1rem;
+    margin-right: auto;
+
+}
+
+.sep-line{
+    
+    height: 0;
+    margin: 0 1rem;
+    border-radius: 2px;
+    border: 1px solid;
+    
+    border-color: var(--bgcolor, #F2F2F7);
+}
+
+.save-btn .label , .event-btn .label{
+
+    color: var(--white, var(--pri_white, #FFF));
+    text-align: center;
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.375rem; /* 157.143% */
+    
+}
+
+.save-icon {
+
+    background: url("../images/teacher_lesson_plan/Save_light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2rem; 
+    height: 2rem;
+    
+
+    
+
+    margin-bottom: 0;
+
+}
+
+.event-icon {
+
+    background: url("../images/teacher_lesson_plan/plus.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 1.5rem; 
+    height: 1.5rem;
+    
+    margin-left: 0;
+
+    
+
+    margin-bottom: 0;
+
+}
+
+
+.footer {
+
+    margin-top: .2rem;
+    margin-bottom: .5rem;
+    width: 100%;
+    display: flex;
+    
+    height: 0;
+
+}
+
+.footer .plan-icon {
+
+    background: url("../images/teacher_lesson_plan/plan.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2rem; height: 2rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.footer .book-icon {
+
+    background: url("../images/teacher_lesson_plan/book.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2rem; height: 2rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.student-icon {
+
+    background: url("../images/teacher_lesson_plan/student.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2rem; height: 2rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.switch-icon {
+
+    background: url("../images/teacher_lesson_plan/switch.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2rem; height: 2rem;
+    margin: 1.25rem 1.5rem;
+
+    margin-left: auto;
+
+    margin-bottom: 0;
+
+}
+
+.footer .intro {
+
+    font-size: 1.25vw;
+    
+    font: bold;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem;
+    letter-spacing: 1px;
+    margin-bottom: auto;
+    height: 1.25rem;
+    text-align: left;
+    
+    margin: 1.5rem 0rem;
+    margin-right: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.select-class .class-selector {
+    display: flex;
+    align-items: center;
+    
+    width: 90%;
+    height: 35%;
+    
+    margin-top: 2rem;
+
+}
