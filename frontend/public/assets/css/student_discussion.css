@@ -8,15 +8,42 @@ body {
 
 }
 
+.label-icon{
+    background: url("../images/student_discussion/chat-light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+
+    height: 2rem; width: 2rem;
+    margin-right: .5rem;
+}
+
+.label-intro{
+    display: flex;
+    margin: .5rem .5rem ;
+    margin-top: 2rem;
+
+}
+
+.label-word{
+    color: var(--sec_gray900, #363636);
+
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: .1rem;
+}
 
 .dialog {
 
-    padding: .5rem 1rem;
+    padding: .5rem 10%;
 
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
     border-radius: 1rem;
 
@@ -26,21 +53,22 @@ body {
 
 .top-label {
 
-    width: 95%;
+    width: 90%;
     background-color: transparent;
     height: 5rem;
     margin: 2rem 2.5%;
     border-radius: 1rem;
 
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    
     margin-bottom: 0;
 
 }
 
 .top-notice {
 
-    width: 95%;
+    width: 90%;
     background-color: rgba(243, 240, 247, 1);
     height: 10rem;
     margin: 2rem 2.5%;
@@ -59,15 +87,11 @@ body {
     width: 85%;
 }
 
-.check_icon {
-    background: url("../images/student_discussion/check.svg") no-repeat;
-    background-position: 0 0;
-    background-size: 100% 100%;
+.course-dropdown-item svg {
 
-
-    height: 1rem; width: 1rem;
     margin-left: auto;
-    margin-right: 1rem;
+    margin-right: 1.5rem;
+
 }
 
 .top-notice .chat-icon {
@@ -291,42 +315,83 @@ body {
 
 }
 
-.course-list {
+.course-list{
 
     outline: none;
     border-color: transparent;
     width: 100%; height: 3rem;
     
     border-radius: .5rem;
-    background: var(--bgcolor, #F2F2F7);
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+
+    background: #FFF;
 
     color: var(--sec_gray500, #8E8E93);
+    text-align: left;
+    padding-left: 1.75rem;
 
-    font-size: 1rem;
+    /* 內文 */
+    
+    font-size: 1.2rem;
     font-style: normal;
     font-weight: 400;
+    line-height: 1.5rem; /* 157.143% */
+    letter-spacing: 1px;
 
+    display: flex;
+    align-items: center;
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
 
 }
 
-.course-list:hover {
+.course-list:hover , .course-list:focus , .course-list:active, 
+.course-list:active:after , .course-list:after,
+.course-dropdown-menu:hover, .course-dropdown-menu:focus , .course-dropdown-menu:active, 
+.course-dropdown-menu:active:after , .course-dropdown-menu:after{
 
-    background: var(--bgcolor, #F2F2F7);
+    outline: none;  
+    background: #FFF;
+
     color: var(--sec_gray500, #8E8E93);
-    outline: none;
-    border-color: transparent;
 
 }
 
 .course-dropdown-menu{
 
-    background: var(--bgcolor, #F2F2F7);
+    background: var(--bgcolor, #FFF);
     border-radius: .5rem;
-    width: 100%;
+    width: 20rem;
     display: none;
     flex-direction: column;
     margin-top: .5rem;
 
+    margin-left: 0;
+
+    border-radius: .5rem;
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
+
+    position: absolute;
+
+}
+
+.course-list svg{
+    margin-left: auto;
+}
+
+
+.course-container{
+    margin-bottom: 0 ;
+    width: 20rem;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 
@@ -334,22 +399,30 @@ body {
     
 
     background: transparent;
-    color: var(--sec_gray500, #8E8E93);
     display: flex;
 
     outline: none;
 
-    color: var(--Untitled-Secondary-GRAY-7, var(--sec_gray900, #363636));
+    color: var(--Untitled-Secondary-GRAY-7, #363636);
+
+    width: 20rem;   
     margin: .625rem;
+    margin-right: 0;
     margin-left: 1rem;
+
+    padding-left: 1rem;
 
     /* 內文 */
     font-family: "Noto Sans TC";
     font-style: normal;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.25rem;
     line-height: 1.5rem; /* 171.429% */
     letter-spacing: 1px;
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
 
     
 
@@ -465,7 +538,7 @@ body {
 
     bottom: 1rem;
 
-    width: 95%;
+    width: 90%;
 
     height: 3.5rem;
     
