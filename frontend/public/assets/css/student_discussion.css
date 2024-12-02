@@ -43,7 +43,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 
     border-radius: 1rem;
 
@@ -210,18 +210,20 @@ body {
 
 .botton-tip {
 
-    width: 75%;
+    width: 90%;
     background-color: rgba(255, 255, 255, 1);
     
-    height: 16rem;
+    height: 25rem;
 
-    margin: 0rem 12.5%;
+    margin: 2rem 2.5%;
     margin-top: auto;
     margin-bottom: 5rem;
     display: flex;
+    justify-content: center;
     
 
 }
+
 .tip-box {
 
     display: flex;
@@ -558,6 +560,24 @@ body {
 
 
     border-radius: 1.5rem;
+
+}
+
+.mic-button{
+    background: url("../images/student_discussion/student_discussion_mic-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
+
 
 }
 

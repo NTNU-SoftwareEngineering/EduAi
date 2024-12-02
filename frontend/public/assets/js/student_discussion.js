@@ -82,6 +82,10 @@ function select_course(index){
     </svg>'
     
     document.querySelector("body > div > div > div > div.top-label > div.flex > button").style.color = '#363636'
+    document.querySelector("#message").placeholder = "請先開始錄音"
+
+    document.querySelector("body > div > div > div > div.send-message > button").style.backgroundImage = "url('./assets/images/student_discussion/student_discussion_mic-icon2.svg')";
+
 
     dropdownMenuCSSModify()
 }   
