@@ -42,7 +42,7 @@
           <div class="top-label">
             <div class="label-intro">
               <div class="label-icon"></div>
-              <div class="label-word">分組聊天室</div>
+              <div class="label-word">分組討論室</div>
             </div>
             <div class="flex course-container" style="justify-content: flex-end;
             align-items: flex-start;">
@@ -102,14 +102,20 @@
                 </div>
               </div>
             </div>
-    
-            <div class="conversation">
-              <!--這個 div 是給 JS 自動生成 html 的-->
+            
+            <div class="record_send_label">
+              <div class="tip-logo"></div>
+            </div>
+            
+            <div class="record_reply_label">
+              
             </div>
     
             <div class="send-message">
               <input onkeydown="detectEnter(this)" id="message" class="message" type="text" placeholder="請先選擇課程" disabled/>
-              <button class="mic-button" onclick="SendMessage()" disabled></button>
+              <audio controls id="audio"></audio>
+              <button class="mic-button" disabled></button>
+              <button class="mic-stop-button" disabled></button>
             </div>
         </div>
       </div>

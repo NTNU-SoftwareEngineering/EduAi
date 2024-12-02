@@ -80,11 +80,13 @@ body {
 }
 
 #audio {
-    display: none;
 
-    padding: 1rem;
     margin: auto;
-    width: 85%;
+    display: none;
+    height: 75%;
+    margin-left: 1rem;
+    width: 90%;
+    
 }
 
 .course-dropdown-item svg {
@@ -220,6 +222,26 @@ body {
     margin-bottom: 5rem;
     display: flex;
     justify-content: center;
+    
+
+}
+
+.record_reply_label{
+    display: none;
+}
+
+.record_send_label{
+
+    width: 90%;
+    background-color: rgba(255, 255, 255, 1);
+    
+    height: 10rem;
+
+    margin: 2rem 2.5%;
+    margin-top: auto;
+    margin-bottom: 5rem;
+    display: none;
+    
     
 
 }
@@ -561,6 +583,24 @@ body {
 
     border-radius: 1.5rem;
 
+}
+
+.mic-stop-button{
+    background: url("../images/student_discussion/student_discussion_mic-stop-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+    display: none;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
 }
 
 .mic-button{
