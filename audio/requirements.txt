@@ -1,0 +1,6 @@
+faster-whisper
+pyannote.audio
+torch
+opencc
+numpy
+librosa
