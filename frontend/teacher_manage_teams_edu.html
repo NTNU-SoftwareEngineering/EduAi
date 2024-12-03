@@ -124,7 +124,7 @@
             <div class="select-class">
                 <div class="footer">
                    <div class="book-icon"></div>
-                   <span class="intro">選擇班級</span>
+                   <div class="intro">選擇班級</div>
                 </div>
                 <div class="class-selector">
                   <select name="class" id="select-class">
@@ -150,11 +150,15 @@
                 <span class="intro">選擇分組組數</span>
               </div>
               <div class="teams-num-selector">
-                <input type="number">
+                <input type="text" readonly="true">
+                <div class="adj-btn">
+                  <button class="plus"></button>
+                  <button class="minus"></button>
+                </div>
               </div>
               <button class="group-button">
                 <div class="group-icon"></div>
-                <span class="group">開始分組</span>
+                <div class="group">開始分組</div>
               </button>
             </div>
 
@@ -165,7 +169,7 @@
               </div> 
               <div class="discuss-time">
                 <select name="time-selector">
-                  <option value="">請選擇討論時間</option>
+                  <option value="">請選擇活動名稱</option>
                   <option value="5">5分鐘</option>
                   <option value="10">10分鐘</option>
                   <option value="15">15分鐘</option>
@@ -173,11 +177,11 @@
                 </select>
               </div>
               <div class="question-content">
-                <input type="text" placeholder="輸入題目內容">
+                <textarea type="text" placeholder="活動內容"></textarea>
               </div>
               <button class="send-button">
                 <div class="send-icon"></div>
-                <span class="send">送出題目</span>
+                <div class="send">送出題目</div>
               </button>
             </div>
 
@@ -197,7 +201,7 @@
             <div class="info-content">
               <div class="class">
                 <div class="class-icon"></div>
-                <span class="intro">班級: </span>
+                <span class="intro">班級：</span>
               </div>
               <div class="class-count">
                 <div class="count-icon"></div>
@@ -217,6 +221,7 @@
                 <span class="intro">分組名單</span>
                 <div class="group-count">共0組</div>
               </div>
+              <div class="group-content"></div>
             </div>
         </div>
       </div>
