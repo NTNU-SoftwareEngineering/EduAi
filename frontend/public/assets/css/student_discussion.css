@@ -235,16 +235,34 @@ body {
     width: 90%;
     background-color: rgba(255, 255, 255, 1);
     
-    height: 10rem;
+    height: 15rem;
 
     margin: 2rem 2.5%;
     margin-top: auto;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
     display: none;
+
+    
+    flex-direction: column;
     
     
 
 }
+
+.record-box{
+
+    border-radius: 8px;
+    background: var(--bgcolor, #F2F2F7);
+
+    width: 35%;
+    height: 8rem;
+    margin: auto;
+    margin-left: 5rem;
+
+}
+
+
+
 
 .tip-box {
 
@@ -291,6 +309,75 @@ body {
     border-radius: 1.5rem;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     
+
+}
+
+.record-file-name{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 2rem;
+
+    color: var(--sec_gray900, #363636);
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
+
+}
+
+.delete-file-btn{
+
+    background: url("../images/student_discussion/delete-btn.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 7rem;
+
+    margin: 2rem 0;
+    margin-left: auto;
+    margin-right: 2rem;
+
+    border: none;
+    color: transparent;
+    outline: none;
+
+}
+
+.send-file-btn{
+
+    background: url("../images/student_discussion/send-btn.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 7rem;
+
+    margin: 2rem 0;
+    margin-left: 0;
+    margin-right: 2rem;
+
+    border: none;
+    color: transparent;
+    outline: none;
+
+}
+
+.record-file_time-label{
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+    margin-left: 2rem;
+
+    color: var(--sec_gray900, #8E8E93);
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
 
 }
 
@@ -404,6 +491,8 @@ body {
     position: absolute;
 
 }
+
+
 
 .course-list svg{
     margin-left: auto;

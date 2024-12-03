@@ -7,7 +7,7 @@ let course_status = new Array(courseList.length)
 
 function fetchData() {
     const token = localStorage.getItem('token');
-   if ( !token ) window.location.href = 'login_edu.html';
+   //if ( !token ) window.location.href = 'login_edu.html';
     
     fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',

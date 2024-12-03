@@ -116,8 +116,7 @@ async function DEBUG_main(){
 	})
 
 	buttonStop.addEventListener('click', event => {
-	buttonStop.setAttribute('disabled', 'disabled')
-	buttonStart.removeAttribute('disabled')
+	buttonStop.setAttribute('disabled', 'disabled')	
 	buttonStop.style.display = 'none'
 	buttonStart.style.display = 'flex'
 	document.querySelector("#message").style.display = "none"
@@ -126,6 +125,7 @@ async function DEBUG_main(){
 	document.querySelector("body > div > div > div > div.record_send_label").style.display = "flex"
 	const parameter = audioRecorder.parameters.get('isRecording')
 	parameter.setValueAtTime(0, audioContext.currentTime) // <10>
+	document.querySelector("body > div > div > div > div.send-message > button").style.backgroundImage = "url('./assets/images/student_discussion/student_discussion_mic-icon.svg')";
 
 	const blob = encodeAudio(buffers, settings) // <11>
 	const url = URL.createObjectURL(blob)
@@ -137,6 +137,22 @@ async function DEBUG_main(){
   
 DEBUG_main()
 
+function deleteTempAudio(){
+	const buttonStart = document.querySelector("body > div > div > div > div.send-message > button.mic-button")
+	const buttonStop = document.querySelector("body > div > div > div > div.send-message > button.mic-stop-button")
+	const audio = document.querySelector('#audio')
+
+	audio.style.display = "none"
+	buttonStart.removeAttribute("disabled")
+	buttonStop.setAttribute('disabled', 'disabled')	
+
+	buttonStop.style.display = "none"
+	buttonStart.style.display = "block"
+
+	document.querySelector("body > div > div > div > div.record_send_label").style.display = "none"
+
+	document.querySelector("body > div > div > div > div.send-message > button").style.backgroundImage = "url('./assets/images/student_discussion/student_discussion_mic-icon2.svg')";
+}
 
 async function uploadAudio(){
 	// 先上傳音檔至 draft
