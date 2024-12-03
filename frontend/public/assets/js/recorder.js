@@ -176,3 +176,20 @@ async function uploadAudio(){
 		console.log('檔案儲存製作業區成功:', saveResult);
 	}
 }
+
+async function triggerSTT(){
+	
+	const audioBlob = await fetch(audio.src).then(res => res.blob())
+
+	// 使用 FormData 包裝音頻文件
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'audio-file.wav');
+
+	const response = await fetch('/api/speech-to-text', {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) throw new Error("語音辨識失敗");
+    return await response.json(); // 返回轉換的逐字稿
+}

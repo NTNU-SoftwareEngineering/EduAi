@@ -61,6 +61,18 @@ services:
       - ./data:/data                       # 持久化資料夾
     networks:
       - moodle-network                     # 與現有服務保持同一網路
+  
+  phpmyadmin:  # 新增的 phpMyAdmin 服務（添加在 db 下方，屬於 services 區塊）
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword  # 必須與 db 服務的 root 密碼一致
+    ports:
+      - "8081:80"  # 映射本機的 8081 埠到 phpMyAdmin 的 80 埠
+    depends_on:
+      - db
+    networks:
+      - moodle-network
 
 networks:
   moodle-network:
