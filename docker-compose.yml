@@ -1,22 +1,33 @@
 services:
   frontend:
     build:
-      context: ./frontend           # Dockerfile 位於 frontend 資料夾
+      context: ./frontend
     ports:
-      - "3000:80"                   # 將主機的 3000 端口映射到容器的 80 端口
+      - "3000:8081"  # 修正為映射容器的 8081 埠
     volumes:
-      - ./frontend:/usr/share/nginx/html  # 掛載本地 frontend 資料夾到 nginx 的靜態文件目錄
+      - ./frontend:/usr/src/app           # 工作目錄挂载到容器中
+      - /usr/src/app/node_modules         # 防止 node_modules 被覆盖
+    networks:
+      - moodle-network
+    env_file: ".env"                      # 使用環境變數文件
+
+  nginx:
+    build: ./nginx                        # 添加 Nginx 配置，提供反向代理
+    links:
+      - frontend:frontend                 # 與前端容器連接
+    ports:
+      - "80:80"                           # 將 Nginx 的 80 埠映射到主機的 80 埠
     networks:
       - moodle-network
 
   backend:
-    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 資料夾
+    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 文件夾
     ports:
-      - "8080:80"                         # 將主機的 8080 端口映射到容器的 80 端口
+      - "8080:80"                         # 對外暴露 8080 端口
     volumes:
-      - ./moodle-backend:/var/www/html/moodle         # 掛載本地 Moodle 應用程式代碼
-      - ./apache2.conf:/etc/apache2/apache2.conf      # 將 Apache 配置掛載到容器中
-      - ./moodle-data:/var/moodledata                 # 確保 Moodle 資料目錄持久化
+      - moodle_app:/var/www/html/moodle         # 使用命名卷持久化 Moodle 應用數據
+      - ./apache2.conf:/etc/apache2/apache2.conf # Apache 配置文件
+      - moodle-data:/var/moodledata             # Moodle 數據目錄持久化
     depends_on:
       - db
     networks:
@@ -37,9 +48,19 @@ services:
       MYSQL_PASSWORD: yourpassword
     volumes:
       - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 腳本
-      - db_data:/var/lib/mysql                          # 持久化數據
+      - db_data:/var/lib/mysql                          # 數據持久化
     networks:
       - moodle-network
+
+  flask-txt:                               # 保留 Flask 應用服務
+    build:
+      context: ./flask-txt                 # Flask Dockerfile
+    ports:
+      - "5000:5000"                        # Flask 端口映射
+    volumes:
+      - ./data:/data                       # 持久化資料夾
+    networks:
+      - moodle-network                     # 與現有服務保持同一網路
 
 networks:
   moodle-network:
@@ -47,3 +68,4 @@ networks:
 volumes:
   db_data:
   moodle-data:
+  moodle_app:

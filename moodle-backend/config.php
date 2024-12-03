@@ -28,6 +28,8 @@ $CFG->admin     = 'admin';  // 管理目录
 $CFG->directorypermissions = 0755;  // 目录权限设置
 $CFG->corsalloweddomains = array('http://localhost:3000');  // 允许的 CORS 域名
 
+$CFG->authloginviaemail = true;
+
 // 调试设置（已关闭）
 @error_reporting(0);
 @ini_set('display_errors', '1');

@@ -1,0 +1,982 @@
+
+body {
+
+    font-family: 'Noto Sans TC', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    height: 100%;
+
+}
+
+.label-icon{
+    background: url("../images/student_discussion/chat-light.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+
+    height: 2rem; width: 2rem;
+    margin-right: .5rem;
+}
+
+.label-intro{
+    display: flex;
+    margin: .5rem .5rem ;
+    margin-top: 2rem;
+
+}
+
+.label-word{
+    color: var(--sec_gray900, #363636);
+
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: .1rem;
+}
+
+.dialog {
+
+    padding: .5rem 10%;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 1rem;
+
+    background-color: white;
+
+}
+
+.top-label {
+
+    width: 90%;
+    background-color: transparent;
+    height: 5rem;
+    margin: 2rem 2.5%;
+    border-radius: 1rem;
+
+    display: flex;
+    align-items: center;
+    
+    margin-bottom: 0;
+
+}
+
+.top-notice {
+
+    width: 90%;
+    background-color: rgba(243, 240, 247, 1);
+    height: 10rem;
+    margin: 2rem 2.5%;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+#audio {
+
+    margin: auto;
+    display: none;
+    height: 75%;
+    margin-left: 1rem;
+    width: 90%;
+    
+}
+
+.course-dropdown-item svg {
+
+    margin-left: auto;
+    margin-right: 1.5rem;
+
+}
+
+.top-notice .chat-icon {
+
+    background: url("../images/student_discussion/student_discussion_chat-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    margin: 1.25rem 1.5rem;
+
+    height: 3.5rem; width: 3.5rem;
+
+}
+
+.time-left-label .time-icon {
+
+    background: url("../images/student_discussion/student_discussion_time-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    color: rgba(255, 255, 255, 1);
+
+    margin: 0.3rem 1rem;
+    margin-right: 0.4rem;
+
+    height: 1.7rem; width: 1.5rem;
+
+}
+
+.time-left-label span {
+
+    color: var(--pri_white, #FFF);
+
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.25rem;
+
+    
+
+
+}
+
+.time-left-label {
+
+    background-color: rgba(13, 189, 9, 1);
+    margin: 1.5rem 2rem;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+
+    color: rgba(255, 255, 255, 1);
+
+    width: 30%; height: 2.3rem;
+    border-radius: 3rem;
+
+
+}
+
+.conversation {
+
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    
+    height: 80%;
+
+    padding: 0rem 12.5%;
+    display: none;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    
+
+}
+
+.sent_dialog{
+
+    margin-left: 50%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+}
+
+.sent_ID{
+
+    text-align: right;
+    color: var(--sec_gray500, #8E8E93);
+    width: 50%;
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 171.429% */
+    letter-spacing: 1px;
+
+}
+
+.sent_content{
+
+    border-radius: .5rem;
+    background: var(--bgcolor, #F2F2F7);
+    font-size: 1rem;
+    margin: .5rem;
+    padding: .5rem 1rem;
+    width: 50%;
+    height: 100%;
+
+
+}
+
+.botton-tip {
+
+    width: 90%;
+    background-color: rgba(255, 255, 255, 1);
+    
+    height: 25rem;
+
+    margin: 2rem 2.5%;
+    margin-top: auto;
+    margin-bottom: 5rem;
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.record_reply_label{
+    display: none;
+}
+
+.record_send_label{
+
+    width: 90%;
+    background-color: rgba(255, 255, 255, 1);
+    
+    height: 15rem;
+
+    margin: 2rem 2.5%;
+    margin-top: auto;
+    margin-bottom: 2rem;
+    display: none;
+
+    
+    flex-direction: column;
+    
+    
+
+}
+
+.record-box{
+
+    border-radius: 8px;
+    background: var(--bgcolor, #F2F2F7);
+
+    width: 35%;
+    height: 8rem;
+    margin: auto;
+    margin-left: 5rem;
+
+}
+
+
+
+
+.tip-box {
+
+    display: flex;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.tip-box .box{
+
+    border-radius: 1rem;
+    margin: 1rem;
+    width: 33%;
+    height: 100%;
+
+}
+
+.tip-content{
+    width:78%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 1rem;
+    color: var(--sec_gray500, #8E8E93);
+
+
+    font-family: "Noto Sans TC";
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 185.714% */
+    letter-spacing: 0.1rem;
+}
+
+.tip-logo {
+
+    background: url("../images/logo.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem; width: 3rem;
+    margin: 2rem 2rem;
+
+    border-radius: 1.5rem;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
+
+}
+
+.record-file-name{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 2rem;
+
+    color: var(--sec_gray900, #363636);
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
+
+}
+
+.delete-file-btn{
+
+    background: url("../images/student_discussion/delete-btn.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 7rem;
+
+    margin: 2rem 0;
+    margin-left: auto;
+    margin-right: 2rem;
+
+    border: none;
+    color: transparent;
+    outline: none;
+
+}
+
+.send-file-btn{
+
+    background: url("../images/student_discussion/send-btn.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 7rem;
+
+    margin: 2rem 0;
+    margin-left: 0;
+    margin-right: 2rem;
+
+    border: none;
+    color: transparent;
+    outline: none;
+
+}
+
+.record-file_time-label{
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+    margin-left: 2rem;
+
+    color: var(--sec_gray900, #8E8E93);
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
+
+}
+
+.notice-content .question {
+
+    color: var(--sec_gray900, #363636);
+
+    font-family: "Noto Sans TC";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 142.857% */
+    letter-spacing: 1px;
+
+    margin: 5rem 0rem;
+    margin-right: 1.5rem;
+
+}
+
+.notice-footer .question-label {
+
+    color: rgba(142, 142, 147, 1);
+    margin: 1.5rem 0rem;
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+
+
+}
+
+.notice-footer {
+
+    width: 100%;
+    height: 0;
+    display: flex;
+
+}
+
+
+.top-notice .notice-content {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.course-list{
+
+    outline: none;
+    border-color: transparent;
+    width: 100%; height: 3rem;
+    
+    border-radius: .5rem;
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+
+    background: #FFF;
+
+    color: var(--sec_gray500, #8E8E93);
+    text-align: left;
+    padding-left: 1.75rem;
+
+    /* 內文 */
+    
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 157.143% */
+    letter-spacing: 1px;
+
+    display: flex;
+    align-items: center;
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
+
+}
+
+.course-list:hover , .course-list:focus , .course-list:active, 
+.course-list:active:after , .course-list:after,
+.course-dropdown-menu:hover, .course-dropdown-menu:focus , .course-dropdown-menu:active, 
+.course-dropdown-menu:active:after , .course-dropdown-menu:after{
+
+    outline: none;  
+    background: #FFF;
+
+    color: var(--sec_gray500, #8E8E93);
+
+}
+
+.course-dropdown-menu{
+
+    background: var(--bgcolor, #FFF);
+    border-radius: .5rem;
+    width: 20rem;
+    display: none;
+    flex-direction: column;
+    margin-top: .5rem;
+
+    margin-left: 0;
+
+    border-radius: .5rem;
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
+
+    position: absolute;
+
+}
+
+
+
+.course-list svg{
+    margin-left: auto;
+}
+
+
+.course-container{
+    margin-bottom: 0 ;
+    width: 20rem;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+
+.course-dropdown-item {
+    
+
+    background: transparent;
+    display: flex;
+
+    outline: none;
+
+    color: var(--Untitled-Secondary-GRAY-7, #363636);
+
+    width: 20rem;   
+    margin: .625rem;
+    margin-right: 0;
+    margin-left: 1rem;
+
+    padding-left: 1rem;
+
+    /* 內文 */
+    font-family: "Noto Sans TC";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5rem; /* 171.429% */
+    letter-spacing: 1px;
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
+
+    
+
+}
+
+
+
+.sep-line {
+
+    width: 90%;
+    height: 0.1rem;
+    margin: 1rem 5%;
+
+    background-color: rgba(229, 229, 234, 1);
+
+}
+
+.invite-code {
+
+    border-radius: .6rem;
+
+    display:flex;
+
+
+    
+    margin: 1rem 5%;
+    margin-top: 5.5rem;
+
+
+    width: 90%;
+
+    height: 2.5rem;
+    
+
+    background-color: rgba(242, 242, 247, 1);
+
+
+}
+
+.send-code {
+
+    border-radius: 3rem;
+
+    display:flex;
+    justify-content: center;
+    
+    margin: 0rem 5%;
+    bottom: 1rem;
+    width: 90%;
+    height: 2.5rem;
+
+    background-color: rgba(134, 101, 205, 1);
+    border-color: transparent;
+    align-items: center;
+
+    outline: none;
+
+
+}
+
+.send-code .link-icon {
+
+    background: url("../images/student_discussion/student_discussion_link-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 1.5rem; width: 1.5rem;
+    
+
+}
+
+.send-code .content {
+
+    color: rgba(255, 255, 255, 1);
+    text-align: left;
+
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+
+
+
+}
+
+.invite-code .code {
+
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+    text-align: center;
+
+    margin: 0rem 1.25rem;
+
+
+    border-radius: 1.5rem;
+
+}
+
+.send-message {
+
+    border-radius: 3rem;
+    justify-content: flex-start;
+    align-self: center;
+    display:flex;
+
+    
+    margin: 1.5rem 2.5%;
+    margin-top: 3rem;
+
+    margin-top: auto;
+
+
+    bottom: 1rem;
+
+    width: 90%;
+
+    height: 3.5rem;
+    
+
+    background-color: rgba(242, 242, 247, 1);
+
+}
+
+.send-message .message {
+
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+
+    margin: 0rem 1.25rem;
+
+
+    border-radius: 1.5rem;
+
+}
+
+.mic-stop-button{
+    background: url("../images/student_discussion/student_discussion_mic-stop-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+    display: none;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
+}
+
+.mic-button{
+    background: url("../images/student_discussion/student_discussion_mic-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
+
+
+}
+
+.send-message .send-button {
+
+    background: url("../images/student_discussion/student_discussion_send-message-button.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+
+
+    justify-content: flex-start;
+    align-self: center;
+    margin: 0.5rem 1rem;
+    margin-left: auto;
+
+
+}
+
+.left-side-bar{
+
+    display: flex;
+    flex-direction: column;
+
+    width: 25%;
+    margin: .5rem 1rem;
+
+    background-color: transparent;
+
+}
+
+.speech-upload {
+
+    top: 0;
+    height: 17.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+
+
+    border-radius: .5rem;
+
+    background-color: white;
+
+}
+
+.footer {
+
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 0;
+
+}
+
+.speech-upload .footer{
+
+    height : 4rem;
+}
+
+.speech-upload .file {
+
+    border-style: dashed;
+    border-color: gray;
+    border-width: .1rem;
+
+    border-radius: 1rem;
+    
+    height: 6.5rem;
+
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1rem;
+
+    margin-bottom: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+}
+
+.speech-upload .upload-file-button {
+
+    width: 90%;
+    border-radius: 2rem;
+    height: 3rem;
+    border-color: transparent;
+    background: var(--sec_gray50, #E5E5EA);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 5%;
+    margin-top: .0rem;
+    margin-bottom: .0rem;
+    outline: none;
+
+}
+
+.speech-upload .upload-file-button-stop {
+
+    width: 90%;
+    border-radius: 2rem;
+    height: 3rem;
+    border-color: transparent;
+    background: var(--sec_gray50, #731310);
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 5%;
+    margin-top: .0rem;
+    margin-bottom: .0rem;
+    outline: none;
+
+}
+
+.speech-upload .upload-file-button .upload-icon {
+
+    background: url("../images/student_discussion/student_discussion_upload-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 1.5rem; width: 1.5rem;
+    
+
+
+}
+
+.speech-upload .upload-file-button .content {
+
+    color: var(--sec_gray500, #8E8E93);
+    text-align: left;
+
+
+    font-family: "Noto Sans TC";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+
+
+}
+
+
+.speech-upload .file .file-name {
+
+    color: var(--sec_gray500, #8E8E93);
+    text-align: center;
+
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: .1rem;
+
+}
+
+.footer .mic-icon {
+
+    background: url("../images/student_discussion/student_discussion_mic-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 3rem; height: 3rem;
+    margin: 1rem 1.25rem;
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+    
+
+
+
+}
+
+.footer .book-icon {
+
+    background: url("../images/student_discussion/student_discussion_book-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 3rem; height: 3rem;
+    margin: 1.25rem 1.25rem;
+
+    margin-right: .5rem;
+    
+
+
+
+}
+
+.footer .intro {
+
+    font-size: 1.25vw;
+    
+    font: bold;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75rem;
+    letter-spacing: 1px;
+    margin-bottom: auto;
+    height: 1.25rem;
+    text-align: left;
+    
+    margin: 2rem 0rem;
+    margin-right: 2rem;
+    margin-bottom: 0.75rem;
+
+}
+
+.speech-upload .upload-button {
+
+    background-color: rgba(134, 101, 205, 1);
+    display: inline-flex;
+       
+
+    height: 3rem;
+    width: 35%;
+    margin: 1rem 1.25rem;
+    margin-left: auto;
+    border-radius: 3rem;
+    border-color: transparent;
+    outline: none;
+
+}
+
+.speech-upload .upload-button .plus-icon {
+
+    background: url("../images/student_discussion/student_discussion_plus-icon.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 1.25rem;
+    width: 1.25rem; 
+    margin-left: .5rem;
+    align-self: center;
+
+}
+
+.speech-upload .upload-button .add {
+
+    color: var(--white, var(--pri_white, #FFF));
+    text-align: left;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.25rem; /* 157.143% */
+    margin-left: 1rem;
+    align-self: center;
+    
+    
+
+}
+
+.select-course {
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+    border-radius: .5rem;
+
+    background-color: white;
+
+}
