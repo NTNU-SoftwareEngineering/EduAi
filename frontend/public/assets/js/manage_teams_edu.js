@@ -28,16 +28,6 @@ downArrow.addEventListener('click', function(){
 const temp_courseid = 2;
 // test class 1
 class1 = {
-    "1": "王小明",
-    "2": "王小明",
-    "3": "王小明",
-    "4": "王小明",
-    "5": "王小明",
-    "6": "王小明",
-    "7": "王小明",
-    "8": "王小明",
-    "9": "王小明",
-    "10": "王小明",
 };
 async function get_group_from_course(courseid){
     // change class information
@@ -92,8 +82,9 @@ async function get_user_fullname_by_id(userid){
 		}),
 	});
     const data = await response.json()
+    // console.log("aaa")
     // console.log(data)
-    return data.fullname
+    return data[0].fullname
 }
 async function get_student_from_course(courseid){
     // change class information
@@ -116,14 +107,13 @@ async function get_student_from_course(courseid){
     }
 
     // Filter out users with the "Teacher" role
-    const participants = data.filter(user => {
-        // Check if the user does NOT have a "Teacher" role (roleid typically 3)
-        return !user.roles.some(role => role.roleid === 3); // Adjust roleid if necessary
-    });
+    const userIds = data
+        .filter(user => !user.roles.some(role => role.roleid === 3)) // Adjust roleid if necessary
+        .map(user => user.id); // Extract only user IDs
 
-    console.log("Filtered Participants (Without Teachers):", participants);
-    return participants;
-}
+    console.log("User IDs (Without Teachers):", userIds);
+    return userIds; // Return an array of user IDs
+} 
 async function show_group_info(){
     try {
         // Step 1: Get groups from the course
@@ -149,7 +139,7 @@ async function show_group_info(){
     }
 }
 show_group_info()
-function updateInfo(){
+async function updateInfo(){
     // change class information
     let classInfo = document.querySelector(".info-content > .class > .intro");
     classInfo.innerHTML = "班級：";
@@ -172,7 +162,21 @@ const color_code = ["#F3F0F7", "#FFF6E8", "#F0FFF0", "#E8F6FF"];
 const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
-    
+    try{
+        const userid=await get_student_from_course(temp_courseid)
+        console.log('hi')
+        console.log(userid)
+        for(const id of userid){
+            const user_name = await get_user_fullname_by_id(id)
+            // console.log(`id:${id}`)
+            // console.log(`name:${user_name}`)
+            class1[id] = user_name
+        }
+        console.log(class1)
+    }
+    catch (error) {
+        console.error("Error:", error);
+    }
     let studentList = document.querySelector(".group-content");
     studentList.innerHTML = "";
     if(selectClassList.value == "class1"){
@@ -204,7 +208,7 @@ async function updateStudent(){
 
 selectCourseList.addEventListener('change', updateCourseInfo);
 
-function updateCourseInfo(){
+async function updateCourseInfo(){
     // change course information
     let courseInfo = document.querySelector(".info-content > .course > .intro");
     courseInfo.innerHTML = "課程名稱：";
