@@ -16,3 +16,4 @@ COPY . .
 EXPOSE 8081
 
 CMD node index.js
+CMD ["node", "index.js"]  # 確保啟動命令正確
