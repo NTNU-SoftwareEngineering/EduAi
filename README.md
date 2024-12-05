@@ -29,7 +29,7 @@
    - URL: `http://localhost:8080/moodle`
 
 2. **前端頁面**
-   - URL: `http://localhost:3000/login_edu.html`
+   - URL: `http://localhost:3001/login_edu.html`
 
 3. **資料庫查詢**
    - URL: `http://localhost:8081`
