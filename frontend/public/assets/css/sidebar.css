@@ -76,8 +76,9 @@ span {
     display: flex;
     flex-direction: column;
     padding: .5rem 1rem;
-    width: 12.5%;
+    width: 8%;
     padding-left: 0;
+    padding-right: 0;
 }
 
 #sidebar.expand {
@@ -156,4 +157,32 @@ a.sidebar-link:hover svg path{
 
 .sidebar-footer {
     margin-bottom: 1rem;
+}
+
+@media (max-width: 1450px) {
+    svg  {
+
+        width: 3rem;
+    
+    }
+    .sidebar-logo-img{
+        width: 5rem;
+        height: 5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    svg {
+
+        width: 4.5rem;
+    
+    }
+}
+
+@media (max-width: 768px) {
+    svg {
+
+        width: 4.5rem;
+    
+    }
 }

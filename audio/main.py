@@ -1,3 +1,7 @@
+import os
+from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from faster_whisper import WhisperModel
 from pyannote.audio import Pipeline
 import logging
@@ -14,7 +18,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"使用設備: {device}")
 
 # 初始化 Hugging Face 授權令牌
-use_auth_token = "hugging_face_token"  # 替換為您的令牌
+use_auth_token = ""  # 替換為您的令牌
 
 # 加載說話人分離模型
 try:
@@ -137,19 +141,62 @@ def diarize_and_label(audio_file, audio_data):
     results = merge_segments_with_overlap(results, time_threshold=0.5)
     return results
 
-# 主程序
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/api/whisper-transcribe', methods=['POST'])
+def whisper_transcribe():
+    try:
+        # 確認請求中是否包含音頻文件
+        if 'audio' not in request.files:
+            return jsonify({"error": "未找到音檔"}), 400
+
+        # 獲取上傳的音檔
+        audio_file = request.files['audio']
+
+        # 生成安全的文件名並保存到臨時目錄
+        temp_dir = "./temp_audio/"
+        os.makedirs(temp_dir, exist_ok=True)  # 確保臨時目錄存在
+        temp_file_path = os.path.join(temp_dir, secure_filename(audio_file.filename))
+        audio_file.save(temp_file_path)
+        
+        # 移除文件名中的 "./" 前綴
+        if temp_file_path.startswith("./"):
+            temp_file_path = temp_file_path[2:]
+        print(f"音檔已保存到: {temp_file_path}")
+
+        # 加載音檔數據
+        audio_data = load_audio(temp_file_path, sample_rate=SAMPLE_RATE)
+
+        # 執行說話人分離與轉錄
+        results = diarize_and_label(temp_file_path, audio_data)
+
+        # 移除臨時文件
+        os.remove(temp_file_path)
+
+        # 返回處理結果
+        return jsonify({"results": results}), 200
+
+    except Exception as e:
+        logging.error(f"處理音檔時出錯: {e}")
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
-    audio_files = ["1.wav"]  # 替換為實際音頻文件路徑
-    merged_audio_file = audio_files[0]
+    app.run(host="0.0.0.0", port=8000, debug=True)
 
-    audio_data = load_audio(merged_audio_file, sample_rate=SAMPLE_RATE)
-    results = diarize_and_label(merged_audio_file, audio_data)
+# 主程序
+# if __name__ == "__main__":
+#     # audio_files = ["temp_audio/test.wav"]  # 替換為實際音頻文件路徑
+#     merged_audio_file = str("temp_audio/test.wav")
 
-    # 輸出結果
-    current_speaker = None
-    for segment in results:
-        if current_speaker != segment['speaker']:
-            print(f"\n=== {segment['speaker']} ===")
-            current_speaker = segment['speaker']
-        print(f"從 {segment['start']:.1f} 秒到 {segment['end']:.1f} 秒:")
-        print(f"  內容: {segment['text']}")
+#     audio_data = load_audio(merged_audio_file, sample_rate=SAMPLE_RATE)
+#     results = diarize_and_label(merged_audio_file, audio_data)
+
+#     # 輸出結果
+#     current_speaker = None
+#     for segment in results:
+#         if current_speaker != segment['speaker']:
+#             print(f"\n=== {segment['speaker']} ===")
+#             current_speaker = segment['speaker']
+#         print(f"從 {segment['start']:.1f} 秒到 {segment['end']:.1f} 秒:")
+#         print(f"  內容: {segment['text']}")

@@ -1,9 +1,9 @@
 body {
 
     font-family: 'Noto Sans TC', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    height: 100%;
+    /* font-style: normal; */
+    /* font-weight: 400; */
+    /* height: 100%; */
 
 }
 
@@ -28,7 +28,7 @@ body {
 .select-class {
 
     top: 0;
-    height:  20%;
+    height: 20%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -51,10 +51,12 @@ body {
 .select-class .intro {
     
     color: var(--pri_white, #FFFFFF);
+    font-size: 1vw !important;
+    font-weight: bold !important;
 
 }
 
-.footer {
+.select-class .footer {
 
     margin-top: .2rem;
     margin-bottom: .5rem;
@@ -107,9 +109,8 @@ body {
 
 .footer .intro {
 
-    font-size: 1.25vw;
-    
-    font: bold;
+    /* font-size: 1.25vw; */
+
     font-style: normal;
     font-weight: 400;
     line-height: 1.75rem;
@@ -132,10 +133,63 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     border-radius: 8px;
     background-color: white;
+}
+
+.teams-num .teams-num-selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    width: 80%;
+    height: 30%;
+    margin-top: .5rem;
+    border: 1px solid var(--light-border---el-border-color-light, #dfe0e3);
+
+}
+
+.teams-num .teams-num-selector input {
+    width: 80%;
+    height: 100%;
+}
+
+.teams-num .teams-num-selector .adj-btn {
+
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.teams-num .teams-num-selector button {
+    width: 100%;
+    height: 50%;
+    border: 1px solid var(--light-border---el-border-color-light, #dfe0e3);
+}
+
+.teams-num .teams-num-selector .adj-btn .plus {
+    background: url("../images/teacher_management/arrow-up.svg") no-repeat;
+    background-color: #E4E7ED;
+    opacity: 0.7;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 50%;
+    width: 100%;
+}
+
+.teams-num .teams-num-selector .adj-btn .minus {
+    background: url("../images/teacher_management/arrow-down.svg") no-repeat;
+    background-color: #E4E7ED;
+    opacity: 0.7;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    height: 50%;
+    width: 100%;
 }
 
 .footer .teams-num-icon {
@@ -155,7 +209,22 @@ body {
 
 }
 
-.teams-num input{
+.teams-num .footer {
+    
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 30%;
+}
+
+.teams-num .footer .intro {
+
+    font-size: 1vw !important;
+    /* font-weight: bold !important; */
+
+}
+
+.teams-num input {
     display: flex;
     align-items: center;
     outline: none;
@@ -166,23 +235,22 @@ body {
 
     height: 2.5rem;
     width: 100%;
-    margin: 1rem 0rem;
-    margin-top: 3.5rem;
+
+    /* margin-top: .5rem; */
 }
 
 .group-button, .send-button {
 
-    
     height: 2rem;
-    width: 90%;
-    margin: 1rem 0rem;
+    width: 80%;
+    /* margin: 1rem 0rem; */
 
     outline: none;
     border-radius: 1.25rem;
     border-color: transparent;
     background-color: var(--sec_gray50, #E5E5EA);
-    color: var(--sec_gray500, #8E8E93);
-    font: bold;
+    color: var(--sec_gray500, #8E8E93) !important;
+    font-weight: bold !important;
     margin-top: 1rem;
     display: inline-flex;
     align-items: center;
@@ -194,10 +262,16 @@ body {
     background: url("../images/teacher_management/teacher_management_group_share_light.svg") no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
-    height: 16px;
-    width: 16px; 
+    height: 1rem;
+    width: 1rem; 
     align-self: center;
 
+}
+
+.group-button .group {
+    font-size: .8vw !important;
+    font-weight: bold !important;
+    margin-left: .2rem;
 }
 
 .group-button .group, .send-button .send, .create-button .create {
@@ -224,6 +298,15 @@ body {
     align-items: center;
 }
 
+.question .footer {
+
+    margin-top: .2rem;
+    width: 100%;
+    display: flex;
+    height: 0;
+
+}
+
 .footer .question-icon {
 
     background: url("../images/teacher_management/teacher_management_question.svg") no-repeat;
@@ -238,6 +321,13 @@ body {
     margin-right: .5rem;
 
     margin-bottom: 0;
+
+}
+
+.question .footer .intro {
+
+    font-size: 1vw !important;
+    /* font-weight: bold !important; */
 
 }
 
@@ -279,17 +369,16 @@ body {
 
 }
 
-.question .question-content input{
-    
-    
-
+.question .question-content textarea {
     width: 100%;
     height: 100%;
     outline: none;
     border-color: transparent;
     background-color: transparent;
-
-    
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5rem;
+    padding: 1rem;
 }
 
 .send-button .send-icon {
@@ -297,9 +386,18 @@ body {
     background: url("../images/teacher_management/teacher_management_Paper_light.svg") no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
-    height: 16px;
-    width: 16px; 
+    height: 1rem;
+    width: 1rem; 
     align-self: center;
+}
+
+.send-button .send {
+
+    display: flex;
+    align-items: center;
+    margin-left: .2rem;
+    font-weight: bold !important;
+
 }
 
 /* teams */
@@ -324,15 +422,19 @@ body {
     width: 100%;
     height: 8%;
     display: inline-flex;
+    align-items: center;
 
 }
 
 .teams .class-info .footer {
 
-    margin-top: .2rem;
+    /* margin-top: .2rem; */
     width: 100%;
     display: flex;
-    height: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-items: center;
 
 }
 
@@ -343,26 +445,32 @@ body {
         background-size: 100% 100%;
     
         width: 1.5rem; height: 1.5rem;
-        margin: 1.25rem 1.25rem;
+        margin: 1rem 1.25rem;
     
         margin-right: .5rem;
-    
         margin-bottom: 0;
 }
 
+.teams .class-info .footer .intro {
+
+    font-size: 1vw !important;
+    /* font-weight: bold !important; */
+
+}
+
 .create-button {
-    width: 160px;
-    height: 32px;
+    width: 14rem;
+    height: 2rem;
     outline: none;
     border-radius: 20px;
     border-color: transparent;
     background-color: var(--sec_gray50, #E5E5EA);
     color: var(--sec_gray500, #8E8E93);
-    font: bold;
     margin-top: 1rem;
     margin-right: 1rem;
     display: inline-flex;
     align-items: center;
+    justify-items: center;
 }
 
 .create-button .chat-icon {
@@ -370,9 +478,9 @@ body {
     background: url("../images/teacher_management/teacher_management_create_chat.svg") no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
-    height: 16px;
-    width: 16px; 
-    margin-left: 1rem;
+    height: 1rem;
+    width: 1rem; 
+    margin-left: 2rem;
     align-self: center;
 
 }
@@ -380,7 +488,11 @@ body {
 .create-button .create {
 
     display: flex;
-    align-items: center;
+    /* align-items: center; */
+    font-size: .8vw;
+    color: #8E8E93;
+    font-weight: bold !important;
+
     /* margin-top: 1rem; */
 
 }
@@ -417,15 +529,21 @@ body {
         width: 1.5rem; height: 1.5rem;
         /* margin: 1.25rem 1.25rem; */
     
-        margin-right: .5rem;
+        margin-right: .2rem;
     
         margin-bottom: 0;
         
 }
 
+.info-content .class .intro {
+    
+    font-size: .8vw !important;
+    font-weight: bold !important;
+}
+
 .info-content .class-count .count-icon {
     
-    background: url("../images/teacher_management/teacher_management_Component.svg") no-repeat;
+    background: url("../images/teacher_management/teacher_management_class_count.svg") no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
     background-color: var(--bgcolor, #F2F2F7);
@@ -434,10 +552,16 @@ body {
     width: 1.5rem; height: 1.5rem;
     /* margin: 1.25rem 1.25rem; */
 
-    margin-right: .5rem;
+    margin-right: .2rem;
 
     margin-bottom: 0;
     
+}
+
+.info-content .class-count .intro {
+    
+    font-size: .8vw !important;
+    /* font-weight: bold !important; */
 }
 
 .info-content .course .course-icon {
@@ -451,10 +575,16 @@ body {
     width: 1.5rem; height: 1.5rem;
     /* margin: 1.25rem 1.25rem; */
 
-    margin-right: .5rem;
+    margin-right: .2rem;
 
     margin-bottom: 0;
     
+}
+
+.info-content .course .intro {
+    
+    font-size: .8vw !important;
+    font-weight: bold !important;
 }
 
 .teams hr {
@@ -492,12 +622,17 @@ body {
 }
 
 .group-info .footer .intro {
-    margin-top: .5rem;
+
+    /* height: 100%; */
+    margin-top: .5rem !important;
+    font-size: 1vw !important;
+    /* font-weight: bold !important; */
+
 }
 
 .group-info .footer .group-count {
     
-        font-size: 1.25vw;
+        font-size: 1vw;
         
         /* font: bold; */
         font-style: normal;
@@ -546,7 +681,7 @@ body {
 
 .student {
     width: 20%;
-    height: 2.5rem;
+    height: 4rem;
     margin: 10px;
     padding: 10px;
     border-radius: 100px;
@@ -554,14 +689,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1vw;
 }
 
 .student .info {
     margin-left: 10px;
 }
 
-.student .purple {
-    width: 1.5rem; height: 1.5rem;
+.student #purple {
+    width: 2rem; height: 2rem;
     background-color: rgba(194, 165, 240, 0.3);
     border-radius: 100%;
     background-image: url("../images/teacher_management/user_purple.svg");
@@ -569,8 +705,8 @@ body {
     background-position: center;
 }
 
-.student .blue {
-    width: 1.5rem; height: 1.5rem;
+.student #blue {
+    width: 2rem; height: 2rem;
     background-color: rgba(75, 183, 255, 0.2);
     /* opacity: 20%; */
     border-radius: 100%;
@@ -579,8 +715,8 @@ body {
     background-position: center;
 }
 
-.student .green {
-    width: 1.5rem; height: 1.5rem;
+.student #green {
+    width: 2rem; height: 2rem;
     background-color: #D9F8D9;
     border-radius: 100%;
     background-image: url("../images/teacher_management/user_green.svg");
@@ -588,8 +724,8 @@ body {
     background-position: center;
 }
 
-.student .yellow {
-    width: 1.5rem; height: 1.5rem;
+.student #yellow {
+    width: 2rem; height: 2rem;
     background-color: rgba(255, 220, 168, 0.5);
     border-radius: 100%;
     background-image: url("../images/teacher_management/user_yellow.svg");
@@ -600,7 +736,49 @@ body {
 .group-content .group {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.group-content .group-title {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 2rem;
+}
+
+.group-content .group-title .group-icon {
+
+    /* background: url("../images/teacher_management/teacher_management_group_share_light.svg") no-repeat; */
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-color: var(--bgcolor, #F2F2F7);
+    border-radius: 2rem;
+
+    width: 1.5rem; height: 1.5rem;
+    /* margin: 1.25rem 1.25rem; */
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+
+}
+
+.group-content .group-title .group-text {
+
+    font-size: 1vw !important;
+    font-weight: bold !important;
+
+}
+
+.group-content .group-student {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
 }

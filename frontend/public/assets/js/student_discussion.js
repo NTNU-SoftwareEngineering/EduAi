@@ -66,37 +66,36 @@ function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
 
-    const dropdown_menu = document.querySelector("body > div > div > div.left-side-bar > div.select-course.mt-4 > div.flex > div");
+    const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
     for(var i=0;i<courseList.length;i++){
         if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
-        else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><div class=check_icon></div></a>'
+        else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none">\
+        <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
+      </svg></a>'
     }
 
-    const record_btn = document.querySelector("body > div > div > div.left-side-bar > div.speech-upload > button")
-    record_btn.style.backgroundColor = '#502F96'
-    document.getElementsByClassName('upload-icon')[0].style.backgroundImage = 'url(./assets/images/student_discussion/upload-light.svg)'
-    document.getElementsByClassName('upload-icon')[1].style.backgroundImage = 'url(./assets/images/student_discussion/upload-light.svg)'
-    document.getElementsByClassName('file-name')[0].innerHTML = ''
-    document.getElementsByClassName('file')[0].style.display = 'none'
-    document.getElementById("audio").style.display = 'block'
-    document.querySelector("body > div > div > div.left-side-bar > div.speech-upload > button > span").style.color = '#FFF'
-    document.querySelector("#record-stop > span").style.color = '#FFF'
+    document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
+    <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
+    </svg>'
+    
+    document.querySelector("body > div > div > div > div.top-label > div.flex > button").style.color = '#363636'
+    document.querySelector("#message").placeholder = "請先開始錄音"
+
+    document.querySelector("body > div > div > div > div.send-message > button.mic-button").removeAttribute("disabled")
+
+    document.querySelector("body > div > div > div > div.send-message > button").style.backgroundImage = "url('./assets/images/student_discussion/student_discussion_mic-icon2.svg')";
+    
+
+    dropdownMenuCSSModify()
 }   
 
 
-function detectEnter(ele){
-
-    if(event.key == 'Enter'){
-        SendMessage()
-    }
-
-}
-
 function dropdownMenuCSSModify(){
 
-    const dropdown_menu = document.querySelector("body > div > div > div.left-side-bar > div.select-course.mt-4 > div.flex > div");
+    const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.style.display = dropdown_expand ? "none" : "flex";
 
@@ -109,46 +108,12 @@ function dropdownMenuCSSModify(){
 
         for(var i=0;i<courseList.length;i++){
             if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
-            else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><div class=check_icon></div></a>'
+            else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none"> \
+            <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> \
+          </svg></a>'
         }
 
     }
 
 }
 
-function SendMessage(){
-
-    //這邊之後應該要結合後端的訊息紀錄
-
-    const message = document.getElementById("message").value
-    document.getElementById("message").value = ""
-    //console.log(message)
-
-
-    if(!didSendMessage){
-        document.querySelector("body > div > div > div.dialog > div.botton-tip").style.display = "none";
-        document.querySelector("body > div > div > div.dialog > div.conversation").style.display = "flex";
-    }
-    didSendMessage = 1
-
-    const conversation_box = document.querySelector("body > div > div > div.dialog > div.conversation");
-
-    conversation_box.innerHTML = "<div class='sent_dialog'>" + 
-    
-    "<div class='sent_ID'>"+username+"</div>" 
-
-    +"<div class='sent_content'>" + message + "</div>"
-    
-    +"</div>";
-
-
-    conversation_box.innerHTML += "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
-
-    "<div class='sent_ID' style='text-align: left;'>"+"王中明"+"</div>" 
-
-    +"<div class='sent_content' style='background: var(--status_y_50, #FFF6E8);'>" + "這是一個範例回覆訊息" + "</div>"
-    
-    +"</div>";
-
-
-}

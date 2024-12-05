@@ -14,78 +14,54 @@ let courseList = [
 let course_status = new Array(courseList.length);
 for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
 
-function select_course(index) {
-    for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
-    course_status[index] = 1;
+function select_course(index){
+    for(var i=0;i<courseList.length;i++) course_status[i] = 0
+    course_status[index] = 1
 
-    const dropdown_menu = document.querySelector(
-        "body > div > div > div.left-side-bar > div.select-course.mt-4 > div.flex > div"
-    );
+    const dropdown_menu = document.querySelector("#course-select");
 
-    dropdown_menu.innerHTML = "";
-    for (var i = 0; i < courseList.length; i++) {
-        if (!course_status[i])
-            dropdown_menu.innerHTML +=
-                '<a class="course-dropdown-item" onclick="select_course(' +
-                i +
-                ')"><div>' +
-                courseList[i] +
-                "</div></a>";
-        else
-            dropdown_menu.innerHTML +=
-                '<a class="course-dropdown-item" onclick="select_course(' +
-                i +
-                ')"><div>' +
-                courseList[i] +
-                "</div><div class=check_icon></div></a>";
+    dropdown_menu.innerHTML = ''
+    for(var i=0;i<courseList.length;i++){
+        if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+        else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none">\
+        <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
+      </svg></a>'
     }
 
-    const record_btn = document.querySelector(
-        "body > div > div > div.left-side-bar > div.speech-upload > button"
-    );
-    record_btn.style.backgroundColor = "#502F96";
-    document.getElementsByClassName("upload-icon")[0].style.backgroundImage =
-        "url(./assets/images/student_discussion/upload-light.svg)";
-    document.getElementsByClassName("upload-icon")[1].style.backgroundImage =
-        "url(./assets/images/student_discussion/upload-light.svg)";
-    document.getElementsByClassName("file-name")[0].innerHTML = "";
-    document.getElementsByClassName("file")[0].style.display = "none";
-    document.getElementById("audio").style.display = "block";
-    document.querySelector(
-        "body > div > div > div.left-side-bar > div.speech-upload > button > span"
-    ).style.color = "#FFF";
-    document.querySelector("#record-stop > span").style.color = "#FFF";
-}
+    document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
+    <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
+    </svg>'
+    
 
-function dropdownMenuCSSModify() {
-    const dropdown_menu = document.querySelector(
-        "body > div > div > div.left-side-bar > div.select-course.mt-4 > div.flex > div"
-    );
+
+
+    dropdownMenuCSSModify()
+}   
+
+
+function dropdownMenuCSSModify(){
+
+    const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.style.display = dropdown_expand ? "none" : "flex";
 
+
     dropdown_expand = dropdown_expand ? 0 : 1;
 
-    dropdown_menu.innerHTML = "";
+    dropdown_menu.innerHTML = ''
 
-    if (dropdown_expand) {
-        for (var i = 0; i < courseList.length; i++) {
-            if (!course_status[i])
-                dropdown_menu.innerHTML +=
-                    '<a class="course-dropdown-item" onclick="select_course(' +
-                    i +
-                    ')"><div>' +
-                    courseList[i] +
-                    "</div></a>";
-            else
-                dropdown_menu.innerHTML +=
-                    '<a class="course-dropdown-item" onclick="select_course(' +
-                    i +
-                    ')"><div>' +
-                    courseList[i] +
-                    "</div><div class=check_icon></div></a>";
+    if(dropdown_expand){
+
+        for(var i=0;i<courseList.length;i++){
+            if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+            else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none"> \
+            <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> \
+          </svg></a>'
         }
+
     }
+
 }
 
 function detectEnter(ele) {
