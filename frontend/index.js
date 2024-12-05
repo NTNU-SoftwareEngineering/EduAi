@@ -2,7 +2,7 @@ import express from 'express';
 import Groq from 'groq-sdk';
 
 let app = express();
-const port = 8081;
+const port = 3000;
 
 app.use(express.static('public'));
 app.use(express.json());

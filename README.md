@@ -41,6 +41,10 @@
    - 使用 Docker Compose 啟動前端服務。
    - 執行命令：`docker-compose up`
 
+2. **資料庫備份**
+   - 執行命令：`docker exec fullstack-db-1 mysqldump -u moodleuser -pyourpassword moodle_db > moodle_db_backup.sql`
+   - 可以把你在moodle後端設定的東西，存到本地並push，讓其他人使用
+   
 ## 環境變數
 
 請確保在 `.env` 文件中設置以下環境變數：
