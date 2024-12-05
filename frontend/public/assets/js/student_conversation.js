@@ -74,6 +74,9 @@ async function SendMessage() {
     //這邊之後應該要結合後端的訊息紀錄
 
     const message = document.getElementById("message").value;
+
+    if(message.length == 0) return;
+
     document.getElementById("message").value = "";
     // console.log(message);
 
