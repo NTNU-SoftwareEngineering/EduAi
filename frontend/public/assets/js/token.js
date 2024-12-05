@@ -54,3 +54,11 @@ function fetchData() {
     });
 }
 document.addEventListener("DOMContentLoaded", fetchData);
+
+setInterval(()=>{
+    const token = localStorage.getItem('token');
+    if ( !token ){
+        window.location.href = 'login_edu.html';
+        clearInterval()
+    }
+}, 100)
