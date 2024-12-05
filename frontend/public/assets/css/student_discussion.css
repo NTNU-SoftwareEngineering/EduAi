@@ -207,6 +207,9 @@ body {
     width: 50%;
     height: 100%;
 
+    border-color: transparent;
+    outline: none;
+
 
 }
 
@@ -345,6 +348,7 @@ body {
     outline: none;
 
 }
+
 
 .send-file-btn{
 
@@ -635,11 +639,24 @@ body {
 
 }
 
+textarea{
+
+    text-align: justify;
+    word-break: break-all;
+    resize: none;
+    
+
+}
+
+.send-message textarea{
+    height: 50%;
+}
+
 .send-message {
 
     border-radius: 3rem;
-    justify-content: flex-start;
-    align-self: center;
+    justify-content: center;
+    align-items: center;
     display:flex;
 
     

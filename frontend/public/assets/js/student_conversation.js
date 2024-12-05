@@ -96,9 +96,9 @@ async function SendMessage() {
         "<div class='sent_ID'>" +
         username +
         "</div>" +
-        "<div class='sent_content'>" +
+        "<textarea class='sent_content' disabled>" +
         message +
-        "</div>" +
+        "</textarea >" +
         "</div>";
 
     conversation_box.scrollTop = conversation_box.scrollHeight;
@@ -122,9 +122,9 @@ async function SendMessage() {
             "<div class='sent_ID' style='text-align: left;'>" +
             "小助手" +
             "</div>" +
-            "<div class='sent_content' style='background: var(--status_y_50, #FFF6E8);'>" +
+            "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);'>" +
             response_message +
-            "</div>" +
+            "</textarea>" +
             "</div>";
     }
     conversation_box.scrollTop = conversation_box.scrollHeight;
