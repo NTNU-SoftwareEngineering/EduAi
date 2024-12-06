@@ -29,7 +29,7 @@
    - URL: `http://localhost:8080/moodle`
 
 2. **前端頁面**
-   - URL: `http://localhost:3000/login_edu.html`
+   - URL: `http://localhost:3000`
 
 3. **資料庫查詢**
    - URL: `http://localhost:8081`
@@ -41,10 +41,30 @@
    - 使用 Docker Compose 啟動前端服務。
    - 執行命令：`docker-compose up`
 
-2. **資料庫備份**
-   - 執行命令：`docker exec fullstack-db-1 mysqldump -u moodleuser -pyourpassword moodle_db > moodle_db_backup.sql`
-   - 可以把你在moodle後端設定的東西，存到本地並push，讓其他人使用
-   
+## 資料庫備份
+
+1. **進入資料庫容器**：
+   使用以下命令進入 MySQL 容器：
+   ```bash
+   docker exec -it fullstack-db-1 mysql -u root -prootpassword
+   ```
+
+2. **分配權限**：
+   在 MySQL 交互式命令行中，執行以下命令為 `moodleuser` 分配額外的權限：
+   ```sql
+   GRANT PROCESS, SELECT, LOCK TABLES ON *.* TO 'moodleuser'@'%';
+   FLUSH PRIVILEGES;
+   ```
+
+3. **退出 MySQL**：
+   執行 `exit` 離開 MySQL。
+
+4. **重新嘗試備份**：
+   再次執行 `mysqldump` 命令進行備份：
+   ```bash
+   docker exec fullstack-db-1 mysqldump -u moodleuser -pyourpassword moodle_db > moodle_db_backup.sql
+   ```
+
 ## 環境變數
 
 請確保在 `.env` 文件中設置以下環境變數：
