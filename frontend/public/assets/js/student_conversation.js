@@ -125,7 +125,7 @@ async function SendMessage() {
             "<div class='sent_ID' style='text-align: left;'>" +
             "小助手" +
             "</div>" +
-            "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);'>" +
+            "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);' disabled>" +
             response_message +
             "</textarea>" +
             "</div>";
