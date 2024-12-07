@@ -48,7 +48,7 @@ app.post('/llm', async function(req, res){
     var input = "";
     try {
         input = req.body.message;
-        const prompt = 'fullstack/frontend/prompt.txt';
+        const prompt = 'prompt.txt';
 
         if (input === undefined) {
             res.status(400).send('Bad request');
@@ -58,6 +58,8 @@ app.post('/llm', async function(req, res){
         if (fs.existsSync(prompt)) {
             input += "\n" + fs.readFileSync(prompt, 'utf-8') + '\n';
         }
+        //console.log(input)
+        
 
     } catch (error) {
         res.status(500).send('伺服器錯誤，無法讀取輸入文件。');
