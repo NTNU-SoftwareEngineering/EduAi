@@ -1,6 +1,6 @@
 import express from 'express';
 import Groq from 'groq-sdk';
-const fs = require('fs'); //import fs from "fs"; (modify to import ?)
+import fs from "fs"; // (modify to import ?)
 
 
 let app = express();
@@ -43,19 +43,20 @@ app.post('/student_conversation', async function (req, res) {
 });
 
 
-app.get('/', async (req, res) => {
+app.post('/llm', async function(req, res){
 
+    var input = "";
     try {
-        const speech = req.body.message;
+        input = req.body.message;
         const prompt = 'fullstack/frontend/prompt.txt';
 
-        if (speech === undefined) {
+        if (input === undefined) {
             res.status(400).send('Bad request');
             return;
         }
 
         if (fs.existsSync(prompt)) {
-            prompt = fs.readFileSync(prompt, 'utf-8') + '\n';
+            input += "\n" + fs.readFileSync(prompt, 'utf-8') + '\n';
         }
 
     } catch (error) {
@@ -76,19 +77,9 @@ app.get('/', async (req, res) => {
         model: "llama-3.2-90b-vision-preview"
     });  
 
-    // 處理回應格式問題
-    let cleanedResponse = response.choices[0].message.content;
-    try {
-        cleanedResponse = response
-            .replace(/\r\n/g, '\n') // 將 CRLF 換行轉為 LF
-            .replace(/[^\S\r\n]+/g, ' ') // 移除多餘空白
-            .replace(/\n{2,}/g, '\n\n') // 合併多餘的空行為一行
-            .trim(); // 移除前後多餘空白
-    } catch (error) {
-        cleanedResponse = "error"
-    }
+    console.log(response.choices[0]?.message?.content || 'No response');
 
-    res.send(cleanedResponse);
+    res.send(response);
 
 });
 
