@@ -1,0 +1,35 @@
+<body>
+    <input type="text" name="prompt" id="prompt" placeholder="輸入逐字稿">
+    <button onclick="getdata()">提交</button>
+    <div class="result"></div>
+    <script>
+
+        async function getdata(){
+
+            const msg = document.getElementById("prompt").value;
+            
+            const response = await fetch("/llm", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    message: msg
+                }),
+            });
+            const data = await response.json();
+            let cleanedResponse = data.choices[0].message.content;
+            try {
+                cleanedResponse = cleanedResponse
+                    .replace(/\r\n/g, '\n') // 將 CRLF 換行轉為 LF
+                    .replace(/[^\S\r\n]+/g, ' ') // 移除多餘空白
+                    .replace(/\n{2,}/g, '\n\n') // 合併多餘的空行為一行
+                    .trim(); // 移除前後多餘空白
+            } catch (error) {
+                cleanedResponse = "error"
+            }
+            console.log(cleanedResponse)
+            document.querySelector("body > div").innerHTML = cleanedResponse
+        }
+    </script>
+</body>
