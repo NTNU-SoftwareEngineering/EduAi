@@ -74,6 +74,19 @@ services:
     networks:
       - moodle-network
 
+  audio:
+    build:
+      context: ./audio
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./audio/temp:/tmp
+    networks:
+      - moodle-network
+    depends_on:
+      - db
+      - backend
+
 networks:
   moodle-network:
 

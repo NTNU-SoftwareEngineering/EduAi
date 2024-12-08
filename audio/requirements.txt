@@ -1,10 +1,4 @@
 Flask
-numpy
-librosa
-opencc
-pyannote.audio
-faster-whisper
-werkzeug
-ffmpeg-python
-torch
-torchaudio
+pydub
+SpeechRecognition
+Flask-CORS
