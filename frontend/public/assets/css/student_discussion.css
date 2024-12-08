@@ -291,14 +291,16 @@ body {
     flex-direction: column;
     margin: 2rem 1rem;
     color: var(--sec_gray500, #8E8E93);
-
-
     font-family: "Noto Sans TC";
     font-size: 1.2rem;
     font-style: normal;
     font-weight: 400;
     line-height: 2rem; /* 185.714% */
     letter-spacing: 0.1rem;
+}
+
+.tip-text{
+    margin-bottom: 3%;
 }
 
 .tip-logo {
