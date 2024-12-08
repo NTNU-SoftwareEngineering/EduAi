@@ -1,18 +1,9 @@
 let dropdown_expand = 0;
 let didSendMessage = 0;
-let username = "王小明"; //backend should modify and offer the username of the account
-
-let courseList = [
-    "09/14 輔導課",
-    "09/17 資訊課",
-    "10/12 國文課",
-    "10/14 輔導課",
-    "10/17 資訊課",
-    "10/19 英文課",
-]; // backend should transfer the data to the frontend
+let username = "王小明";
+let courseList = [];
 
 let course_status = new Array(courseList.length);
-for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
 
 function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
@@ -74,6 +65,7 @@ async function SendMessage() {
     //這邊之後應該要結合後端的訊息紀錄
 
     const message = document.getElementById("message").value;
+    const thread_id = localStorage.getItem("thread_id");
 
     if(message.length == 0) return;
 
@@ -113,11 +105,12 @@ async function SendMessage() {
         },
         body: JSON.stringify({
             message: message,
+            thread_id: thread_id,
         }),
     });
 
     const data = await response.json();
-    const response_message = data.choices[0]?.message?.content || "No response";
+    const response_message = data.message || "No response";
 
     if (response.ok) {
         conversation_box.innerHTML +=
@@ -132,3 +125,15 @@ async function SendMessage() {
     }
     conversation_box.scrollTop = conversation_box.scrollHeight;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize conversation thread
+    fetch("/student_conversation/init", {
+        method: "POST",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // save thread id to local storage
+        localStorage.setItem("thread_id", data.thread_id);
+    });
+});
