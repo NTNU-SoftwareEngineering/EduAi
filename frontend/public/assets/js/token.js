@@ -13,8 +13,13 @@ function fetchData() {
             moodlewsrestformat: 'json'
         })
     })
-    .then( response => response.json() )
+    .then( response =>{
+        response.json() 
+    })
     .then( (data) => {
+
+        
+
         return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
             method: 'POST',
             headers: {
@@ -27,8 +32,13 @@ function fetchData() {
                 userid: data.userid
             })
         });
+        
+        
     })
-    .then( response => response.json() )
+    .then( response =>{ 
+        response.json()
+        
+    })
     .then( data => {
         console.log("取得用戶註冊的課程列表");
         return data.map( j => j.fullname );
@@ -51,9 +61,32 @@ function fetchData() {
     })
     .catch( error => {
         console.error('錯誤:', error);
+        
     });
 }
 document.addEventListener("DOMContentLoaded", fetchData);
+
+
+async function checkTokenVaild() {
+    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction
+		}),
+	});
+	const data = await response.json()
+    console.log(data)
+    if(data.errorcode == "invalidtoken"){
+        localStorage.removeItem("token");
+        localStorage.removeItem("userid");
+        window.location.href = "login_edu.html"
+    }
+
+}
 
 setInterval(()=>{
     const token = localStorage.getItem('token');
@@ -61,4 +94,10 @@ setInterval(()=>{
         window.location.href = 'login_edu.html';
         clearInterval()
     }
+    
 }, 100)
+
+checkTokenVaild()
+setInterval(() => {
+    checkTokenVaild()
+}, 15000);
