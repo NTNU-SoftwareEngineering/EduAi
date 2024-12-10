@@ -179,7 +179,7 @@ async function uploadAudioToMoodle(){
 	// 先上傳音檔至 draft
     const audioBlob = await fetch(audio.src).then(res => res.blob())
     
-	const uploadUrl = `http://localhost:8080/moodle/webservice/upload.php?token=${wstoken_webservice}`;
+	const uploadUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/upload.php?token=${wstoken_webservice}`;
     
 	const formData = new FormData();
 	formData.append('filearea', 'draft');
@@ -198,7 +198,7 @@ async function uploadAudioToMoodle(){
 	}
 
 	// 再將 draft 中的音檔上傳至作業
-	const saveSubmissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
+	const saveSubmissionUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
 	const saveSubmissionData = new URLSearchParams();
 	saveSubmissionData.append('assignmentid', assignmentId);
 	saveSubmissionData.append('plugindata[files_filemanager]', result[0].itemid);
@@ -230,7 +230,7 @@ async function triggerSTT(){
 		const formData = new FormData();
 		formData.append('audio', audioBlob, 'audio-file.wav');
 
-		const response = await fetch('http://localhost:5001/transcribe', {
+		const response = await fetch('https://localhost:5001/transcribe', {
 			method: 'POST',
 			body: formData,
 		});

@@ -643,6 +643,8 @@ function hash_local_config_cache() {
 function initialise_fullme() {
     global $CFG, $FULLME, $ME, $SCRIPT, $FULLSCRIPT;
 
+    
+
     // Detect common config error.
     if (substr($CFG->wwwroot, -1) == '/') {
         throw new \moodle_exception('wwwrootslash', 'error');
@@ -661,6 +663,7 @@ function initialise_fullme() {
     }
 
     $rurl = setup_get_remote_url();
+    $rurl['scheme'] = 'https';
     $wwwroot = parse_url($CFG->wwwroot.'/');
 
     if (empty($rurl['host'])) {

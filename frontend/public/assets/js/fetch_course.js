@@ -2,7 +2,7 @@ function fetchCourses() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
     
-    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+    fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -15,7 +15,7 @@ function fetchCourses() {
     })
     .then( response => response.json() )
     .then( (data) => {
-        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
+        return fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

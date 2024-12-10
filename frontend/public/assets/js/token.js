@@ -2,7 +2,7 @@ function fetchData() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
     
-    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+    fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -18,9 +18,9 @@ function fetchData() {
     })
     .then( (data) => {
 
-        
+        console.log(data)        
 
-        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
+        return fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -40,6 +40,7 @@ function fetchData() {
          
     })
     .then( data => {
+        console.log(data)
         console.log("取得用戶註冊的課程列表");
         return data.map( j => j.fullname );
     })
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", fetchData);
 
 
 async function checkTokenVaild() {
-    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    const response = await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
