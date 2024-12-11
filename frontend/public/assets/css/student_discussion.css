@@ -477,8 +477,7 @@ body {
 .course-list:hover , .course-list:focus , .course-list:active, 
 .course-list:active:after , .course-list:after,
 .course-dropdown-menu:hover, .course-dropdown-menu:focus , .course-dropdown-menu:active, 
-.course-dropdown-menu:active:after , .course-dropdown-menu:after,
-.course-dropdown-menu-large:hover , .course-dropdown-menu-large:focus , .course-dropdown-menu-large:active{
+.course-dropdown-menu:active:after , .course-dropdown-menu:after{
 
     outline: none;  
     background: #FFF;
@@ -487,14 +486,14 @@ body {
 
 }
 
-.course-dropdown-menu , .course-dropdown-menu-large{
+.course-dropdown-menu{
 
     background: var(--bgcolor, #FFF);
     border-radius: .5rem;
     width: 20rem;
     display: none;
     flex-direction: column;
-    margin-top: 5.5rem;
+    margin-top: .5rem;
 
     margin-left: 0;
 
@@ -525,7 +524,7 @@ body {
 }
 
 
-.course-dropdown-item , .course-dropdown-item-large{
+.course-dropdown-item {
     
 
     background: transparent;
@@ -558,16 +557,6 @@ body {
 
 }
 
-
-.course-dropdown-item-large{
-    width: 100%;
-    font-size: 1.5rem;
-    line-height: 2rem;
-}
-.course-dropdown-menu-large{
-    width: 50.3%;
-    
-}
 
 
 .sep-line {
