@@ -1,3 +1,7 @@
+//Warning : this js is deprecated and replaced the function to index.js in fullstack/frontend
+//moved the llm.js function with student_coversation, therefore, both function will use the same api key 
+//in .env
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -11,6 +15,8 @@ const apiKey = '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'; // �
 
 const OUTPUT_LOG_FILE = path.join(__dirname, 'groq_output_log.txt');
 const ERROR_LOG_FILE = path.join(__dirname, 'groq_error_log.txt');
+
+
 
 // 初始化日誌文件
 function initLogFiles() {

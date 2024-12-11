@@ -7,12 +7,12 @@ WORKDIR /usr/src/app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 安装前端依赖
+# 安裝前端依賴
 RUN npm install
 
 # 复制剩余的前端代码
 COPY . .
 
-EXPOSE 8081
+EXPOSE 3000
 
 CMD node index.js

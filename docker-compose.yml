@@ -3,31 +3,31 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:8081"  # 修正為映射容器的 8081 埠
+      - "3000:3000"  # 修正為映射容器的 3000 埠
     volumes:
-      - ./frontend:/usr/src/app           # 工作目錄挂载到容器中
-      - /usr/src/app/node_modules         # 防止 node_modules 被覆盖
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - moodle-network
-    env_file: ".env"                      # 使用環境變數文件
+    env_file: ".env"
 
   nginx:
-    build: ./nginx                        # 添加 Nginx 配置，提供反向代理
+    build: ./nginx
     links:
-      - frontend:frontend                 # 與前端容器連接
+      - frontend:frontend
     ports:
-      - "80:80"                           # 將 Nginx 的 80 埠映射到主機的 80 埠
+      - "8088:80"
     networks:
       - moodle-network
 
   backend:
-    build: ./moodle-backend               # 後端的 Dockerfile 位於 moodle-backend 文件夾
+    build: ./moodle-backend
     ports:
-      - "8080:80"                         # 對外暴露 8080 端口
+      - "8080:80"
     volumes:
-      - moodle_app:/var/www/html/moodle         # 使用命名卷持久化 Moodle 應用數據
-      - ./apache2.conf:/etc/apache2/apache2.conf # Apache 配置文件
-      - moodle-data:/var/moodledata             # Moodle 數據目錄持久化
+      - moodle_app:/var/www/html/moodle
+      - ./apache2.conf:/etc/apache2/apache2.conf
+      - moodle-data:/var/moodledata
     depends_on:
       - db
     networks:
@@ -47,20 +47,45 @@ services:
       MYSQL_USER: moodleuser
       MYSQL_PASSWORD: yourpassword
     volumes:
-      - ./moodle-db-backup:/docker-entrypoint-initdb.d  # 初始 SQL 腳本
-      - db_data:/var/lib/mysql                          # 數據持久化
+      - ./moodle-db-backup:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
     networks:
       - moodle-network
 
-  flask-txt:                               # 保留 Flask 應用服務
+  flask-txt:
     build:
-      context: ./flask-txt                 # Flask Dockerfile
+      context: ./flask-txt
     ports:
-      - "5000:5000"                        # Flask 端口映射
+      - "5000:5000"
     volumes:
-      - ./data:/data                       # 持久化資料夾
+      - ./data:/data
     networks:
-      - moodle-network                     # 與現有服務保持同一網路
+      - moodle-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - moodle-network
+
+  audio:
+    build:
+      context: ./audio
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./audio/temp:/tmp
+    networks:
+      - moodle-network
+    depends_on:
+      - db
+      - backend
 
 networks:
   moodle-network:
