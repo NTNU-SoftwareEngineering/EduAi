@@ -50,19 +50,22 @@
           </div>
           <div class="flex course-container" style="justify-content: flex-end;
           align-items: flex-start;">
-            <button onclick="dropdownMenuCSSModify()" class="btn btn-secondary course-list">
+            <button class="btn btn-secondary course-list">
               <div class="choose-text">請選擇課程</div>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             
-            <div class="flex course-dropdown-menu" id="course-select">
+            <div class="flex course-dropdown-menu" id="course-select"
+              pref = "&lt;a class=&quot;course-dropdown-item&quot; href=&quot;#&quot;&gt;"
+              suff = "&lt;/a&gt;"
+              >
 
               <!-- 這邊的內容之後應該可以直接串後端 獲得各個課程的 title 後
               用 js 自動在這裡加 innerHTML -->
 
-              <a class="course-dropdown-item" href="#">09/30 課程</a>
+              <a class="course-dropdown-item" href="#">09/30 課程abababa</a>
               <a class="course-dropdown-item" href="#">10/07 課程</a>
               <a class="course-dropdown-item" href="#">10/14 課程</a>
               <a class="course-dropdown-item" href="#">10/21 課程</a>
@@ -116,10 +119,11 @@
   </div>
 
   <!--student_discussion page JS-->
+  <script src="./assets/js/fetch_course.js"></script>
   <script src="./assets/js/student_conversation.js"></script>
   <script src="./assets/js/sidebar.js"></script>
   <script src="./assets/js/token.js"></script>
-    <script src="./assets/js/logout.js"></script>
+  <script src="./assets/js/logout.js"></script>
 </body>
 
 </html>

@@ -2,7 +2,7 @@ let dropdown_expand = 0;
 let didSendMessage = 0;
 let username = "王小明"; //backend should modify and offer the username of the account
 
-let courseList = [
+/*let courseList = [
     "09/14 輔導課",
     "09/17 資訊課",
     "10/12 國文課",
@@ -10,9 +10,18 @@ let courseList = [
     "10/17 資訊課",
     "10/19 英文課",
 ]; // backend should transfer the data to the frontend
-
-let course_status = new Array(courseList.length);
-for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
+*/
+let courseList = []; // course name only
+let courseObjList = [];
+let course_status = [];
+async function loadCourse() { // fetch course data from backend
+    courseObjList = await fetchCourses();
+    courseList = courseObjList.map(c => c.fullname);
+    console.log("Courses: ", courseList);
+    course_status = new Array(courseList.length);
+    for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
+}
+document.addEventListener("DOMContentLoaded", loadCourse);
 
 function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
@@ -32,12 +41,9 @@ function select_course(index){
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
     <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
     </svg>'
-    
-
-
 
     dropdownMenuCSSModify()
-}   
+}
 
 
 function dropdownMenuCSSModify(){
@@ -63,6 +69,7 @@ function dropdownMenuCSSModify(){
     }
 
 }
+document.querySelector('.course-list').addEventListener('click', dropdownMenuCSSModify);
 
 function detectEnter(ele) {
     if (event.key == "Enter") {
