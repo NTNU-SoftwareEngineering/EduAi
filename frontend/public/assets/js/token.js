@@ -14,7 +14,7 @@ function fetchData() {
         })
     })
     .then( response =>{
-        response.json() 
+        return response.json()  
     })
     .then( (data) => {
 
@@ -36,8 +36,8 @@ function fetchData() {
         
     })
     .then( response =>{ 
-        response.json()
-        
+        return response.json()
+         
     })
     .then( data => {
         console.log("取得用戶註冊的課程列表");
@@ -101,3 +101,4 @@ checkTokenVaild()
 setInterval(() => {
     checkTokenVaild()
 }, 15000);
+
