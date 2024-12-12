@@ -9,7 +9,7 @@ async function loadCourse() { // fetch course data from backend
     const course_select_ele = document.getElementById('select-course');
     
     // 將靜態網頁預填的選項清空
-    course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+    // course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
     
     courseList.forEach ( course => {
         const option = document.createElement('option');
@@ -145,6 +145,7 @@ async function get_student_from_course(courseid){
 		}),
 	});
     const data = await response.json()
+    console.log(data);
     if (data.exception) {
         throw new Error(`Error fetching course participants: ${data.message}`);
     }
@@ -252,7 +253,13 @@ const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
     try{
-        const userid=await get_student_from_course(temp_courseid)
+        selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+        if ( !selectedCourseObj ) console.error(`Cannot find course: ${selectCourseList.value}`);
+
+        const courseid = selectedCourseObj.id;
+        if ( !courseid ) console.error(`Cannot find course id for: ${selectCourseList.value}`);
+
+        const userid = await get_student_from_course(courseid)
         console.log('hi')
         console.log(userid)
         for(const id of userid){
