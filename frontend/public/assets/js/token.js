@@ -1,4 +1,3 @@
-
 async function checkTokenVaild() {
     const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
@@ -33,3 +32,4 @@ checkTokenVaild()
 setInterval(() => {
     checkTokenVaild()
 }, 15000);
+

@@ -27,6 +27,13 @@ function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
 
+    document.querySelector("#message").removeAttribute("disabled")
+    document.querySelector("#message").placeholder = "請輸入訊息"
+
+    document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "flex"
+    document.querySelector("body > div > div > div > div.botton-tip").style.display = 'none'
+    document.querySelector("body > div > div > div > div.send-message > button").style.display = 'flex'
+
     const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
@@ -48,28 +55,42 @@ function select_course(index){
 
 function dropdownMenuCSSModify(){
 
-    const dropdown_menu = document.querySelector("#course-select");
+    const dropdown_menu = document.querySelectorAll("#course-select");
 
-    dropdown_menu.style.display = dropdown_expand ? "none" : "flex";
+
+    
 
 
     dropdown_expand = dropdown_expand ? 0 : 1;
 
-    dropdown_menu.innerHTML = ''
-
     if(dropdown_expand){
 
-        for(var i=0;i<courseList.length;i++){
-            if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
-            else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none"> \
+        for(var j = 0; j < dropdown_menu.length; j++){
+          
+          dropdown_menu[j].style.display = dropdown_expand ? "flex" : "none";
+          dropdown_menu[j].innerHTML = ''
+          for(var i=0;i<courseList.length;i++){
+            if(!course_status[i]) dropdown_menu[j].innerHTML += '<a class="course-dropdown-item' +(j?"-large" : "") + '" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+            else dropdown_menu[j].innerHTML += '<a class="course-dropdown-item' +(j?"-large" : "") + '" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none"> \
             <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> \
           </svg></a>'
         }
 
     }
+  }
+  else{
+    for(var j = 0; j < dropdown_menu.length; j++){
+          
+      dropdown_menu[j].style.display = dropdown_expand ? "flex" : "none";
+      dropdown_menu[j].innerHTML = ''
+      
+  }
+}
 
 }
 document.querySelector('.course-list').addEventListener('click', dropdownMenuCSSModify);
+
+document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "none"
 
 function detectEnter(ele) {
     if (event.key == "Enter") {
@@ -139,3 +160,7 @@ async function SendMessage() {
     }
     conversation_box.scrollTop = conversation_box.scrollHeight;
 }
+
+document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "none"
+document.querySelector("#message").setAttribute("disabled" , "disabled")
+document.querySelector("body > div > div > div > div.send-message > button").style.display = "none"
