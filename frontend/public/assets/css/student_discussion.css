@@ -14,7 +14,7 @@ body {
     background-size: 100% 100%;
 
 
-    height: 2rem; width: 2rem;
+    height: 3rem; width: 3rem;
     margin-right: .5rem;
 }
 
@@ -28,7 +28,7 @@ body {
 .label-word{
     color: var(--sec_gray900, #363636);
 
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -132,9 +132,6 @@ body {
     font-weight: 700;
     font-size: 1.25rem;
 
-    
-
-
 }
 
 .time-left-label {
@@ -174,7 +171,8 @@ body {
 
     margin-left: 50%;
     width: 100%;
-    height: auto;
+    height: 40%;
+    max-height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -268,11 +266,9 @@ body {
 
 
 .tip-box {
-
     display: flex;
     width: 100%;
     height: 100%;
-    
 }
 
 .tip-box .box{
@@ -290,10 +286,26 @@ body {
     flex-direction: column;
     margin: 2rem 1rem;
     color: var(--sec_gray500, #8E8E93);
-
-
     font-family: "Noto Sans TC";
-    font-size: 1.2rem;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2rem; /* 185.714% */
+    letter-spacing: 0.1rem;
+}
+
+.tip-text{
+    margin-bottom: 5%;
+}
+
+.choose-text{
+    width:78%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 1rem;
+    color: var(--sec_gray500, #8E8E93);
+    font-family: "Noto Sans TC";
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
     line-height: 2rem; /* 185.714% */
@@ -306,8 +318,8 @@ body {
     background-position: 0 0;
     background-size: 100% 100%;
 
-    height: 3rem; width: 3rem;
-    margin: 2rem 2rem;
+    height: 5rem; width: 5rem;
+    margin: 1rem 1rem;
 
     border-radius: 1.5rem;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -322,7 +334,7 @@ body {
 
     color: var(--sec_gray900, #363636);
 
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.5rem; /* 142.857% */
@@ -377,7 +389,7 @@ body {
 
     color: var(--sec_gray900, #8E8E93);
 
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.5rem; /* 142.857% */
@@ -406,7 +418,7 @@ body {
     color: rgba(142, 142, 147, 1);
     margin: 1.5rem 0rem;
 
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
 
@@ -434,7 +446,7 @@ body {
 
     outline: none;
     border-color: transparent;
-    width: 100%; height: 3rem;
+    width: 100%; height: 5rem;
     
     border-radius: .5rem;
     border: 1px solid var(--sec_gray50, #E5E5EA);
@@ -465,7 +477,8 @@ body {
 .course-list:hover , .course-list:focus , .course-list:active, 
 .course-list:active:after , .course-list:after,
 .course-dropdown-menu:hover, .course-dropdown-menu:focus , .course-dropdown-menu:active, 
-.course-dropdown-menu:active:after , .course-dropdown-menu:after{
+.course-dropdown-menu:active:after , .course-dropdown-menu:after,
+.course-dropdown-menu-large:hover , .course-dropdown-menu-large:focus , .course-dropdown-menu-large:active{
 
     outline: none;  
     background: #FFF;
@@ -474,14 +487,14 @@ body {
 
 }
 
-.course-dropdown-menu{
+.course-dropdown-menu , .course-dropdown-menu-large{
 
     background: var(--bgcolor, #FFF);
     border-radius: .5rem;
     width: 20rem;
     display: none;
     flex-direction: column;
-    margin-top: .5rem;
+    margin-top: 5.5rem;
 
     margin-left: 0;
 
@@ -512,7 +525,7 @@ body {
 }
 
 
-.course-dropdown-item {
+.course-dropdown-item , .course-dropdown-item-large{
     
 
     background: transparent;
@@ -545,6 +558,16 @@ body {
 
 }
 
+
+.course-dropdown-item-large{
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.course-dropdown-menu-large{
+    width: 50.3%;
+    
+}
 
 
 .sep-line {
@@ -616,7 +639,7 @@ body {
     color: rgba(255, 255, 255, 1);
     text-align: left;
 
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
 
@@ -659,22 +682,19 @@ textarea{
     align-items: center;
     display:flex;
 
-    
     margin: 1.5rem 2.5%;
     margin-top: 3rem;
 
     margin-top: auto;
 
-
     bottom: 1rem;
 
     width: 90%;
 
-    height: 3.5rem;
-    
+    height: 6rem;
 
     background-color: rgba(242, 242, 247, 1);
-
+    font-size: 2rem;
 }
 
 .send-message .message {
@@ -868,7 +888,7 @@ textarea{
 
 
     font-family: "Noto Sans TC";
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
 
@@ -881,7 +901,7 @@ textarea{
     color: var(--sec_gray500, #8E8E93);
     text-align: center;
 
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     letter-spacing: .1rem;
@@ -973,7 +993,7 @@ textarea{
 
     color: var(--white, var(--pri_white, #FFF));
     text-align: left;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.25rem; /* 157.143% */

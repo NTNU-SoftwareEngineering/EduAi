@@ -1,5 +1,7 @@
 import express from 'express';
-// import Groq from 'groq-sdk';
+import Groq from 'groq-sdk';
+import fs from "fs";
+
 import { ChatGroq } from '@langchain/groq';
 import { END, MemorySaver, MessagesAnnotation, START, StateGraph } from '@langchain/langgraph';
 import { v4 as uuidv4 } from 'uuid';
@@ -85,6 +87,51 @@ app.post('/student_conversation', async function (req, res) {
         message: output.messages[output.messages.length - 1].content
     });
 });
+
+
+app.post('/llm', async function(req, res){
+
+    var input = "";
+    try {
+        input = req.body.message;
+        const prompt = 'prompt.txt';
+
+        if (input === undefined) {
+            res.status(400).send('Bad request');
+            return;
+        }
+
+        if (fs.existsSync(prompt)) {
+            input += "\n" + fs.readFileSync(prompt, 'utf-8') + '\n';
+        }
+        //console.log(input)
+        
+
+    } catch (error) {
+        res.status(500).send('伺服器錯誤，無法讀取輸入文件。');
+        return;
+    }
+
+    const key = process.env.GROQ_API_KEY;
+    const groq = new Groq({ apiKey: key });
+
+    const response = await groq.chat.completions.create({
+        messages: [
+            {
+                role: 'user',
+                content: input,
+            },
+        ],
+        model: "llama-3.2-90b-vision-preview"
+    });  
+
+    console.log(response.choices[0]?.message?.content || 'No response');
+
+    res.send(response);
+
+});
+
+
 
 app.listen(port, function () {
     console.log(`App listening on port ${port}`);

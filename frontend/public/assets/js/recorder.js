@@ -221,20 +221,28 @@ async function uploadAudioToMoodle(){
 	}
 }
 
-// 將音訊編碼為 WAV 格式，並呼叫STT API轉換成文字回傳
+// 將音訊編碼為 WAV 格式，並呼叫transcribe API轉換成文字回傳 //step 2
 async function triggerSTT(){
-	
-	const audioBlob = await fetch(audio.src).then(res => res.blob())
+	try {
+		const audioBlob = await fetch(audio.src).then(res => res.blob())
 
-	// 使用 FormData 包裝音頻文件
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'audio-file.wav');
+		// 使用 FormData 包裝音頻文件
+		const formData = new FormData();
+		formData.append('audio', audioBlob, 'audio-file.wav');
 
-	const response = await fetch('http://localhost:8000/api/whisper-transcribe', {
-        method: 'POST',
-        body: formData,
-    });
+		const response = await fetch('http://localhost:5001/transcribe', {
+			method: 'POST',
+			body: formData,
+		});
 
-    if (!response.ok) throw new Error("語音辨識失敗");
-    return await response.json(); // 返回轉換的逐字稿
+		if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`語音辨識失敗，伺服器回應：${errorMessage}`);
+        }
+		return await response.json(); // 返回轉換的逐字稿
+	}
+	catch(err){
+		console.error("語音辨識請求失敗：", error);
+        throw new Error("無法完成語音辨識，請稍後再試。");
+	}
 }
