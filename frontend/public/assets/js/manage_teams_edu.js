@@ -275,10 +275,37 @@ function randomGroup() {
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     const groupArray = [];
+
+    let studentsPerGroup = Math.floor(studentArray.length / groupNum);
+    let remainder = studentArray.length % groupNum;
+
+    let index = 0;
+    for (let i = 0; i < groupNum; i++) {
+        groupArray.push([]);
+        for (let j = 0; j < studentsPerGroup; j++) {
+            groupArray[i].push(studentArray[index]);
+            index++;
+        }
+    }
+
+    while (remainder > 0) {
+        const randomIndex = Math.floor(Math.random() * groupNum);
+        if (groupArray[randomIndex].length < studentsPerGroup + 1) {
+            groupArray[randomIndex].push(studentArray[index]);
+            index++;
+            remainder--;
+        }
+    }
+
+    displayGroups(groupArray);
+    console.log(groupArray);
+}
+
+function displayGroups(groupArray) {
     const groupList = document.querySelector(".group-content");
     groupList.innerHTML = "";
-    for (let i = 0; i < groupNum; i++) {
 
+    for (let i = 0; i < groupArray.length; i++) {
         //group div
         const group = document.createElement('div');
         group.className = 'group';
@@ -297,7 +324,7 @@ function randomGroup() {
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';
-        groupText.textContent = `第${i + 1}組 共0人`;
+        groupText.textContent = `第${i + 1}組 共${groupArray[i].length}人`;
         groupTitle.appendChild(groupText);
 
         group.appendChild(groupTitle);
@@ -307,44 +334,19 @@ function randomGroup() {
         groupStudent.className = 'group-student';
         group.appendChild(groupStudent);
 
-        groupArray.push(group);
+        groupArray[i].forEach(student => {
+            student.style.backgroundColor = group_student_color_code[i % 4];
+            student.querySelector('.student-icon').id = colors[i % 4];
+            groupStudent.appendChild(student);
+        });
+
         groupList.appendChild(group);
     }
 
-    let studentsPerGroup = Math.floor(studentArray.length / groupNum);
-    let remainder = studentArray.length % groupNum;
-
-    let index = 0;
-    for (let i = 0; i < groupNum; i++) {
-        for (let j = 0; j < studentsPerGroup; j++) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[i % 4];
-            // student.querySelector('.student-icon').backgroundColor = group_student_icon_color[i % 4];
-            student.querySelector('.student-icon').id = colors[i % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[i % 4];
-            // student.querySelector('student-icon').style.backgroundColor = group_student_icon_color[i % 4];
-            groupArray[i].querySelector('.group-student').appendChild(student);
-            index++;
-        }
-    }
-
-    while (remainder > 0) {
-        const randomIndex = Math.floor(Math.random() * groupNum);
-        if (groupArray[randomIndex].querySelector('.group-student').childElementCount < studentsPerGroup + 1) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[randomIndex % 4];
-            student.querySelector('.student-icon').id = colors[randomIndex % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[randomIndex % 4];
-            groupArray[randomIndex].querySelector('.group-student').appendChild(student);
-            index++;
-            remainder--;
-        }
-    }
-
     // Update group titles with the correct number of students
-    groupArray.forEach(group => {
-        const groupTitle = group.querySelector('.group-title');
-        const studentCount = group.querySelector('.group-student').childElementCount;
+    groupArray.forEach((group, index) => {
+        const groupTitle = document.querySelector(`#group${index + 1} .group-title`);
+        const studentCount = group.length;
 
         // Clear previous group title content
         groupTitle.innerHTML = '';
@@ -352,7 +354,7 @@ function randomGroup() {
         // Add group icon to group title
         const groupIcon = document.createElement('div');
         groupIcon.className = 'group-icon';
-        switch (group.id.replace('group', '') % 4) {
+        switch (index % 4) {
             case 0:
                 groupIcon.style.backgroundImage = "url(../assets/images/teacher_management/light_blue.svg)";
                 groupIcon.style.backgroundColor = "rgb(201, 233, 255)";
@@ -375,7 +377,7 @@ function randomGroup() {
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';
-        groupText.textContent = `第${madarian[parseInt(group.id.replace('group', '')) - 1]}組 共${studentCount}人`;
+        groupText.textContent = `第${madarian[index]}組 共${studentCount}人`;
         groupTitle.appendChild(groupText);
     });
 }
