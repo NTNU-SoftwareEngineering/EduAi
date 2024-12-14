@@ -1,3 +1,25 @@
+let courseList = []; // course name only
+let courseObjList = [];
+async function loadCourse() { // fetch course data from backend
+    courseObjList = await fetchCourses();
+    courseList = courseObjList.map(c => c.fullname);
+    console.log("courseList: ", courseList);
+
+    // 更改 sourse-select 下拉選單的值
+    const course_select_ele = document.getElementById('course-select');
+    
+    // 將靜態網頁預填的選項清空
+    course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+    
+    courseList.forEach ( course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        course_select_ele.appendChild(option);
+    });
+}
+document.addEventListener("DOMContentLoaded", loadCourse);
+
 
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -103,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentTime = Date.now();
     const studentName = localStorage.getItem("studentName");
     const savedCourse = localStorage.getItem("selectedCourse");
-    const saveddClass = localStorage.getItem("selectedClass");
+    // const saveddClass = localStorage.getItem("selectedClass");
 
     //頁面每10分鐘刷新一次(=頁面變成預設尚未選擇課程狀態)
     if (studentName && savedTime && currentTime - savedTime >10 * 60 * 1000) {
@@ -117,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
         selectedStuName.textContent = studentName;
         selectedCourseName.textContent = savedCourse;
         courseSelect.value = savedCourse;
-        classSelect.value = saveddClass;
+        // classSelect.value = saveddClass;
 
         fetch('assets/data/response.txt')
             .then(response => {
@@ -180,10 +202,10 @@ document.addEventListener("DOMContentLoaded", function() {
         selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
     });
 
-    classSelect.addEventListener("change", function() {
-        const selectedClass = classSelect.value;
-        localStorage.setItem("selectedClass", selectedClass);
-    });
+    // classSelect.addEventListener("change", function() {
+    //     const selectedClass = classSelect.value;
+    //     localStorage.setItem("selectedClass", selectedClass);
+    // });
 
     function updateInfoCards(data) {
 

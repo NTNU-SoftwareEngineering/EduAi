@@ -7,6 +7,10 @@ const signInForm = document.getElementById('signInForm');
 
 // 確保表單存在
 if (signInForm) {
+
+	const token = localStorage.getItem('token');
+    if ( token ) window.location.href = 'student_user_data_edu.html';
+	
 	// 找到登入表單內的 DOM 元素
 	const usernameInput = signInForm.querySelector('input[type="email"]');  // 使用者名稱輸入框
 	const passwordInput = signInForm.querySelector('input[type="password"]');  // 密碼輸入框

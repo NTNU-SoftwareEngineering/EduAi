@@ -1,3 +1,27 @@
+let courseList = []; // course name only
+let courseObjList = [];
+async function loadCourse() { // fetch course data from backend
+    courseObjList = await fetchCourses();
+    courseList = courseObjList.map(c => c.fullname);
+    console.log("courseList: ", courseList);
+
+    // 更改 sourse-select 下拉選單的值
+    const course_select_ele = document.getElementById('select-course');
+    
+    // 將靜態網頁預填的選項清空
+    // course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+    
+    courseList.forEach ( course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        course_select_ele.appendChild(option);
+    });
+}
+document.addEventListener("DOMContentLoaded", loadCourse);
+
+
+
 const selectClassList = document.querySelector('#select-class')
 const selectCourseList = document.querySelector('#select-course')
 
@@ -28,16 +52,6 @@ downArrow.addEventListener('click', function(){
 const temp_courseid = 2;
 // test class 1
 class1 = {
-    "1": "王小明",
-    "2": "王小明",
-    "3": "王小明",
-    "4": "王小明",
-    "5": "王小明",
-    "6": "王小明",
-    "7": "王小明",
-    "8": "王小明",
-    "9": "王小明",
-    "10": "王小明",
 };
 async function get_group_from_course(courseid){
     // change class information
@@ -92,8 +106,28 @@ async function get_user_fullname_by_id(userid){
 		}),
 	});
     const data = await response.json()
+    // console.log("aaa")
     // console.log(data)
-    return data.fullname
+    return data[0].fullname
+}
+async function delete_group(groupid){
+    // change class information
+    const wsfunction = 'core_group_delete_groups'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupid}`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+		}),
+	});
+    const data = await response.json()
+    // console.log("aaa")
+    // console.log(data)
+    return 1;
 }
 async function get_student_from_course(courseid){
     // change class information
@@ -111,18 +145,64 @@ async function get_student_from_course(courseid){
 		}),
 	});
     const data = await response.json()
+    console.log(data);
     if (data.exception) {
         throw new Error(`Error fetching course participants: ${data.message}`);
     }
 
     // Filter out users with the "Teacher" role
-    const participants = data.filter(user => {
-        // Check if the user does NOT have a "Teacher" role (roleid typically 3)
-        return !user.roles.some(role => role.roleid === 3); // Adjust roleid if necessary
+    const userIds = data
+        .filter(user => !user.roles.some(role => role.roleid === 3)) // Adjust roleid if necessary
+        .map(user => user.id); // Extract only user IDs
+
+    console.log("User IDs (Without Teachers):", userIds);
+    return userIds; // Return an array of user IDs
+} 
+async function create_group(courseid, name) {
+    const wsfunction = 'core_group_create_groups';
+    const wstoken = localStorage.getItem('token'); // Moodle API token
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groups[0][courseid]=${courseid}&groups[0][name]=${name}&groups[0][description]=aaa`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken,
+            wsfunction,
+        }),
     });
 
-    console.log("Filtered Participants (Without Teachers):", participants);
-    return participants;
+    const data = await response.json();
+
+    // if (data.exception) {
+    //     throw new Error(`Error creating groups: ${data.message}`);
+    // }
+
+    // console.log("Created Groups:", data);
+    return 1
+}
+async function add_group_member(groupid, userid) {
+    const wsfunction = 'core_group_add_group_members';
+    const wstoken = localStorage.getItem('token'); // Moodle API token
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&members[0][groupid]=${groupid}&members[0][userid]=${userid}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken,
+            wsfunction,
+        }),
+    });
+
+    const data = await response.json();
+
+    // if (data.exception) {
+    //     throw new Error(`Error adding group member: ${data.message}`);
+    // }
+
+    // console.log("add group member:", data);
+    return 1; // Returns the created group IDs
 }
 async function show_group_info(){
     try {
@@ -148,8 +228,8 @@ async function show_group_info(){
         console.error("Error:", error);
     }
 }
-show_group_info()
-function updateInfo(){
+// show_group_info()
+async function updateInfo(){
     // change class information
     let classInfo = document.querySelector(".info-content > .class > .intro");
     classInfo.innerHTML = "班級：";
@@ -172,7 +252,27 @@ const color_code = ["#F3F0F7", "#FFF6E8", "#F0FFF0", "#E8F6FF"];
 const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
-    
+    try{
+        selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+        if ( !selectedCourseObj ) console.error(`Cannot find course: ${selectCourseList.value}`);
+
+        const courseid = selectedCourseObj.id;
+        if ( !courseid ) console.error(`Cannot find course id for: ${selectCourseList.value}`);
+
+        const userid = await get_student_from_course(courseid)
+        console.log('hi')
+        console.log(userid)
+        for(const id of userid){
+            const user_name = await get_user_fullname_by_id(id)
+            // console.log(`id:${id}`)
+            // console.log(`name:${user_name}`)
+            class1[id] = id
+        }
+        console.log(class1)
+    }
+    catch (error) {
+        console.error("Error:", error);
+    }
     let studentList = document.querySelector(".group-content");
     studentList.innerHTML = "";
     if(selectClassList.value == "class1"){
@@ -204,7 +304,7 @@ async function updateStudent(){
 
 selectCourseList.addEventListener('change', updateCourseInfo);
 
-function updateCourseInfo(){
+async function updateCourseInfo(){
     // change course information
     let courseInfo = document.querySelector(".info-content > .course > .intro");
     courseInfo.innerHTML = "課程名稱：";
@@ -266,6 +366,44 @@ const group_student_icon_color = ["#8665CD", "#FFBC57", "#0DBD09", "#4BB7FF"];
 const madarian = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十",
                 "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"];
 
+async function random_group() {
+    const groups_old = await get_group_from_course(temp_courseid)
+    for(let i=0;i<groups_old.length;i++){
+        delete_group(groups_old[i].id)
+    }
+    const participant = await get_student_from_course(temp_courseid)
+    console.log(`parti:${participant}`)
+    const participant_length = participant.length
+    console.log(`parti_l:${participant_length}`)
+    const participant_suffle = participant
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+        console.log(`parti_s:${participant_suffle}`)
+    // const groupNum = document.querySelector(".teams-num-selector > input").value;
+    const groupNum = 3
+    console.log(groupNum);
+    for(let i = 0; i<groupNum;i++)
+        await create_group(temp_courseid, `group ${i + 1}`)
+    const groups = await get_group_from_course(temp_courseid)
+    console.log(groups)
+    let groupids = []
+    for(let i = 0;i<groups.length;i++){
+        groupids.push(groups[i].id);
+    }
+    console.log(`group:${groupids}`)
+    const group_member_num = Math.floor(participant_length/groupNum)
+    for(let i = 0;i<participant_length;i++){
+        console.log(`${i} ${participant[i]}`)
+        if(i >= group_member_num * groupNum){
+            add_group_member(groupids[i%group_member_num],participant[i])
+        }
+        else add_group_member(groupids[Math.floor(i/group_member_num)],participant[i])
+    }
+    const groups_new = await get_group_from_course(temp_courseid)
+    console.log(groups_new)
+}
+random_group()
 
 function randomGroup() {
     console.log("randomGroup");
@@ -304,36 +442,29 @@ function randomGroup() {
 function displayGroups(groupArray) {
     const groupList = document.querySelector(".group-content");
     groupList.innerHTML = "";
-
     for (let i = 0; i < groupArray.length; i++) {
         //group div
         const group = document.createElement('div');
         group.className = 'group';
         group.id = `group${i + 1}`;
         group.style.backgroundColor = group_color_code[i % 4];
-
         //group title
         const groupTitle = document.createElement('div');
         groupTitle.className = 'group-title';
-
         //group icon
         const groupIcon = document.createElement('div');
         groupIcon.className = 'group-icon';
         groupTitle.appendChild(groupIcon);
-
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';
         groupText.textContent = `第${i + 1}組 共${groupArray[i].length}人`;
         groupTitle.appendChild(groupText);
-
         group.appendChild(groupTitle);
-
         //group student div
         const groupStudent = document.createElement('div');
         groupStudent.className = 'group-student';
         group.appendChild(groupStudent);
-
         groupArray[i].forEach(student => {
             student.style.backgroundColor = group_student_color_code[i % 4];
             student.querySelector('.student-icon').id = colors[i % 4];
@@ -342,15 +473,12 @@ function displayGroups(groupArray) {
 
         groupList.appendChild(group);
     }
-
     // Update group titles with the correct number of students
     groupArray.forEach((group, index) => {
         const groupTitle = document.querySelector(`#group${index + 1} .group-title`);
         const studentCount = group.length;
-
         // Clear previous group title content
         groupTitle.innerHTML = '';
-
         // Add group icon to group title
         const groupIcon = document.createElement('div');
         groupIcon.className = 'group-icon';
@@ -373,7 +501,6 @@ function displayGroups(groupArray) {
                 break;
         }
         groupTitle.appendChild(groupIcon);
-
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';

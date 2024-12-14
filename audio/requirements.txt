@@ -1,0 +1,4 @@
+Flask
+pydub
+SpeechRecognition
+Flask-CORS

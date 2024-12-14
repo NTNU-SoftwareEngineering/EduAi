@@ -1,8 +1,8 @@
-function fetchCourses() {
+async function fetchCourses() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
     
-    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+    return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -32,25 +32,26 @@ function fetchCourses() {
     .then( data => {
         console.log("取得用戶註冊的課程列表");
         console.log(data);
-        return data.map( j => j.fullname );
+        return data;
+        // return data.map( j => j.fullname );
     })
-    .then( courses => {
+    /*.then( courses => {
         // 更改 sourse-select 下拉選單的值
+        return courses;
         const course_select_ele = document.getElementById('course-select');
-        console.log(courses);
+        const pref = course_select_ele.getAttribute('pref');
+        const suff = course_select_ele.getAttribute('suff');
+        const init = course_select_ele.getAttribute('init');
         
         // 將靜態網頁預填的選項清空
-        course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+        if ( init ) course_select_ele.innerHTML = init;
         
-        courses.forEach ( course => {
-            const option = document.createElement('option');
-            option.value = course;
-            option.textContent = course;
-            course_select_ele.appendChild(option);
-        });
-    })
+        let options = courses.map( c => pref+c+suff );
+        options = options.join('\n');
+        course_select_ele.innerHTML += options;
+    })*/
     .catch( error => {
         console.error('錯誤:', error);
     });
 }
-document.addEventListener("DOMContentLoaded", fetchCourses);
+// document.addEventListener("DOMContentLoaded", fetchCourses);
