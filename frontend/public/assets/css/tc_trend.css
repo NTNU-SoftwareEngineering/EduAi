@@ -92,7 +92,7 @@ body {
 .summary{
     height: 3.5rem;
     display: flex;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     align-items: center;
@@ -197,7 +197,7 @@ body {
     color: var(--grey900, #303133);
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.3rem;
     font-style: normal;
     font-weight: 400;
@@ -311,7 +311,7 @@ body {
     align-self: stretch;
     padding-left: 1%;
 
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: 700;
@@ -417,7 +417,7 @@ body {
     text-align: start;
     /* font-weight: bold; */
     display: block;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     color: #8E8E93;
@@ -426,7 +426,7 @@ body {
 .score-summary p{
     color: var(--sec_gray900, #363636);
 
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: bold;
@@ -530,7 +530,7 @@ body {
 }
 .description {
     color: #8E8E93;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     padding-left: 2rem;
     line-height: 1.6;
     font-size: 1.46rem;
@@ -581,7 +581,7 @@ body {
     color: var(--sec_gray900, #8E8E93);
     margin-top: 4rem;
     margin-left: 14rem;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -664,7 +664,7 @@ h4 {
     color: var(--sec_gray500, #8E8E93);
     /* text-align: center;
     justify-content: center; */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     margin-top: 9rem;
     margin-left: 45%;
@@ -725,7 +725,7 @@ h4 {
 
 .card-container h5{
     color: var(--sec_gray900, #363636);
-    font-family: "PingFang TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-weight : bold;
     margin-top: 1rem;
@@ -735,7 +735,7 @@ h4 {
 }
 
 .card-container p{
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.3rem;
     /* font-weight : bold; */
     margin-top: 1rem;

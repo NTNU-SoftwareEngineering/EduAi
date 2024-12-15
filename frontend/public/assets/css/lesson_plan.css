@@ -34,7 +34,7 @@
 .event-row-title{
     color: var(--light-text---el-text-color-secondary, #909399);
     background: var(--bg, #F9FAFC);
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
@@ -49,7 +49,7 @@
 
     color: var(--light-text---el-text-color-secondary, #909399);
     text-align: center;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
@@ -112,7 +112,7 @@
     color: var(--sec_gray900, #363636);
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -191,7 +191,7 @@
     text-align: left;
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 400;
@@ -207,7 +207,7 @@
     text-align: left;
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -219,7 +219,7 @@
 .class_empty_hint div{
     color: var(--sec_gray500, #8E8E93);
     text-align: center;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -239,7 +239,6 @@
 }
 
 .select-class {
-
     top: 0;
     height:  15%;
     width: 100%;
@@ -252,19 +251,21 @@
 
     background-color: var(--pri_p300, #9879DA);
 
+    padding: 1.67rem;
 }
 
 
 
-.select-class select{
+/* .select-class select{
     outline: none;
     width: 100%;
     color: var(--sec_gray500, #8E8E93);
+    background-color: #fff;
     border-radius: .5rem;
     font-size: 1.25rem;
     height: 100%;
     padding: 1rem;
-}
+} */
 
 .select-class .intro {
     
@@ -348,7 +349,7 @@
     color: var(--grey900, #303133);
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.25rem;
     font-style: normal;
     text-align: left;
@@ -367,7 +368,7 @@
     outline: none;
     border: none;
     color: var(--light-text---el-text-color-placeholder, #A8ABB2);
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 400;
@@ -384,7 +385,7 @@
     outline: none;
     border: none;
     color: var(--light-text---el-text-color-placeholder, #A8ABB2);
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 400;
@@ -410,7 +411,7 @@
 
     color: var(--white, var(--pri_white, #FFF));
     text-align: center;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
@@ -426,9 +427,6 @@
 
     width: 2rem; 
     height: 2rem;
-    
-
-    
 
     margin-bottom: 0;
 
@@ -444,9 +442,6 @@
     height: 1.5rem;
     
     margin-left: 0;
-
-    
-
     margin-bottom: 0;
 
 }
@@ -454,8 +449,8 @@
 
 .footer {
 
-    margin-top: .2rem;
-    margin-bottom: .5rem;
+    margin-top: 1.7rem;
+    margin-left: 1.7rem;
     width: 100%;
     display: flex;
     
@@ -470,7 +465,6 @@
     background-size: 100% 100%;
 
     width: 2rem; height: 2rem;
-    margin: 1.25rem 1.25rem;
 
     margin-right: .5rem;
 
@@ -478,18 +472,18 @@
 
 }
 
-.footer .book-icon {
+.select-label {
+    height: 0;
+}
+
+.book-icon {
 
     background: url("../images/teacher_lesson_plan/book.svg") no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
 
-    width: 2rem; height: 2rem;
-    margin: 1.25rem 1.25rem;
-
-    margin-right: .5rem;
-
-    margin-bottom: 0;
+    width: 2.5rem; height: 2.5rem;
+    margin-right: 0.8rem;
 
 }
 
@@ -544,10 +538,56 @@
 .select-class .class-selector {
     display: flex;
     align-items: center;
+    position: relative;
     
-    width: 90%;
+    width: 100%;
     height: 35%;
     
-    margin-top: 2rem;
+    margin-top: 1rem;
+}
 
+.class-selector select {
+    display: none;
+}
+
+.select-selected {
+    background-color: #F2F2F7;
+    width: 100%;
+    border-radius: 0.83rem;
+}
+  
+  /* Style the arrow inside the select element: */
+.select-selected:after {
+    position: absolute;
+    content: url('../images/select-arrow.svg');
+    right: 10px;
+}
+  
+  /* style the items (options), including the selected item: */
+.select-items div, .select-selected {
+    color: #8E8E93;
+    font-size: 1.46rem;
+    padding: .83rem 1.67rem;
+    cursor: pointer;
+}
+  
+  /* Style items (options): */
+.select-items {
+    position: absolute;
+    background-color: #F2F2F7;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-radius: 0.83rem;
+}
+  
+  /* Hide the items when the select box is closed: */
+.select-hide {
+    display: none;
+}
+
+.same-as-selected {
+    background: url('../images/select-check.svg') no-repeat right;
+    margin-right: 10px;
 }
