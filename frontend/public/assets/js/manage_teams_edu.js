@@ -1,5 +1,9 @@
 let courseList = []; // course name only
 let courseObjList = [];
+let courseId = -1; // 還未選擇課程: -1
+const selectClassList = document.querySelector('#select-class')
+const selectCourseList = document.querySelector('#select-course')
+
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
@@ -20,10 +24,27 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
+function updateCourseId() {
+    console.log( "select course: " + selectCourseList.value );
+    selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+    if ( !selectedCourseObj ) {
+        // 還未選擇課程，或後端無此課程
+        courseId = -1;
+        console.error(`Cannot find course: ${selectCourseList.value}`);
+        return;
+    };
+
+    courseId = selectedCourseObj.id;
+    if ( !courseId ) {
+        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        return;
+    }
+    console.log( "update courseid: " + courseId );
+}
+selectCourseList.addEventListener("change", updateCourseId);
 
 
-const selectClassList = document.querySelector('#select-class')
-const selectCourseList = document.querySelector('#select-course')
+
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0
 
