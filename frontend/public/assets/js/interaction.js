@@ -1,59 +1,47 @@
-/*
-function fetchCourses() {
-    const token = localStorage.getItem('token');
-    if ( !token ) window.location.href = 'login.html';
+let courseList = []; // course name only
+let courseObjList = [];
+
+let courseId = -1; // 還未選擇課程: -1
+const selectCourseList = document.querySelector('#course-select')
+
+function updateCourseId() {
+    console.log( "select course: " + selectCourseList.value );
+    selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+    if ( !selectedCourseObj ) {
+        // 還未選擇課程，或後端無此課程
+        courseId = -1;
+        console.error(`Cannot find course: ${selectCourseList.value}`);
+        return;
+    };
+
+    courseId = selectedCourseObj.id;
+    if ( !courseId ) {
+        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        return;
+    }
+    console.log( "update courseid: " + courseId );
+}
+selectCourseList.addEventListener("change", updateCourseId);
+
+async function loadCourse() { // fetch course data from backend
+    courseObjList = await fetchCourses();
+    courseList = courseObjList.map(c => c.fullname);
+    console.log("courseList: ", courseList);
+
+    // 更改 sourse-select 下拉選單的值
+    const course_select_ele = document.getElementById('course-select');
     
-    fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            wstoken: token,
-            wsfunction: 'core_webservice_get_site_info',
-            moodlewsrestformat: 'json'
-        })
-    })
-    .then( response => response.json() )
-    .then( (data) => {
-        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                wstoken: token,
-                wsfunction: 'core_enrol_get_users_courses',
-                moodlewsrestformat: 'json',
-                userid: data.userid
-            })
-        });
-    })
-    .then( response => response.json() )
-    .then( data => {
-        console.log("取得用戶註冊的課程列表");
-        return data.map( j => j.fullname );
-    })
-    .then( courses => {
-        // 更改 sourse-select 下拉選單的值
-        const course_select_ele = document.getElementById('course-select');
-        
-        // 將靜態網頁預填的選項清空
-        // course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
-        
-        courses.forEach ( course => {
-            const option = document.createElement('option');
-            option.value = course;
-            option.textContent = course;
-            course_select_ele.appendChild(option);
-        });
-    })
-    .catch( error => {
-        console.error('錯誤:', error);
+    // 將靜態網頁預填的選項清空
+    course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+    
+    courseList.forEach ( course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        course_select_ele.appendChild(option);
     });
 }
-document.addEventListener("DOMContentLoaded", fetchCourses);
-*/
+document.addEventListener("DOMContentLoaded", loadCourse);
 
 document.addEventListener("DOMContentLoaded", function() {
 
