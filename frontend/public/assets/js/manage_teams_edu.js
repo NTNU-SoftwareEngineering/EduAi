@@ -440,6 +440,7 @@ function randomGroup() {
 
     let index = 0;
     for (let i = 0; i < groupNum; i++) {
+
         groupArray.push([]);
         for (let j = 0; j < studentsPerGroup; j++) {
             groupArray[i].push(studentArray[index]);
@@ -464,31 +465,12 @@ function displayGroups(groupArray) {
     const groupList = document.querySelector(".group-content");
     groupList.innerHTML = "";
     for (let i = 0; i < groupArray.length; i++) {
-        //group div
-        const group = document.createElement('div');
-        group.className = 'group';
-        group.id = `group${i + 1}`;
-        group.style.backgroundColor = group_color_code[i % 4];
-        //group title
-        const groupTitle = document.createElement('div');
-        groupTitle.className = 'group-title';
-        //group icon
-        const groupIcon = document.createElement('div');
-        groupIcon.className = 'group-icon';
-        groupTitle.appendChild(groupIcon);
-        //group text
-        const groupText = document.createElement('div');
-        groupText.className = 'group-text';
-        groupText.textContent = `第${i + 1}組 共${groupArray[i].length}人`;
-        groupTitle.appendChild(groupText);
-        group.appendChild(groupTitle);
-        //group student div
-        const groupStudent = document.createElement('div');
-        groupStudent.className = 'group-student';
-        group.appendChild(groupStudent);
+
         groupArray[i].forEach(student => {
+
             student.style.backgroundColor = group_student_color_code[i % 4];
             student.querySelector('.student-icon').id = colors[i % 4];
+
             groupStudent.appendChild(student);
         });
 
@@ -498,6 +480,7 @@ function displayGroups(groupArray) {
     groupArray.forEach((group, index) => {
         const groupTitle = document.querySelector(`#group${index + 1} .group-title`);
         const studentCount = group.length;
+
         // Clear previous group title content
         groupTitle.innerHTML = '';
         // Add group icon to group title
