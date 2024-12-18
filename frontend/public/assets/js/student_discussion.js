@@ -1,18 +1,13 @@
 let dropdown_expand = 0
 let didSendMessage = 0
-let username = "王小明" //backend should modify and offer the username of the account
-/*let courseList = [
-  "09/14 輔導課",
-  "09/17 資訊課",
-  "10/12 國文課",
-  "10/14 輔導課",
-  "10/17 資訊課",
-  "10/19 英文課",
-]; // backend should transfer the data to the frontend
-*/
+// let username = "王小明" //backend should modify and offer the username of the account
 let courseList = []; // course name only
 let courseObjList = [];
 let course_status = [];
+let courseId = -1; // 還未選擇課程
+let assignmentId = -1; // 還未選擇作業(這個變數是要給record.js用的)
+
+
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
@@ -27,7 +22,8 @@ function select_course(index){
     course_status[index] = 1
     dropdown_expand = 1
 
-    
+	courseId = courseObjList[index].id; // 同步更新 courseId
+	updateAssignmentId(); // 同步更新 assignmentId
 
     document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "flex"
     document.querySelector("body > div > div > div > div.botton-tip").style.display = 'none'
@@ -35,12 +31,12 @@ function select_course(index){
     const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
-    for(var i=0;i<courseList.length;i++){
-      if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
-      else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none">\
-      <path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
-    </svg></a>'
-  }
+    for(var i=0;i<courseList.length;i++) {
+    	if(!course_status[i]) dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div></a>'
+    	else dropdown_menu.innerHTML += '<a class="course-dropdown-item" onclick="select_course('+i+')"><div>' + courseList[i] + '</div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 25" fill="none">\
+    	<path d="M8 13.3333L11.6667 18L19 8" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
+    	</svg></a>'
+}
 
     document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
@@ -93,3 +89,36 @@ function dropdownMenuCSSModify(){
 
 document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "none"
 document.querySelector("#message").setAttribute("disabled" , "disabled")
+
+// 更新 assignmentId
+async function updateAssignmentId() {
+	const assignmentUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+	try {
+		const assignmentResponse = await fetch(assignmentUrl);
+		const data = await assignmentResponse.json();
+		// 分析回傳的數據，找出最新開放的作業
+        if (data.courses && data.courses.length > 0) {
+            const assignments = data.courses[0].assignments;
+
+            // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
+            const sortedAssignments = assignments
+                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
+                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+
+            if (sortedAssignments.length > 0) {
+                const latestAssignment = sortedAssignments[0];
+				assignmentId = latestAssignment.id; // 同步更新 assignmentId
+                // console.log('最新開放的作業 ID:', latestAssignment.id);
+                // console.log('作業名稱:', latestAssignment.name);
+                // console.log('開放時間:', new Date(latestAssignment.allowsubmissionsfromdate * 1000));
+            } else {
+                // console.log('找不到任何作業。');
+            }
+        } else {
+            // console.log('找不到課程或作業。');
+        }
+	}
+	catch (error) {
+		console.error('無法取得作業 ID:', error);
+	}
+}
