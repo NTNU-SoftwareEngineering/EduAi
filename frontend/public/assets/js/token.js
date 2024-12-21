@@ -1,12 +1,15 @@
+
 async function checkTokenVaild() {
+    const wstoken = localStorage.getItem('token')
+    const wsfunction='core_webservice_get_site_info'
     const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
 		},
 		body: new URLSearchParams({
-			wstoken,  
-			wsfunction
+			wstoken,
+            wsfunction
 		}),
 	});
 	const data = await response.json()
