@@ -1,5 +1,50 @@
+let courseList = []; // course name only
+let courseObjList = [];
+let courseId = -1; // 還未選擇課程: -1
 const selectClassList = document.querySelector('#select-class')
 const selectCourseList = document.querySelector('#select-course')
+
+async function loadCourse() { // fetch course data from backend
+    courseObjList = await fetchCourses();
+    courseList = courseObjList.map(c => c.fullname);
+    console.log("courseList: ", courseList);
+
+    // 更改 sourse-select 下拉選單的值
+    const course_select_ele = document.getElementById('select-course');
+    
+    // 將靜態網頁預填的選項清空
+    // course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
+    
+    courseList.forEach ( course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        course_select_ele.appendChild(option);
+    });
+}
+document.addEventListener("DOMContentLoaded", loadCourse);
+
+function updateCourseId() {
+    console.log( "select course: " + selectCourseList.value );
+    selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+    if ( !selectedCourseObj ) {
+        // 還未選擇課程，或後端無此課程
+        courseId = -1;
+        console.error(`Cannot find course: ${selectCourseList.value}`);
+        return;
+    };
+
+    courseId = selectedCourseObj.id;
+    if ( !courseId ) {
+        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        return;
+    }
+    console.log( "update courseid: " + courseId );
+}
+selectCourseList.addEventListener("change", updateCourseId);
+
+
+
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0
 
@@ -86,6 +131,25 @@ async function get_user_fullname_by_id(userid){
     // console.log(data)
     return data[0].fullname
 }
+async function delete_group(groupid){
+    // change class information
+    const wsfunction = 'core_group_delete_groups'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupid}`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+		}),
+	});
+    const data = await response.json()
+    // console.log("aaa")
+    // console.log(data)
+    return 1;
+}
 async function get_student_from_course(courseid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
@@ -102,6 +166,7 @@ async function get_student_from_course(courseid){
 		}),
 	});
     const data = await response.json()
+    console.log(data);
     if (data.exception) {
         throw new Error(`Error fetching course participants: ${data.message}`);
     }
@@ -114,6 +179,52 @@ async function get_student_from_course(courseid){
     console.log("User IDs (Without Teachers):", userIds);
     return userIds; // Return an array of user IDs
 } 
+async function create_group(courseid, name) {
+    const wsfunction = 'core_group_create_groups';
+    const wstoken = localStorage.getItem('token'); // Moodle API token
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groups[0][courseid]=${courseid}&groups[0][name]=${name}&groups[0][description]=aaa`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken,
+            wsfunction,
+        }),
+    });
+
+    const data = await response.json();
+
+    // if (data.exception) {
+    //     throw new Error(`Error creating groups: ${data.message}`);
+    // }
+
+    // console.log("Created Groups:", data);
+    return 1
+}
+async function add_group_member(groupid, userid) {
+    const wsfunction = 'core_group_add_group_members';
+    const wstoken = localStorage.getItem('token'); // Moodle API token
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&members[0][groupid]=${groupid}&members[0][userid]=${userid}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken,
+            wsfunction,
+        }),
+    });
+
+    const data = await response.json();
+
+    // if (data.exception) {
+    //     throw new Error(`Error adding group member: ${data.message}`);
+    // }
+
+    // console.log("add group member:", data);
+    return 1; // Returns the created group IDs
+}
 async function show_group_info(){
     try {
         // Step 1: Get groups from the course
@@ -138,7 +249,7 @@ async function show_group_info(){
         console.error("Error:", error);
     }
 }
-show_group_info()
+// show_group_info()
 async function updateInfo(){
     // change class information
     let classInfo = document.querySelector(".info-content > .class > .intro");
@@ -163,7 +274,13 @@ const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
     try{
-        const userid=await get_student_from_course(temp_courseid)
+        selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+        if ( !selectedCourseObj ) console.error(`Cannot find course: ${selectCourseList.value}`);
+
+        const courseid = selectedCourseObj.id;
+        if ( !courseid ) console.error(`Cannot find course id for: ${selectCourseList.value}`);
+
+        const userid = await get_student_from_course(courseid)
         console.log('hi')
         console.log(userid)
         for(const id of userid){
@@ -270,6 +387,43 @@ const group_student_icon_color = ["#8665CD", "#FFBC57", "#0DBD09", "#4BB7FF"];
 const madarian = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十",
                 "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"];
 
+async function random_group() {
+    const groups_old = await get_group_from_course(temp_courseid)
+    for(let i=0;i<groups_old.length;i++){
+        delete_group(groups_old[i].id)
+    }
+    const participant = await get_student_from_course(temp_courseid)
+    console.log(`parti:${participant}`)
+    const participant_length = participant.length
+    console.log(`parti_l:${participant_length}`)
+    const participant_suffle = participant
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+        console.log(`parti_s:${participant_suffle}`)
+    // const groupNum = document.querySelector(".teams-num-selector > input").value;
+    const groupNum = 3
+    console.log(groupNum);
+    for(let i = 0; i<groupNum;i++)
+        await create_group(temp_courseid, `group ${i + 1}`)
+    const groups = await get_group_from_course(temp_courseid)
+    console.log(groups)
+    let groupids = []
+    for(let i = 0;i<groups.length;i++){
+        groupids.push(groups[i].id);
+    }
+    console.log(`group:${groupids}`)
+    const group_member_num = Math.floor(participant_length/groupNum)
+    for(let i = 0;i<participant_length;i++){
+        console.log(`${i} ${participant[i]}`)
+        if(i >= group_member_num * groupNum){
+            add_group_member(groupids[i%group_member_num],participant[i])
+        }
+        else add_group_member(groupids[Math.floor(i/group_member_num)],participant[i])
+    }
+    const groups_new = await get_group_from_course(temp_courseid)
+    console.log(groups_new)
+}
 
 function randomGroup() {
     console.log("randomGroup");
@@ -279,84 +433,58 @@ function randomGroup() {
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     const groupArray = [];
-    const groupList = document.querySelector(".group-content");
-    groupList.innerHTML = "";
-    for (let i = 0; i < groupNum; i++) {
-
-        //group div
-        const group = document.createElement('div');
-        group.className = 'group';
-        group.id = `group${i + 1}`;
-        group.style.backgroundColor = group_color_code[i % 4];
-
-        //group title
-        const groupTitle = document.createElement('div');
-        groupTitle.className = 'group-title';
-
-        //group icon
-        const groupIcon = document.createElement('div');
-        groupIcon.className = 'group-icon';
-        groupTitle.appendChild(groupIcon);
-
-        //group text
-        const groupText = document.createElement('div');
-        groupText.className = 'group-text';
-        groupText.textContent = `第${i + 1}組 共0人`;
-        groupTitle.appendChild(groupText);
-
-        group.appendChild(groupTitle);
-
-        //group student div
-        const groupStudent = document.createElement('div');
-        groupStudent.className = 'group-student';
-        group.appendChild(groupStudent);
-
-        groupArray.push(group);
-        groupList.appendChild(group);
-    }
-
     let studentsPerGroup = Math.floor(studentArray.length / groupNum);
     let remainder = studentArray.length % groupNum;
 
     let index = 0;
     for (let i = 0; i < groupNum; i++) {
+
+        groupArray.push([]);
         for (let j = 0; j < studentsPerGroup; j++) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[i % 4];
-            // student.querySelector('.student-icon').backgroundColor = group_student_icon_color[i % 4];
-            student.querySelector('.student-icon').id = colors[i % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[i % 4];
-            // student.querySelector('student-icon').style.backgroundColor = group_student_icon_color[i % 4];
-            groupArray[i].querySelector('.group-student').appendChild(student);
+            groupArray[i].push(studentArray[index]);
             index++;
         }
     }
 
     while (remainder > 0) {
         const randomIndex = Math.floor(Math.random() * groupNum);
-        if (groupArray[randomIndex].querySelector('.group-student').childElementCount < studentsPerGroup + 1) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[randomIndex % 4];
-            student.querySelector('.student-icon').id = colors[randomIndex % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[randomIndex % 4];
-            groupArray[randomIndex].querySelector('.group-student').appendChild(student);
+        if (groupArray[randomIndex].length < studentsPerGroup + 1) {
+            groupArray[randomIndex].push(studentArray[index]);
             index++;
             remainder--;
         }
     }
 
+    displayGroups(groupArray);
+    console.log(groupArray);
+}
+
+function displayGroups(groupArray) {
+    const groupList = document.querySelector(".group-content");
+    groupList.innerHTML = "";
+    for (let i = 0; i < groupArray.length; i++) {
+
+        groupArray[i].forEach(student => {
+
+            student.style.backgroundColor = group_student_color_code[i % 4];
+            student.querySelector('.student-icon').id = colors[i % 4];
+
+            groupStudent.appendChild(student);
+        });
+
+        groupList.appendChild(group);
+    }
     // Update group titles with the correct number of students
-    groupArray.forEach(group => {
-        const groupTitle = group.querySelector('.group-title');
-        const studentCount = group.querySelector('.group-student').childElementCount;
+    groupArray.forEach((group, index) => {
+        const groupTitle = document.querySelector(`#group${index + 1} .group-title`);
+        const studentCount = group.length;
 
         // Clear previous group title content
         groupTitle.innerHTML = '';
-
         // Add group icon to group title
         const groupIcon = document.createElement('div');
         groupIcon.className = 'group-icon';
-        switch (group.id.replace('group', '') % 4) {
+        switch (index % 4) {
             case 0:
                 groupIcon.style.backgroundImage = "url(../assets/images/teacher_management/light_blue.svg)";
                 groupIcon.style.backgroundColor = "rgb(201, 233, 255)";
@@ -375,11 +503,10 @@ function randomGroup() {
                 break;
         }
         groupTitle.appendChild(groupIcon);
-
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';
-        groupText.textContent = `第${madarian[parseInt(group.id.replace('group', '')) - 1]}組 共${studentCount}人`;
+        groupText.textContent = `第${madarian[index]}組 共${studentCount}人`;
         groupTitle.appendChild(groupText);
     });
 }

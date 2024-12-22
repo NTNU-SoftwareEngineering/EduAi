@@ -11,6 +11,21 @@
 
 }
 
+textarea{
+
+    text-align: justify;
+    word-break: break-all;
+    resize: none;
+
+    border: transparent;
+    outline: none;
+
+    margin-top: auto;
+    margin-bottom: auto;
+    
+
+}
+
 .event-label{
 
     padding: 1rem 1rem;
@@ -45,7 +60,7 @@
 
 }
 
-.event-row-title-input{
+.event-row-title-textarea{
 
     color: var(--light-text---el-text-color-secondary, #909399);
     text-align: center;
@@ -361,7 +376,7 @@
     
 }
 
-.form-input{
+.form-textarea{
 
     border-radius: .5rem;
     background: var(--bgcolor, #F2F2F7);
@@ -378,7 +393,7 @@
     padding-left: 1rem;
 }
 
-.form-input-large{
+.form-textarea-large{
 
     border-radius: .5rem;
     background: var(--bgcolor, #F2F2F7);
@@ -394,6 +409,7 @@
     height: 100%;
     padding-left: 1rem;
     margin-right: auto;
+
 
 }
 

@@ -4,9 +4,12 @@ const showPwdButton = document.getElementById('showPwd');
 const pwdInput = document.getElementById('pwd');
 const container = document.querySelector("body > div");
 const signInForm = document.getElementById('signInForm');
-
 // 確保表單存在
 if (signInForm) {
+
+	const token = localStorage.getItem('token');
+    if ( token ) window.location.href = 'student_user_data_edu.html';
+	
 	// 找到登入表單內的 DOM 元素
 	const usernameInput = signInForm.querySelector('input[type="email"]');  // 使用者名稱輸入框
 	const passwordInput = signInForm.querySelector('input[type="password"]');  // 密碼輸入框
@@ -53,11 +56,23 @@ if (signInForm) {
 			console.log("登入成功，回應包含 token");
 			// 儲存 Token 到瀏覽器的 localStorage
 			localStorage.setItem('token', data.token);
+			courseObjList = await fetchCourses();
+			// console.log(courseObjList[0])
+    		courseList = courseObjList.map(c => c.id);
+			course_first = courseList[0]
 			// 清除錯誤訊息
+			userid = await get_userid()
+			role = await get_role_from_course(course_first,userid)
+			console.log(`role:${role}`)
+			if(role==5)
+				localStorage.setItem('role', '學生');
+			else localStorage.setItem('role', '老師');
 			errorDisplay.textContent = '';
 			alert('登入成功！');  // 彈出成功訊息
 			// 重定向到主頁或其他頁面
-			window.location.href = 'student_user_data_edu.html';  // 請替換為實際的頁面
+			if(role==5)
+				window.location.href = 'student_user_data_edu.html';  // 請替換為實際的頁面
+			else window.location.href = 'teacher_user_data_edu.html';
 		} else {
 			console.warn("登入失敗，伺服器未返回 token");
 			// 根據後端返回的錯誤訊息，顯示相應的提示

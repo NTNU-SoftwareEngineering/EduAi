@@ -1,10 +1,11 @@
 const wstoken_webservice = localStorage.getItem('token'); // 從 localStorage 獲取 token
-const courseId = 2; // 替換成實際的課程 ID
-const assignmentId = 1; // 替換成實際的作業 ID
-const userId = 2; // 替換成實際的學生 ID (現在的是joe)
-const contextId = 17; // 對應課程 "test" 的作業 "Upload music file" ID
-let itemId = 0; // 暫時的 itemId，之後要改成實際的
+let userId = localStorage.getItem('userId'); // 從 localStorage 獲取 userId
+// assignmentId 已經在student_discussion.js中處理好了
+// const contextId = 17;
+// let itemId = -1; 
 
+// 這個部分是原本的程式碼，處理錄音相關的部分(至下方分隔線都是)
+// 其他的是處理整個上傳流程的部分跟這個網頁的其他功能(我不知道放哪就全寫在這裡了)
 async function main () {
     try {
 		const buttonStart = document.querySelector("body > div > div > div > div.send-message > button.mic-button")
@@ -153,70 +154,124 @@ function deleteTempAudio(){
 
 	document.querySelector("body > div > div > div > div.send-message > button").style.backgroundImage = "url('./assets/images/student_discussion/student_discussion_mic-icon2.svg')";
 }
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 以下是其餘功能的實作
 
-// 實際上為一套流程: 錄完音後，將音檔上傳至 Moodle 作業區，並呼叫 STT API 轉換成文字，並同時再次上傳至 Moodle 作業區，最後傳遞逐字稿給LLM service
+// 實際上為一套流程: 1. 先創建一個 DraftArea，獲得其itemId // 2. 錄完音後，將音檔上傳至創建好的 Moodle DraftArea // 
+//                  3. 觸發語音處理，將音檔轉換成文字 // 4. 將文字上傳至創建好的 Moodle DraftArea // 5. 傳遞逐字稿給 LLM service (尚未完成)
+//                  6. 將所有 itemId 上傳至 Moodle 作業區
 async function uploadAudio(){
 	try{
-		// Step 1: 上傳錄音檔至 Moodle
-		const uploadResult = await uploadAudioToMoodle();
-		console.log("上傳音檔至 Moodle 的結果：", uploadResult);
+		// Step 1: 創建草稿區域
+		const itemId = await createDraftArea();
+		// console.log("創建草稿區域的 item ID: ", itemId);
+		
+		// Step 2: 上傳錄音檔至 Moodle
+		const audioBlob = await fetch(audio.src).then(res => res.blob())
+		uploadFileToDraftArea(audioBlob, 'audio.wav', itemId);
 
-		// Step 2: 觸發語音處理
+		// Step 3: 觸發語音處理
 		const sttResult = await triggerSTT();
 		console.log("語音轉換成文字的結果: ", sttResult);
 
-		// Step 3: 上傳語音文字至 Moodle
+		// Step 4: 上傳語音文字至 Moodle
+		const transcriptBlob = new Blob([sttResult], { type: 'text/plain' });
+		uploadFileToDraftArea(transcriptBlob, 'transcript.txt', itemId);
 		
-		// Step 4: 傳遞逐字稿給 LLM service
+		// Step 5: 傳遞逐字稿給 LLM service
+
+		// Step 6: 上傳所有itemId至Moodle作業區
+		uploadFilesToMoodleAssignment(itemId);
 	}
 	catch(err){
-		console.error("處理上傳過程中出現錯誤：", error)
+		console.error("處理上傳過程中出現錯誤：", err);
 	}
 }
 
-// 上傳音檔至 Moodle  //step 1
-async function uploadAudioToMoodle(){
-	// 先上傳音檔至 draft
-    const audioBlob = await fetch(audio.src).then(res => res.blob())
-    
-	const uploadUrl = `http://localhost:8080/moodle/webservice/upload.php?token=${wstoken_webservice}`;
-    
-	const formData = new FormData();
-	formData.append('filearea', 'draft');
-	formData.append('file', audioBlob, 'audio.wav');
+// 將音訊編碼為 WAV 格式，並呼叫transcribe API轉換成文字回傳
+async function triggerSTT(){
+	try {
+		const audioBlob = await fetch(audio.src).then(res => res.blob())
 
-	const response = await fetch(uploadUrl, {
-		method: 'POST',
-		body: formData
-	});
+		// 使用 FormData 包裝音頻文件
+		const formData = new FormData();
+		formData.append('audio', audioBlob, 'audio-file.wav');
 
-	const result = await response.json(); // result of uploading audio to draft
-	if (result.error) {
-		console.error('Upload failed:', result.error);
-	} else {
-		console.log('Draft item ID:', result[0].itemid);
+		const response = await fetch('http://localhost:5001/transcribe', {
+			method: 'POST',
+			body: formData,
+		});
+
+		if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`語音辨識失敗，伺服器回應：${errorMessage}`);
+        } else {
+			const result = await response.json();
+			console.log("語音辨識結果：", result);
+			return result.transcript;
+		}
 	}
+	catch(err){
+		console.error("語音辨識請求失敗：", err);
+        throw new Error("無法完成語音辨識，請稍後再試。");
+	}
+}
 
-	// 再將 draft 中的音檔上傳至作業
+// 創建草稿區域，並回傳 item ID
+async function createDraftArea() {
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=core_files_get_unused_draft_itemid&moodlewsrestformat=json`, {
+        method: 'POST'
+    });
+    const result = await response.json();
+    if (result.error) {
+        throw new Error(`創建草稿區域失敗: ${result.error}`);
+    } else {
+		// console.log('創建草稿區域成功:', result);
+		return result.itemid;
+	}
+}
+
+// 上傳檔案至草稿區域，並回傳 file ID
+async function uploadFileToDraftArea(fileBlob, filename, itemid) {
+    const formData = new FormData();
+    formData.append('filearea', 'draft');
+    formData.append('itemid', itemid);
+    formData.append('file', fileBlob, filename);
+
+    const response = await fetch(`http://localhost:8080/moodle/webservice/upload.php?token=${wstoken_webservice}`, {
+        method: 'POST',
+        body: formData
+    });
+    const result = await response.json();
+    if (result.error) {
+        throw new Error(`上傳文件失敗: ${result.error}`);
+    } else {
+		// console.log('上傳文件成功:', result);
+		return result;
+	}
+}
+
+// 將itemId陣列中所有檔案上傳至Moodle作業區
+async function uploadFilesToMoodleAssignment(itemId){
 	const saveSubmissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
-	const saveSubmissionData = new URLSearchParams();
-	saveSubmissionData.append('assignmentid', assignmentId);
-	saveSubmissionData.append('plugindata[files_filemanager]', result[0].itemid);
+    const saveSubmissionData = new URLSearchParams();
 
-	const saveResponse = await fetch(saveSubmissionUrl, {
-		method: 'POST',
-		body: saveSubmissionData,
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-	});
+    saveSubmissionData.append('assignmentid', assignmentId);
+	saveSubmissionData.append('plugindata[files_filemanager]', itemId);
 
-	const saveResult = await saveResponse.json();
-	if (saveResult.error) {
-		// console.error('檔案儲存製作業區失敗: ', saveResult.error);
-		return saveResult.error;
-	} else {
-		// console.log('檔案儲存製作業區成功:', saveResult);
+    const saveResponse = await fetch(saveSubmissionUrl, {
+        method: 'POST',
+        body: saveSubmissionData,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    });
+
+    const saveResult = await saveResponse.json();
+    if (saveResult.error) {
+        throw new Error(`無法更新繳交檔案: ${saveResult.error}`);
+    } else {
+		// console.log('檔案繳交成功:', saveResult);
 		return saveResult;
 	}
 }
