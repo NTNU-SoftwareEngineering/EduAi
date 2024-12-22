@@ -433,7 +433,6 @@ function randomGroup() {
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     const groupArray = [];
-
     let studentsPerGroup = Math.floor(studentArray.length / groupNum);
     let remainder = studentArray.length % groupNum;
 
