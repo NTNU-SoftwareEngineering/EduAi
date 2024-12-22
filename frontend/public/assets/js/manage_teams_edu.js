@@ -287,7 +287,7 @@ async function updateStudent(){
             const user_name = await get_user_fullname_by_id(id)
             // console.log(`id:${id}`)
             // console.log(`name:${user_name}`)
-            class1[id] = id
+            class1[id] = user_name
         }
         console.log(class1)
     }
@@ -424,7 +424,6 @@ async function random_group() {
     const groups_new = await get_group_from_course(temp_courseid)
     console.log(groups_new)
 }
-random_group()
 
 function randomGroup() {
     console.log("randomGroup");
