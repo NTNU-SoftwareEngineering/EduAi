@@ -22,14 +22,8 @@ async function getData(){
 	const data = await response.json()
 	console.log(data)
 	localStorage.setItem('userid', data.userid);
-	if(user === 'teacher'){
-		identity.value = '教師';
-	}else if(user === 'student'){
-		identity.value = '學生';
-	}else{
-		identity.value = '未知';
-	}
-
+	const role = localStorage.getItem('role')
+	identity.value = role;
     fullname.value = data.fullname;
     id.value = '11011111';
     email.value = data.username;
