@@ -196,6 +196,7 @@ async function triggerSTT(){
 		// 使用 FormData 包裝音頻文件
 		const formData = new FormData();
 		formData.append('audio', audioBlob, 'audio-file.wav');
+		formData.append('token' , wstoken_webservice);
 
 		const response = await fetch('http://localhost:5001/transcribe', {
 			method: 'POST',
@@ -277,6 +278,7 @@ async function uploadFilesToMoodleAssignment(itemId){
 }
 
 // 將音訊編碼為 WAV 格式，並呼叫STT API轉換成文字回傳
+/*
 async function triggerSTT(){
 	
 	const audioBlob = await fetch(audio.src).then(res => res.blob())
@@ -293,3 +295,5 @@ async function triggerSTT(){
     if (!response.ok) throw new Error("語音辨識失敗");
     return await response.json(); // 返回轉換的逐字稿
 }
+
+*/
