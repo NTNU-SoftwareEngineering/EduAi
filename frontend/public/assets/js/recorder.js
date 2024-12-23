@@ -197,7 +197,7 @@ async function triggerSTT(){
 		const formData = new FormData();
 		formData.append('audio', audioBlob, 'audio-file.wav');
 
-		const response = await fetch('http://localhost:5001/transcribe', {
+		const response = await fetch('https://localhost:5001/transcribe', {
 			method: 'POST',
 			body: formData,
 		});

@@ -25,7 +25,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - moodle_app:/var/www/html/moodle
+      # - moodle_app:/var/www/html/moodle
+      - ./moodle-backend:/var/www/html/moodle
       - ./apache2.conf:/etc/apache2/apache2.conf
       - moodle-data:/var/moodledata
     depends_on:
@@ -37,7 +38,7 @@ services:
       MOODLE_DB_NAME: moodle_db
       MOODLE_DB_USER: moodleuser
       MOODLE_DB_PASSWORD: yourpassword
-      MOODLE_URL: http://localhost:8080
+      MOODLE_URL: https://eduai-api.andy-lu.dev
 
   db:
     image: mysql:8.0
@@ -93,4 +94,4 @@ networks:
 volumes:
   db_data:
   moodle-data:
-  moodle_app:
+  # moodle_app:

@@ -31,6 +31,7 @@ async function loadCourse() { // fetch course data from backend
     // 更改 sourse-select 下拉選單的值
     const course_select_ele = document.getElementById('course-select');
     
+
     // 將靜態網頁預填的選項清空
     course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
     
