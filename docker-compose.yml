@@ -26,7 +26,6 @@ services:
       - "8080:80"
     volumes:
       - moodle_app:/var/www/html/moodle
-      # - ./moodle-backend:/var/www/html/moodle
       - ./apache2.conf:/etc/apache2/apache2.conf
       - moodle-data:/var/moodledata
     depends_on:
@@ -88,4 +87,4 @@ networks:
 volumes:
   db_data:
   moodle-data:
-  # moodle_app:
+  moodle_app:
