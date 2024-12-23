@@ -127,37 +127,74 @@ function core_expand_toggle(){
 function eventDelete(idx){
     eventList[idx] = 0
     toDelete = document.querySelectorAll("#event" + idx)
+  
     for(var i=0;i<toDelete.length;i++) toDelete[i].remove()
 
     var cnt = 0
     for(var i=0;i<5;i++) if(eventList[i]) cnt += 1
-    if(cnt == 0) document.querySelector(".event-row").style.display = "flex"
+    if(cnt == 0) document.querySelector(".event-row").style.display = "none"
     
 }
 
-function eventAdd(){
+async function cnt_event(){
+  for(var i=0;i<5;i++) if(!eventList[i]) return i
+  return 5
+}
 
-    var idx = 0 
-    while(idx < 5 && eventList[idx] == 1) idx += 1
-    if(idx == 5) return
+async function eventAdd(){
 
-    eventList[idx] = 1
+  
+  var idx = await cnt_event()
+  
+  if(idx == 5) return
 
-    document.querySelector(".event-row").style.display = "flex"
+  eventList[idx] = 1
 
-    const parentEle = document.querySelector(".event-label")
-    parentEle.innerHTML += 
-    `
-    <div class="event-row" id="event${idx}" style="background: #FFF;">
-              <input class="event-row-title-input" placeholder="請輸入活動名稱">
-              <button class="event-delete-btn" onclick="eventDelete(${idx})"></button>
-            </div>
-            <div class="event-row" id="event${idx}">
-              <input class="event-row-title" style="width: 45%;" placeholder="請輸入學習內容及實施方式"></input>
-              <input class="event-row-title" style="width: 17.5%;" placeholder="請輸入時間"></input>
-              <input class="event-row-title" style="width: 37.5%;" placeholder="請輸入標準答案"></input>
-            </div>
-    `
+  document.querySelector(".event-row").style.display = "flex"
+
+  const parentEle = document.querySelector(".event-label")
+
+  var div1 = document.createElement('div');
+  div1.className = 'event-row';
+  div1.id = 'event' + idx;
+  div1.style.background = '#FFF';
+
+  var input1 = document.createElement('input');
+  input1.className = 'event-row-title-textarea';
+  input1.placeholder = '請輸入活動名稱';
+
+  var button1 = document.createElement('button');
+  button1.className = 'event-delete-btn';
+  button1.onclick = function() { eventDelete(idx); };
+
+  div1.appendChild(input1);
+  div1.appendChild(button1);
+
+  var div2 = document.createElement('div');
+  div2.className = 'event-row';
+  div2.id = 'event' + idx;
+
+  var input2 = document.createElement('input');
+  input2.className = 'event-row-title';
+  input2.style.width = '45%';
+  input2.placeholder = '請輸入學習內容及實施方式';
+
+  var input3 = document.createElement('input');
+  input3.className = 'event-row-title';
+  input3.style.width = '17.5%';
+  input3.placeholder = '請輸入時間';
+
+  var input4 = document.createElement('input');
+  input4.className = 'event-row-title';
+  input4.style.width = '37.5%';
+  input4.placeholder = '請輸入標準答案';
+
+  div2.appendChild(input2);
+  div2.appendChild(input3);
+  div2.appendChild(input4);
+
+  parentEle.appendChild(div1);
+  parentEle.appendChild(div2);
 
 }
 
