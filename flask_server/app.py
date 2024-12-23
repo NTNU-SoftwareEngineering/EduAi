@@ -38,40 +38,6 @@ def split_and_transcribe(audio_path, chunk_length_ms=60000):
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():
 
-    if 'audio' not in request.files:
-        return jsonify({'error': 'No audio file provided'}), 400
-    
-    if 'token' not in request.form:
-        return jsonify({'error': 'No token file provided'}), 400
-
-
-    url = 'http://host.docker.internal:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json'
-
-    params = {
-        'wstoken': request.form['token'],
-        'wsfunction': 'core_webservice_get_site_info',
-    }
-
-    try:
-
-        response = requests.post(url, params=params)
-        response.raise_for_status()
-        
-        try:
-            data = response.json()
-            if 'exception' in data:
-                return jsonify({'error': 'Invalid token or insufficient permissions'}), 403
-
-        except requests.exceptions.JSONDecodeError:
-            
-            return jsonify({'error': 'Invalid JSON response'}), 500
-
-    except requests.exceptions.RequestException as e:
-        
-        return jsonify({'error': str(e)}), 500
-
-    
-
     try:
         file = request.files['audio']
         chunk_length_ms = int(request.form.get('chunk_length_ms', 60000))
