@@ -43,7 +43,8 @@ async function fetchCourses() {
 }
 
 const ROOT_ASSIGNMENT_NAME = "!root_assignment!";
-// return new assignment id when success, -1 otherwise
+
+// return new module id when success, -1 otherwise
 async function createAssignment ( token, courseId ) {
     const old_modules = new Set();
     const mid = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
