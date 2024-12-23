@@ -1,26 +1,3 @@
-let courseList = []; // course name only
-let courseObjList = [];
-async function loadCourse() { // fetch course data from backend
-    courseObjList = await fetchCourses();
-    courseList = courseObjList.map(c => c.fullname);
-    console.log("courseList: ", courseList);
-
-    // 更改 sourse-select 下拉選單的值
-    const course_select_ele = document.getElementById('class');
-    
-    // 將靜態網頁預填的選項清空
-    // course_select_ele.innerHTML = '';
-    
-    courseList.forEach ( course => {
-        const option = document.createElement('option');
-        option.value = course;
-        option.textContent = course;
-        course_select_ele.appendChild(option);
-    });
-}
-document.addEventListener("DOMContentLoaded", loadCourse);
-
-
 let core_toggle = 0;
 let core_select = -1;
 
