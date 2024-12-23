@@ -1,6 +1,6 @@
 let courseList = []; // course name only
 let courseObjList = [];
-let courseId = -1; // 還未選擇課程: -1
+let courseId = 2; // 還未選擇課程: -1
 const selectCourseList = document.querySelector('#class')
 
 async function loadCourse() { // fetch course data from backend
@@ -60,7 +60,6 @@ document.getElementById("submitButton").addEventListener("click", async () => {
     try {
         const token = localStorage.getItem('token');
         if ( !token ) window.location.href = 'login_edu.html';
-        
         console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`)
 
         const ret = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {

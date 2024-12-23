@@ -110,6 +110,14 @@ async function onTopicSubmit () {
 
     console.log( 'creating calendar event...' );
     createCourseActivity(token, courseId, selectedObj.getAttribute('time'));
+
+    console.log( 'creating new assignment...' );
+    const mod_id = await createAssignment(token, courseId);
+    if ( mod_id == -1 ) {
+        console.error('error when createAssignment');
+        return;
+    }
+    console.log( `new assignment created: module_id=${mod_id}` );
 }
 submitBtn.addEventListener('click', onTopicSubmit);
 

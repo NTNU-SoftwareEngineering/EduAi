@@ -37,24 +37,90 @@ async function fetchCourses() {
         return data;
         // return data.map( j => j.fullname );
     })
-    /*.then( courses => {
-        // 更改 sourse-select 下拉選單的值
-        return courses;
-        const course_select_ele = document.getElementById('course-select');
-        const pref = course_select_ele.getAttribute('pref');
-        const suff = course_select_ele.getAttribute('suff');
-        const init = course_select_ele.getAttribute('init');
-        
-        // 將靜態網頁預填的選項清空
-        if ( init ) course_select_ele.innerHTML = init;
-        
-        let options = courses.map( c => pref+c+suff );
-        options = options.join('\n');
-        course_select_ele.innerHTML += options;
-    })*/
     .catch( error => {
         console.error('錯誤:', error);
     });
+}
+
+const ROOT_ASSIGNMENT_NAME = "!root_assignment!";
+// return new assignment id when success, -1 otherwise
+async function createAssignment ( token, courseId ) {
+    const old_modules = new Set();
+    const mid = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_get_contents',
+            moodlewsrestformat: 'json',
+            courseid: courseId,
+        })
+    })
+    .then( ret=>ret.json() )
+    .then ( sections => {
+        let module_id = -1;
+        // console.log(sections)
+        sections.forEach( s => {
+            s.modules.forEach( m => {
+                if ( m.name === ROOT_ASSIGNMENT_NAME ) {
+                    module_id = m.id;
+                }
+                old_modules.add(m.id);
+            });
+        });
+        if ( module_id == -1 ) {
+            console.error(`找不到課程：${ROOT_ASSIGNMENT_NAME}`);
+        }
+        return module_id;
+    })
+    .catch ( error => console.error(error.message) );
+    
+    if ( mid == -1 ) return -1;
+    
+    await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: 'b69e3cf2abe404972aaa8c73a21cffc3',
+            wsfunction: 'core_course_edit_module',
+            moodlewsrestformat: 'json',
+            action: 'duplicate',
+            id: mid
+        })
+    })
+    
+    // return new mod id
+    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_get_contents',
+            moodlewsrestformat: 'json',
+            courseid: courseId,
+        })
+    })
+    .then( ret=>ret.json() )
+    .then ( sections => {
+        // console.log(sections)
+        let new_mod_id = -1;
+        sections.forEach( s => {
+            s.modules.forEach( m => {
+                if ( !old_modules.has(m.id) ) new_mod_id = m.id;
+            });
+        });
+        return new_mod_id;
+    })
+    .catch ( error => {
+        console.error(error.message);
+        return -1;
+    })
 }
 
 // return true when update successfully, false otherwise
