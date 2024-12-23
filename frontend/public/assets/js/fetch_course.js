@@ -56,7 +56,108 @@ async function fetchCourses() {
         console.error('錯誤:', error);
     });
 }
-// document.addEventListener("DOMContentLoaded", fetchCourses);
+
+// return true when update successfully, false otherwise
+async function updateActivityName( token, courseId, activity_name ) {
+    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_update_courses',
+            moodlewsrestformat: 'json',
+            'courses[0][id]': courseId,
+            'courses[0][shortname]': activity_name
+        })
+    })
+    .then ( ret => ret.json() )
+    .then ( ret => {
+        console.log('更新完畢：warnings: ', ret.warnings);
+        return ret.warnings.length === 0;
+    })
+    .catch ( error => {
+        console.error(error.message);
+        return false;
+    })
+}
+
+// return activity name when successfully
+async function getActivityName( token, courseId ) {
+    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_get_courses',
+            moodlewsrestformat: 'json',
+            'options[ids][0]': courseId
+        })
+    })
+    .then ( ret => ret.json() )
+    .then ( ret => ret[0].shortname )
+    .catch ( error => console.error(error.message) );
+}
+
+const EVENT_NAME = '!activity!';
+// return true when there's no ongoing activities(in this course), false otherwise
+async function checkCourseActivity (token, courseId ) {
+    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_calendar_get_calendar_upcoming_view',
+            moodlewsrestformat: 'json',
+            courseid: courseId
+        })
+    })
+    .then ( ret => ret.json() )
+    .then ( ret => {
+        const timestamp = ret.date.timestamp;
+        const events = ret.events;
+        const progress_act = events.filter( e => e.name==EVENT_NAME && e.timestart+e.timeduration >= timestamp );
+        return progress_act.length === 0;
+    })
+    .catch ( error => {
+        console.error(error.message);
+        return false;
+    });
+}
+
+// return true when create activity successfully, false otherwise
+async function createCourseActivity (token, courseId, duration/*in seconds*/ ) {
+    fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_calendar_create_calendar_events',
+            moodlewsrestformat: 'json',
+            'events[0][name]': EVENT_NAME,
+            'events[0][eventtype]': 'course',
+            'events[0][courseid]': courseId,
+            'events[0][timeduration]': duration * 60
+        })
+    })
+    .then ( ret => ret.json() )
+    .then ( ret => {
+        console.log('更新完畢：warnings: ', ret.warnings);
+        return ret.warnings.length === 0;
+    })
+    .catch ( error => {
+        console.error(error.message);
+        return false;
+    })
+}
+
 async function get_userid(){
     // change class information
     const wstoken = localStorage.getItem('token')

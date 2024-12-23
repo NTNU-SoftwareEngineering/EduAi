@@ -2,16 +2,8 @@ let dropdown_expand = 0;
 let didSendMessage = 0;
 let username = "王小明"; //backend should modify and offer the username of the account
 
-/*let courseList = [
-    "09/14 輔導課",
-    "09/17 資訊課",
-    "10/12 國文課",
-    "10/14 輔導課",
-    "10/17 資訊課",
-    "10/19 英文課",
-]; // backend should transfer the data to the frontend
-*/
 let courseList = []; // course name only
+let courseId = -1;
 let courseObjList = [];
 let course_status = [];
 async function loadCourse() { // fetch course data from backend
@@ -23,9 +15,29 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
+async function updateTopicText () {
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login_edu.html';
+    
+    const topic_ele = document.querySelector('.question');
+    const check = await checkCourseActivity(token, courseId);
+    if ( check ) { // 沒有正在進行的討論
+        topic_ele.innerHTML = "目前沒有進行中的討論活動";
+    } else {
+        try {
+            topic_ele.innerHTML = await getActivityName(token, courseId);
+        } catch ( err ) {
+            console.error(err);
+        }
+    }
+}
+
 function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
+
+	courseId = courseObjList[index].id; // 同步更新 courseId
+    updateTopicText();
 
     document.querySelector("#message").removeAttribute("disabled")
     document.querySelector("#message").placeholder = "請輸入訊息"
