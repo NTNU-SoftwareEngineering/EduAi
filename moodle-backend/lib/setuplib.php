@@ -663,7 +663,7 @@ function initialise_fullme() {
     }
 
     $rurl = setup_get_remote_url();
-    $rurl['scheme'] = 'https';
+    
     $wwwroot = parse_url($CFG->wwwroot.'/');
 
     if (empty($rurl['host'])) {

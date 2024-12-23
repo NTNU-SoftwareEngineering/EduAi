@@ -78,7 +78,7 @@ async function get_group_from_course(courseid){
     // change class information
     const wsfunction = 'core_group_get_course_groups'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -98,7 +98,7 @@ async function get_group_member(groupids){
     // change class information
     const wsfunction = 'core_group_get_group_members'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupids}`, {
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupids}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -116,7 +116,7 @@ async function get_user_fullname_by_id(userid){
     // change class information
     const wsfunction = 'core_user_get_users_by_field'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -154,7 +154,7 @@ async function get_student_from_course(courseid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',

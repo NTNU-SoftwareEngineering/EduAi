@@ -26,7 +26,7 @@ $CFG->dataroot  = '/var/www/moodledata';  // Moodle 数据目录的路径
 $CFG->admin     = 'admin';  // 管理目录
 
 $CFG->directorypermissions = 0755;  // 目录权限设置
-$CFG->corsalloweddomains = array('"https://eduai.andy-lu.dev"');  // 允许的 CORS 域名
+$CFG->corsalloweddomains = array('http://localhost:3000');  // 允许的 CORS 域名
 
 $CFG->authloginviaemail = true;
 
