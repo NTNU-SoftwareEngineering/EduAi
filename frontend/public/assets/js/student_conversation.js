@@ -104,10 +104,10 @@ function detectEnter(ele) {
 async function SendMessage() {
     //這邊之後應該要結合後端的訊息紀錄
 
-    const message = document.getElementById("message").value;
     const thread_id = localStorage.getItem("thread_id");
+    const user_message = document.getElementById("message").value;
 
-    if(message.length == 0) return;
+    if(user_message.length == 0) return;
 
     document.getElementById("message").value = "";
     // console.log(message);
@@ -132,11 +132,16 @@ async function SendMessage() {
         username +
         "</div>" +
         "<textarea class='sent_content' disabled>" +
-        message +
+        user_message +
         "</textarea >" +
         "</div>";
 
     conversation_box.scrollTop = conversation_box.scrollHeight;
+
+    // Get the selected course name
+    const course_name = document.querySelector(
+        "body > div > div > div > div.top-label > div.flex > button"
+    ).textContent;
 
     const response = await fetch("/student_conversation", {
         method: "POST",
@@ -144,8 +149,9 @@ async function SendMessage() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            message: message,
             thread_id: thread_id,
+            course_name: course_name,
+            user_message: user_message,
         }),
     });
 

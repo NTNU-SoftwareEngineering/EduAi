@@ -52,9 +52,10 @@ app.post('/student_conversation/init', async function (req, res) {
 });
 
 app.post('/student_conversation', async function (req, res) {
-    // Get user message and thread_id
-    const user_message = req.body.message;
-    const thread_id = req.body.thread_id;
+    // Get user message, thread_id and course_name
+    const thread_id    = req.body.thread_id;
+    const course_name  = req.body.course_name;
+    const user_message = req.body.user_message;
 
     if (user_message === undefined || thread_id === undefined) {
         res.status(400).send('Bad request');
@@ -68,10 +69,12 @@ app.post('/student_conversation', async function (req, res) {
             }
         }
 
+        const system_content = `你是一位就職於${course_name}的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`;
+
         const input = [
             {
                 role: 'system',
-                content: '你是一位就職於國中課程的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。',
+                content: system_content,
             },
             {
                 role: 'user',
