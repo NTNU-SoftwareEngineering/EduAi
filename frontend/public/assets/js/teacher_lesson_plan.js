@@ -69,7 +69,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
-                wstoken: 'b69e3cf2abe404972aaa8c73a21cffc3',
+                wstoken: token,
                 wsfunction: 'core_course_update_courses',
                 moodlewsrestformat: 'json',
                 'courses[0][id]': courseId,
