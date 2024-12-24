@@ -1,14 +1,14 @@
 let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
-const selectCourseList = document.querySelector('#class')
+const selectCourseList = document.querySelector('#class');
 
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
     console.log("courseList: ", courseList);
-    
-    courseList.forEach ( course => {
+
+    courseList.forEach(course => {
         const option = document.createElement('option');
         option.value = course;
         option.textContent = course;
@@ -18,24 +18,23 @@ async function loadCourse() { // fetch course data from backend
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 function updateCourseId() {
-    console.log( "select course: " + selectCourseList.value );
-    selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
-    if ( !selectedCourseObj ) {
+    console.log("select course: " + selectCourseList.value);
+    const selectedCourseObj = courseObjList.find(course => course.fullname === selectCourseList.value);
+    if (!selectedCourseObj) {
         // 還未選擇課程，或後端無此課程
         courseId = -1;
         console.error(`Cannot find course: ${selectCourseList.value}`);
         return;
-    };
+    }
 
     courseId = selectedCourseObj.id;
-    if ( !courseId ) {
+    if (!courseId) {
         console.error(`Cannot find course id for: ${selectCourseList.value}`);
         return;
     }
-    console.log( "update courseid: " + courseId );
+    console.log("update courseid: " + courseId);
 }
 selectCourseList.addEventListener("change", updateCourseId);
-
 
 document.getElementById("submitButton").addEventListener("click", async () => {
     const lessonPlanData = {
@@ -50,20 +49,21 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         source: document.getElementById("lesson-plan-source").value,
         facilities: document.getElementById("lesson-plan-facilities").value,
         goal: document.getElementById("lesson-plan-goal").value,
+        activity: document.getElementById("lesson-plan-activity").value, // 新增的活動欄位
     };
 
-    if ( courseId < 0 ) {
+    if (courseId < 0) {
         alert('請先選擇課程');
         return;
     }
 
     try {
         const token = localStorage.getItem('token');
-        if ( !token ) window.location.href = 'login_edu.html';
-      
-        console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`)
+        if (!token) window.location.href = 'login_edu.html';
 
-        const ret = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+        console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`);
+
+        const ret = await fetch('http://localhost:8080/moodle/webservice/rest/server.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -75,8 +75,8 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                 'courses[0][id]': courseId,
                 'courses[0][summary]': JSON.stringify(lessonPlanData)
             })
-        }).then ( ret => ret.json() );
-        
+        }).then(ret => ret.json());
+
         console.log(`上傳教案結果：`);
         console.log(ret);
 
@@ -84,3 +84,13 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         alert(`發生錯誤: ${error.message}`);
     }
 });
+
+// 模擬的 fetchCourses 函數（後端 API 替代）
+async function fetchCourses() {
+    // 假資料範例
+    return [
+        { id: 1, fullname: "數學課程" },
+        { id: 2, fullname: "科學課程" },
+        { id: 3, fullname: "歷史課程" }
+    ];
+}
