@@ -55,6 +55,8 @@ async function onCourseChange() {
 
     if ( !response[0].summary ) {
         alert('此課程尚未上傳教案');
+        // console.log(selectCourseList.selectedIndex);
+        selectCourseList.selectedIndex = 0;
         return;
     }
 
@@ -66,6 +68,7 @@ async function onCourseChange() {
             { name: '活動一', len: 5},
             { name: '活動二', len: 7},
         ]
+        selectActivityList.innerHTML = '<option value="">請選擇活動名稱</option>';
         activities.forEach ( act => {
             const option = document.createElement('option');
             option.setAttribute('time', act.len);
