@@ -43,9 +43,13 @@ async function select_course(index){
     <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
     </svg>'
 
-    dropdownMenuCSSModify()
+    // Clear conversation box
+    const conversation_box = document.querySelector("body > div > div > div.dialog > div.conversation");
+    conversation_box.innerHTML = "";
 
-    // Initialize conversation thread
+    dropdownMenuCSSModify();
+
+    // Get conversation data
     await fetch("/student_conversation/init", {
         method: "POST",
         headers: {
@@ -57,8 +61,14 @@ async function select_course(index){
             course_name: courseObjList[index].fullname,
         }),
     })
-    .then((response) => {
-        console.log(response);
+    .then((response) => response.json())
+    .then((data) => {
+        const messages = data.messages;
+
+        // Append history messages
+        for (let i = 0; i < messages.length; i++) {
+            appendMessage(messages[i].role, messages[i].content);
+        }
     })
     .catch((error) => {
         console.error(error);
@@ -111,6 +121,16 @@ function detectEnter(ele) {
 }
 
 function appendMessage(role, message) {
+    if (!didSendMessage) {
+        document.querySelector(
+            "body > div > div > div.dialog > div.botton-tip"
+        ).style.display = "none";
+        document.querySelector(
+            "body > div > div > div.dialog > div.conversation"
+        ).style.display = "flex";
+    }
+    didSendMessage = 1;
+
     const conversation_box = document.querySelector(
         "body > div > div > div.dialog > div.conversation"
     );
@@ -126,7 +146,7 @@ function appendMessage(role, message) {
         "</textarea >" +
         "</div>";
     }
-    else if (role == "system") {
+    else if (role == "ai") {
         conversation_box.innerHTML +=
         "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
         "<div class='sent_ID' style='text-align: left;'>" +
@@ -148,16 +168,6 @@ async function SendMessage() {
 
     document.getElementById("message").value = "";
 
-    if (!didSendMessage) {
-        document.querySelector(
-            "body > div > div > div.dialog > div.botton-tip"
-        ).style.display = "none";
-        document.querySelector(
-            "body > div > div > div.dialog > div.conversation"
-        ).style.display = "flex";
-    }
-    didSendMessage = 1;
-
     appendMessage("user", user_message);
 
     // Get the selected course id
@@ -176,7 +186,7 @@ async function SendMessage() {
     })
     .then((response) => response.json())
     .then((data) => {
-        appendMessage("system", data.message);
+        appendMessage("ai", data.message);
     })
     .catch((error) => {
         console.error(error);

@@ -5,6 +5,7 @@ import fs from "fs";
 import { ChatGroq } from '@langchain/groq';
 import { END, MemorySaver, MessagesAnnotation, START, StateGraph } from '@langchain/langgraph';
 import { v4 as uuidv4 } from 'uuid';
+import { AIMessage, HumanMessage } from '@langchain/core/messages';
 
 let app = express();
 const port = 3000;
@@ -56,18 +57,74 @@ app.post('/student_conversation/init', async function (req, res) {
 
     // Get thread id if token and course id match
     let memory = conversation_memory.find((thread) => thread.token === token && thread.course_id === course_id);
-
-    console.log(memory);
+    let config = {};
+    let messages_content = [];
 
     if (memory === undefined) {
         const thread_id = uuidv4();
 
         conversation_memory.push({
-            token, thread_id, course_id, course_name
+            token, thread_id, course_id
+        });
+
+        config = {
+            configurable: {
+                thread_id,
+            }
+        };
+
+        const input = [
+            {
+                role: 'system',
+                content: `你是一位就職於${ course_name }的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`,
+            }
+        ];
+
+        const output  = await aiApp.invoke({messages: input}, config);
+
+        const message = output.messages[output.messages.length - 1].content;
+
+        messages_content.push({
+            role: 'ai',
+            content: message,
         });
     }
+    else {
+        config = {
+            configurable: {
+                thread_id: memory.thread_id,
+            }
+        }
 
-    res.status(200).send();
+        const state = await aiApp.getState(config);
+        const messages = state.values.messages;
+
+        for (let i = 0; i < messages.length; i++) {
+            let role;
+
+            if (messages[i] instanceof AIMessage) {
+                role = 'ai';
+            }
+            else if (messages[i] instanceof HumanMessage) {
+                role = 'user';
+            }
+            else {
+                continue;
+            }
+
+            messages_content.push({
+                role: role,
+                content: messages[i].content,
+            });
+        }
+    }
+
+    console.log("messages_content");
+    console.log(messages_content);
+
+    res.status(200).send({
+        messages: messages_content
+    });
 });
 
 app.post('/student_conversation', async function (req, res) {
@@ -96,13 +153,7 @@ app.post('/student_conversation', async function (req, res) {
             }
         }
 
-        const system_content = `你是一位就職於${ memory.course_name }的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`;
-
         const input = [
-            {
-                role: 'system',
-                content: system_content,
-            },
             {
                 role: 'user',
                 content: user_message,
