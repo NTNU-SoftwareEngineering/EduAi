@@ -92,6 +92,7 @@ body {
 .summary{
     padding-left:1rem;
     display: flex;
+    font-size: 1.46rem;
 }
 
 .btns {
@@ -144,7 +145,7 @@ body {
     display: flex;
     width: 90%; 
     height: 38%; 
-    padding: 5% 10% 5% 10% ; 
+    padding: 1% 10% 1% 10% ; 
     
     font-size:1.3rem;
     /* border: none; */
@@ -291,14 +292,14 @@ body {
     text-align: start;
     /* font-weight: bold; */
     display: block;
-    font-size: 14px;
+    font-size: 1.46rem;
     color: #8E8E93;
 }
 
 .score-summary p{
     color: var(--sec_gray900, #363636);
 
-    font-family: "Noto Sans TC", sans-serif;
+    font-family: "Noto Sans TC";
     font-size: 1.46rem;
     font-style: normal;
     font-weight: bold;
@@ -328,21 +329,21 @@ body {
     border-radius: 8px;
     background: var(--status_y_50, #FFF6E8);
     background-image: url('../images/student_feedback/Mask_group.svg');
-    background-repeat: no-repeat;
-    background-size: 20%;
+    background-repeat: no-repeat ;
+    background-size: 22%;
     background-position: top right;
     
-    background-position: 52vw 1vh;
+    background-position: 57vw 1vh;
 }
 .section.B{
     border-radius: 8px;
     background: #F3F0F7;
     background-image: url('../images/student_feedback/mask_group_purple.svg');
     background-repeat: no-repeat;
-    background-size: 20%;
+    background-size: 22%;
     background-position: top right;
     
-    background-position: 52vw 1vh;
+    background-position: 57vw 1vh;
 }
 .section-title.A{
     /* display: flex; */
@@ -386,9 +387,9 @@ body {
 }
 .scores {
     /* margin-top: 1rem; */
-    font-size: 3rem;
+    font-size: 1.46rem;
     color: #8E8E93;
-    font-size: 20px;
+    /* font-size: 20px; */
     /* font-style: normal; */
     font-weight: 400;
 
@@ -451,10 +452,10 @@ body {
 }
 .comment-box p {
     color: var(--sec_gray900, #8E8E93);
-    margin-top: 4rem;
-    margin-left: 14rem;
+    margin-top: 3rem;
+    margin-left: 45%;
     font-family: "Noto Sans TC", sans-serif;
-    font-size: 14px;
+    font-size: 1.46rem;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 171.429% */

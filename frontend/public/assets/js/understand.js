@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "stufb_interaction_edu.html";
     });
 
-    document.getElementById("trend-btn").addEventListener("click", function() {
-        window.location.href = "stufb_trend_edu.html";
-        });
+    // document.getElementById("trend-btn").addEventListener("click", function() {
+    //     window.location.href = "stufb_trend_edu.html";
+    //     });
     
 });
