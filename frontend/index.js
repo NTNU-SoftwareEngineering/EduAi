@@ -1,45 +1,99 @@
 import express from 'express';
 import Groq from 'groq-sdk';
-import fs from "fs"; // (modify to import ?)
+import fs from "fs";
 
+import { ChatGroq } from '@langchain/groq';
+import { END, MemorySaver, MessagesAnnotation, START, StateGraph } from '@langchain/langgraph';
+import { v4 as uuidv4 } from 'uuid';
 
 let app = express();
 const port = 3000;
 
+let aiApp = await initChat();
+
+// Init Groq chat with Langchain
+async function initChat() {
+    const llm = new ChatGroq({
+        model: 'llama-3.3-70b-versatile',
+        response_format: {
+            "type": "json_object",
+        },
+    });
+
+    const callModel = async (state) => {
+        const response = await llm.invoke(state.messages);
+        return {
+            messages: response
+        };
+    };
+
+    const workflow = new StateGraph(MessagesAnnotation)
+    .addNode("model", callModel)
+    .addEdge(START, "model")
+    .addEdge("model", END);
+
+    const memory = new MemorySaver();
+    const aiApp = workflow.compile({
+        checkpointer: memory,
+    });
+
+    return aiApp;
+}
+
 app.use(express.static('public'));
 app.use(express.json());
 
-app.post('/student_conversation', async function (req, res) {
-    const msg = req.body.message;
-    const key = process.env.GROQ_API_KEY;
+app.post('/student_conversation/init', async function (req, res) {
+    const thread_id = uuidv4();
 
-    if (msg === undefined) {
+    res.status(200).send({
+        thread_id,
+    });
+});
+
+app.post('/student_conversation', async function (req, res) {
+    // Get user message, thread_id and course_name
+    const thread_id    = req.body.thread_id;
+    const course_name  = req.body.course_name;
+    const user_message = req.body.user_message;
+
+    if (user_message === undefined || thread_id === undefined) {
         res.status(400).send('Bad request');
         return;
     }
-    else if (key === undefined) {
-        res.status(500).send('Internal server error');
-        return;
-    }
 
-    const groq = new Groq({ apiKey: key });
-    const response = await groq.chat.completions.create({
-        messages: [
+    try {
+        const config = {
+            configurable: {
+                thread_id: thread_id,
+            }
+        }
+
+        const system_content = `你是一位就職於${course_name}的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`;
+
+        const input = [
             {
                 role: 'system',
-                content: 'You are a helpful assistant that always use chinese to communicate with the user.',
+                content: system_content,
             },
             {
                 role: 'user',
-                content: msg,
-            },
-        ],
-        model: "llama3-8b-8192"
-    });
+                content: user_message,
+            }
+        ];
 
-    console.log(response.choices[0]?.message?.content || 'No response');
+        const output = await aiApp.invoke({messages: input}, config);
+        console.log("User message: " + user_message);
+        console.log("AI response : " + output.messages[output.messages.length - 1].content);
 
-    res.send(response);
+        res.status(200).send({
+            message: output.messages[output.messages.length - 1].content
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 

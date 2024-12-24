@@ -23,7 +23,7 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
-function select_course(index){
+async function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
 
@@ -37,17 +37,24 @@ function select_course(index){
     const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
-    
 
     document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
     <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
     </svg>'
 
-    
     dropdownMenuCSSModify()
-}
 
+    // Initialize conversation thread
+    await fetch("/student_conversation/init", {
+        method: "POST",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // console.log(data);
+        localStorage.setItem("thread_id", data.thread_id);
+    });
+}
 
 function dropdownMenuCSSModify(){
 
@@ -97,9 +104,10 @@ function detectEnter(ele) {
 async function SendMessage() {
     //這邊之後應該要結合後端的訊息紀錄
 
-    const message = document.getElementById("message").value;
+    const thread_id = localStorage.getItem("thread_id");
+    const user_message = document.getElementById("message").value;
 
-    if(message.length == 0) return;
+    if(user_message.length == 0) return;
 
     document.getElementById("message").value = "";
     // console.log(message);
@@ -124,11 +132,16 @@ async function SendMessage() {
         username +
         "</div>" +
         "<textarea class='sent_content' disabled>" +
-        message +
+        user_message +
         "</textarea >" +
         "</div>";
 
     conversation_box.scrollTop = conversation_box.scrollHeight;
+
+    // Get the selected course name
+    const course_name = document.querySelector(
+        "body > div > div > div > div.top-label > div.flex > button"
+    ).textContent;
 
     const response = await fetch("/student_conversation", {
         method: "POST",
@@ -136,12 +149,14 @@ async function SendMessage() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            message: message,
+            thread_id: thread_id,
+            course_name: course_name,
+            user_message: user_message,
         }),
     });
 
     const data = await response.json();
-    const response_message = data.choices[0]?.message?.content || "No response";
+    const response_message = data.message || "No response";
 
     if (response.ok) {
         conversation_box.innerHTML +=
