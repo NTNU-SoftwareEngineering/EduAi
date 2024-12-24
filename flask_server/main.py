@@ -1,3 +1,5 @@
+# Note : this file is currently deprecated, the only working file is app.py
+
 import os
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify

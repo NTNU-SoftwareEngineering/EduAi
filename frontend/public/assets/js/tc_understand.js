@@ -240,8 +240,8 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "tcfb_interaction_edu.html";
     });
 
-    document.getElementById("trend-btn").addEventListener("click", function() {
-        window.location.href = "tcfb_trend_edu.html";
-        });
+    // document.getElementById("trend-btn").addEventListener("click", function() {
+    //     window.location.href = "tcfb_trend_edu.html";
+    //     });
     
 });

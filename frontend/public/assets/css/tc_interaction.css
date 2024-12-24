@@ -137,6 +137,7 @@ body {
     border-radius: 8px;
     background-color: #9879da;
     height: 14rem;
+    
     transform-origin: 0 0;
     /* margin: 0rem 1rem 0rem 1rem; */
 }
@@ -149,11 +150,11 @@ body {
 
     display: flex;
     width: 90%; 
-    height: 38%; 
-    padding: 5% 10% 5% 10% ; 
+    height: 40%; 
+    padding: 5% 10% 5% 10% ;
     
     font-size:1.3rem;
-    /* border: none; */
+    
     border-radius: 8px;
     /* align-items: center; */
     background: var(--pri_white, #FFF);
@@ -195,7 +196,7 @@ body {
     color: var(--grey900, #303133);
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.3rem;
     font-style: normal;
     font-weight: 400;
@@ -310,7 +311,7 @@ body {
     align-self: stretch;
     padding-left: 1%;
 
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: 700;
@@ -321,8 +322,10 @@ body {
 
 .select-course {
     padding-top: 1rem;
-    height: 100%;
+    height: 60%;
+    /* height: auto; */
     width: 110%;
+
     display: flex;
     flex-direction: column;
     border-radius: 8px;
@@ -417,7 +420,7 @@ body {
     text-align: start;
     /* font-weight: bold; */
     display: block;
-    font-size: 14px;
+    font-size: 1.46rem;
     color: #8E8E93;
 }
 
@@ -553,7 +556,7 @@ body {
 }
 .description {
     color: #8E8E93;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     padding-left: 2rem;
     /* line-height: 1.6; */
     font-size: 1.46rem;
@@ -603,8 +606,8 @@ body {
     color: var(--sec_gray900, #8E8E93);
     margin-top: 0rem;
     margin-left: 34rem;
-    font-family: "Noto Sans TC";
-    font-size: 14px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 1.46rem;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 171.429% */
