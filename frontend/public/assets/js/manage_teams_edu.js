@@ -1,5 +1,9 @@
 let courseList = []; // course name only
 let courseObjList = [];
+let courseId = -1; // 還未選擇課程: -1
+const selectClassList = document.querySelector('#select-class')
+const selectCourseList = document.querySelector('#select-course')
+
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
@@ -20,10 +24,27 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
+function updateCourseId() {
+    console.log( "select course: " + selectCourseList.value );
+    selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
+    if ( !selectedCourseObj ) {
+        // 還未選擇課程，或後端無此課程
+        courseId = -1;
+        console.error(`Cannot find course: ${selectCourseList.value}`);
+        return;
+    };
+
+    courseId = selectedCourseObj.id;
+    if ( !courseId ) {
+        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        return;
+    }
+    console.log( "update courseid: " + courseId );
+}
+selectCourseList.addEventListener("change", updateCourseId);
 
 
-const selectClassList = document.querySelector('#select-class')
-const selectCourseList = document.querySelector('#select-course')
+
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0
 
@@ -266,7 +287,7 @@ async function updateStudent(){
             const user_name = await get_user_fullname_by_id(id)
             // console.log(`id:${id}`)
             // console.log(`name:${user_name}`)
-            class1[id] = id
+            class1[id] = user_name
         }
         console.log(class1)
     }
@@ -403,7 +424,6 @@ async function random_group() {
     const groups_new = await get_group_from_course(temp_courseid)
     console.log(groups_new)
 }
-random_group()
 
 function randomGroup() {
     console.log("randomGroup");
@@ -413,71 +433,58 @@ function randomGroup() {
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     const groupArray = [];
-    const groupList = document.querySelector(".group-content");
-    groupList.innerHTML = "";
-    for (let i = 0; i < groupNum; i++) {
-        //group div
-        const group = document.createElement('div');
-        group.className = 'group';
-        group.id = `group${i + 1}`;
-        group.style.backgroundColor = group_color_code[i % 4];
-        //group title
-        const groupTitle = document.createElement('div');
-        groupTitle.className = 'group-title';
-        //group icon
-        const groupIcon = document.createElement('div');
-        groupIcon.className = 'group-icon';
-        groupTitle.appendChild(groupIcon);
-        //group text
-        const groupText = document.createElement('div');
-        groupText.className = 'group-text';
-        groupText.textContent = `第${i + 1}組 共0人`;
-        groupTitle.appendChild(groupText);
-        group.appendChild(groupTitle);
-        //group student div
-        const groupStudent = document.createElement('div');
-        groupStudent.className = 'group-student';
-        group.appendChild(groupStudent);
-        groupArray.push(group);
-        groupList.appendChild(group);
-    }
     let studentsPerGroup = Math.floor(studentArray.length / groupNum);
     let remainder = studentArray.length % groupNum;
+
     let index = 0;
     for (let i = 0; i < groupNum; i++) {
+
+        groupArray.push([]);
         for (let j = 0; j < studentsPerGroup; j++) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[i % 4];
-            // student.querySelector('.student-icon').backgroundColor = group_student_icon_color[i % 4];
-            student.querySelector('.student-icon').id = colors[i % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[i % 4];
-            // student.querySelector('student-icon').style.backgroundColor = group_student_icon_color[i % 4];
-            groupArray[i].querySelector('.group-student').appendChild(student);
+            groupArray[i].push(studentArray[index]);
             index++;
         }
     }
+
     while (remainder > 0) {
         const randomIndex = Math.floor(Math.random() * groupNum);
-        if (groupArray[randomIndex].querySelector('.group-student').childElementCount < studentsPerGroup + 1) {
-            const student = studentArray[index];
-            student.style.backgroundColor = group_student_color_code[randomIndex % 4];
-            student.querySelector('.student-icon').id = colors[randomIndex % 4];
-            // student.querySelector('.info').style.color = group_student_icon_color[randomIndex % 4];
-            groupArray[randomIndex].querySelector('.group-student').appendChild(student);
+        if (groupArray[randomIndex].length < studentsPerGroup + 1) {
+            groupArray[randomIndex].push(studentArray[index]);
             index++;
             remainder--;
         }
     }
+
+    displayGroups(groupArray);
+    console.log(groupArray);
+}
+
+function displayGroups(groupArray) {
+    const groupList = document.querySelector(".group-content");
+    groupList.innerHTML = "";
+    for (let i = 0; i < groupArray.length; i++) {
+
+        groupArray[i].forEach(student => {
+
+            student.style.backgroundColor = group_student_color_code[i % 4];
+            student.querySelector('.student-icon').id = colors[i % 4];
+
+            groupStudent.appendChild(student);
+        });
+
+        groupList.appendChild(group);
+    }
     // Update group titles with the correct number of students
-    groupArray.forEach(group => {
-        const groupTitle = group.querySelector('.group-title');
-        const studentCount = group.querySelector('.group-student').childElementCount;
+    groupArray.forEach((group, index) => {
+        const groupTitle = document.querySelector(`#group${index + 1} .group-title`);
+        const studentCount = group.length;
+
         // Clear previous group title content
         groupTitle.innerHTML = '';
         // Add group icon to group title
         const groupIcon = document.createElement('div');
         groupIcon.className = 'group-icon';
-        switch (group.id.replace('group', '') % 4) {
+        switch (index % 4) {
             case 0:
                 groupIcon.style.backgroundImage = "url(../assets/images/teacher_management/light_blue.svg)";
                 groupIcon.style.backgroundColor = "rgb(201, 233, 255)";
@@ -499,7 +506,7 @@ function randomGroup() {
         //group text
         const groupText = document.createElement('div');
         groupText.className = 'group-text';
-        groupText.textContent = `第${madarian[parseInt(group.id.replace('group', '')) - 1]}組 共${studentCount}人`;
+        groupText.textContent = `第${madarian[index]}組 共${studentCount}人`;
         groupTitle.appendChild(groupText);
     });
 }

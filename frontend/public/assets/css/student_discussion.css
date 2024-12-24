@@ -220,7 +220,7 @@ body {
 
     margin: 2rem 2.5%;
     margin-top: auto;
-    margin-bottom: 5rem;
+    margin-bottom: 0;
     display: flex;
     justify-content: center;
     
@@ -360,7 +360,6 @@ body {
     outline: none;
 
 }
-
 
 .send-file-btn{
 
@@ -507,6 +506,32 @@ body {
 
     position: absolute;
 
+    margin-left: 0;
+
+    border-radius: .5rem;
+    border: 1px solid var(--sec_gray50, #E5E5EA);
+
+    user-select:none; /* standard syntax */
+    -webkit-user-select:none; /* for Chrome、Safari */
+    -moz-user-select:none;  /* for Mozilla、Firefox */
+
+    position: absolute;
+
+}
+
+
+
+.course-list svg{
+    margin-left: auto;
+}
+
+
+.course-container{
+    margin-bottom: 0 ;
+    width: 20rem;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 

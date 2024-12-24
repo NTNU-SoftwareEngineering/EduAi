@@ -195,7 +195,7 @@ body {
     color: var(--grey900, #303133);
 
     /* 內文 */
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.3rem;
     font-style: normal;
     font-weight: 400;
@@ -309,7 +309,7 @@ body {
     align-self: stretch;
     padding-left: 1%;
 
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: 700;
@@ -425,7 +425,7 @@ body {
 .score-summary p{
     color: var(--sec_gray900, #363636);
 
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: bold;
@@ -529,7 +529,7 @@ body {
 }
 .description {
     color: #8E8E93;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     padding-left: 2rem;
     line-height: 1.6;
     font-size: 1.46rem;
@@ -580,7 +580,7 @@ body {
     color: var(--sec_gray900, #8E8E93);
     margin-top: 4rem;
     margin-left: 14rem;
-    font-family: "Noto Sans TC";
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

@@ -39,6 +39,7 @@ services:
       MOODLE_DB_PASSWORD: yourpassword
       MOODLE_URL: http://localhost:8080
 
+
   db:
     image: mysql:8.0
     environment:
@@ -49,16 +50,6 @@ services:
     volumes:
       - ./moodle-db-backup:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
-    networks:
-      - moodle-network
-
-  flask-txt:
-    build:
-      context: ./flask-txt
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./data:/data
     networks:
       - moodle-network
 
@@ -74,9 +65,9 @@ services:
     networks:
       - moodle-network
 
-  audio:
+  flask_server:
     build:
-      context: ./audio
+      context: ./flask_server
     ports:
       - "5001:5000"
     volumes:
@@ -87,6 +78,8 @@ services:
       - db
       - backend
 
+
+    
 networks:
   moodle-network:
 

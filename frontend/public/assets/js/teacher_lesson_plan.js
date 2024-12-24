@@ -1,4 +1,4 @@
-document.getElementById("submitButton").addEventListener("click", function () {
+document.getElementById("submitButton").addEventListener("click", async () => {
     const lessonPlanData = {
         name: document.getElementById("lesson-plan-name").value,
         author: document.getElementById("lesson-plan-author").value,
@@ -13,22 +13,22 @@ document.getElementById("submitButton").addEventListener("click", function () {
         goal: document.getElementById("lesson-plan-goal").value,
     };
 
-    console.log(lessonPlanData); // 用來檢查資料是否正確
+    try {
+        const response = await fetch("/api/lesson_plan", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(lessonPlanData),
+        });
 
-    // 發送 POST 請求到 Flask 服務
-    fetch("http://localhost:5000/save_to_txt", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(lessonPlanData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);  // 顯示成功訊息
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("儲存失敗，請稍後再試。");
-    });
+        const result = await response.json();
+        if (response.ok) {
+            alert("教案儲存成功！");
+        } else {
+            alert(`儲存失敗: ${result.message}`);
+        }
+    } catch (error) {
+        alert(`發生錯誤: ${error.message}`);
+    }
 });
