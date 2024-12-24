@@ -46,17 +46,15 @@
                  <div class="book-icon"></div>
                  <span class="intro">選擇課程</span>
               </div>
-              <div class="class-selector">
-                <select id="class" onChange="select_class(this.options[this.selectedIndex].value)">
-                  <option value="">請選擇課程</option>
-                </select>
-              </div>
+              <select id="class">
+                <option value="" disabled selected>請選擇課程</option>
+              </select>
               
           </div>
 
 
           <div class="student_list flex">
-            <div class="footer">
+            <div class="footer d-flex align-items-center justify-content-center">
               <div class="student-icon"></div>
               <span class="intro">學生列表</span>
               <div class="switch-icon"></div>
@@ -74,12 +72,12 @@
 
         </div>
         <div class="lesson_plan flex">
-          <div class="footer" style="height: 5rem;">
+          <div class="footer d-flex align-items-center" style="height: 5rem;">
             <div class="plan-icon"></div>
-            <span class="intro">教案檔案輸入</span>
+            <span class="intro" style="margin-top: 0;">教案檔案輸入</span>
             <!-- 將 div 改為 role="button"  -->
             <button class="event-btn" id="submitButton">
-              <div class="event-icon"></div>
+              <div class="save-icon"></div>
               <div class="label">儲存</div>
             </button>
           </div>
