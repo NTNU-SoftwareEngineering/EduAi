@@ -179,6 +179,19 @@ async function uploadAudio(){
 		uploadFileToDraftArea(transcriptBlob, 'transcript.txt', itemId);
 		
 		// Step 5: 傳遞逐字稿給 LLM service
+		const llmResult = await fetch("llm", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				message: sttResult,
+			}),
+		});
+		const llmResultJson = await llmResult.json();
+		console.log("LLM服務回應: ", llmResultJson);
+		const llmMessage = llmResultJson.choices[0]?.message?.content || 'No response';
+		uploadFileToDraftArea(new Blob([llmMessage], { type: 'text/plain' }), 'llm.txt', itemId);
 
 		// Step 6: 上傳所有itemId至Moodle作業區
 		uploadFilesToMoodleAssignment(itemId);
@@ -209,7 +222,7 @@ async function triggerSTT(){
         } else {
 			const result = await response.json();
 			console.log("語音辨識結果：", result);
-			return result.transcript;
+			return result.transcription;
 		}
 	}
 	catch(err){
@@ -276,24 +289,3 @@ async function uploadFilesToMoodleAssignment(itemId){
 		return saveResult;
 	}
 }
-
-// 將音訊編碼為 WAV 格式，並呼叫STT API轉換成文字回傳
-/*
-async function triggerSTT(){
-	
-	const audioBlob = await fetch(audio.src).then(res => res.blob())
-
-	// 使用 FormData 包裝音頻文件
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'audio-file.wav');
-
-	const response = await fetch('http://localhost:8000/api/whisper-transcribe', {
-        method: 'POST',
-        body: formData,
-    });
-
-    if (!response.ok) throw new Error("語音辨識失敗");
-    return await response.json(); // 返回轉換的逐字稿
-}
-
-*/
