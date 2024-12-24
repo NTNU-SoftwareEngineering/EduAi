@@ -75,7 +75,11 @@ async function onCourseChange() {
         });
 
     } catch (error) {
-        alert(`解析教案發生錯誤: ${error.message}`);
+        if ( error instanceof SyntaxError ) {
+            alert('請先上傳教案，或重新上傳教案。');
+            return;
+        }
+        console.error(`解析教案發生錯誤: ${error.message}`);
     }
 }
 selectCourseList.addEventListener("change", onCourseChange);
