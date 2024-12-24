@@ -23,8 +23,8 @@ async function checkTokenVaild() {
 
     courseObjList = await fetchCourses();
     // console.log(courseObjList[0])
-    courseList = courseObjList.map(c => c.id);
-    course_first = courseList[0]
+    courseIdList = courseObjList.map(c => c.id);
+    course_first = courseIdList[0]
     // 清除錯誤訊息
     userid = await get_userid()
     role = await get_role_from_course(course_first,userid)
