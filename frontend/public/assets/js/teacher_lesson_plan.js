@@ -60,7 +60,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
     try {
         const token = localStorage.getItem('token');
         if ( !token ) window.location.href = 'login_edu.html';
-        
+      
         console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`)
 
         const ret = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
