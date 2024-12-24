@@ -10,6 +10,7 @@ let app = express();
 const port = 3000;
 
 let aiApp = await initChat();
+let conversation_memory = [];
 
 // Init Groq chat with Langchain
 async function initChat() {
@@ -44,20 +45,46 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.post('/student_conversation/init', async function (req, res) {
-    const thread_id = uuidv4();
+    const token = req.body.token;
+    const course_id = req.body.course_id;
+    const course_name = req.body.course_name;
 
-    res.status(200).send({
-        thread_id,
-    });
+    if (token === undefined || course_id === undefined || course_name === undefined) {
+        res.status(400).send('Bad request');
+        return;
+    }
+
+    // Get thread id if token and course id match
+    let memory = conversation_memory.find((thread) => thread.token === token && thread.course_id === course_id);
+
+    console.log(memory);
+
+    if (memory === undefined) {
+        const thread_id = uuidv4();
+
+        conversation_memory.push({
+            token, thread_id, course_id, course_name
+        });
+    }
+
+    res.status(200).send();
 });
 
 app.post('/student_conversation', async function (req, res) {
-    // Get user message, thread_id and course_name
-    const thread_id    = req.body.thread_id;
-    const course_name  = req.body.course_name;
+    // Get token, course id, and user message from request
+    const token        = req.body.token;
+    const course_id    = req.body.course_id;
     const user_message = req.body.user_message;
 
-    if (user_message === undefined || thread_id === undefined) {
+    if (token === undefined || course_id === undefined || user_message === undefined) {
+        res.status(400).send('Bad request');
+        return;
+    }
+
+    // Get thread id if token and course id match
+    const memory = conversation_memory.find((thread) => thread.token === token && thread.course_id === course_id);
+
+    if (memory === undefined) {
         res.status(400).send('Bad request');
         return;
     }
@@ -65,11 +92,11 @@ app.post('/student_conversation', async function (req, res) {
     try {
         const config = {
             configurable: {
-                thread_id: thread_id,
+                thread_id: memory.thread_id,
             }
         }
 
-        const system_content = `你是一位就職於${course_name}的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`;
+        const system_content = `你是一位就職於${ memory.course_name }的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。`;
 
         const input = [
             {

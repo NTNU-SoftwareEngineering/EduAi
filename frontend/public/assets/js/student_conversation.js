@@ -48,11 +48,20 @@ async function select_course(index){
     // Initialize conversation thread
     await fetch("/student_conversation/init", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem("token"),
+            course_id: courseObjList[index].id,
+            course_name: courseObjList[index].fullname,
+        }),
     })
-    .then((response) => response.json())
-    .then((data) => {
-        // console.log(data);
-        localStorage.setItem("thread_id", data.thread_id);
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.error(error);
     });
 }
 
@@ -101,16 +110,43 @@ function detectEnter(ele) {
     }
 }
 
-async function SendMessage() {
-    //這邊之後應該要結合後端的訊息紀錄
+function appendMessage(role, message) {
+    const conversation_box = document.querySelector(
+        "body > div > div > div.dialog > div.conversation"
+    );
 
-    const thread_id = localStorage.getItem("thread_id");
+    if (role == "user") {
+        conversation_box.innerHTML +=
+        "<div class='sent_dialog'>" +
+        "<div class='sent_ID'>" +
+        username +
+        "</div>" +
+        "<textarea class='sent_content' disabled>" +
+        message +
+        "</textarea >" +
+        "</div>";
+    }
+    else if (role == "system") {
+        conversation_box.innerHTML +=
+        "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
+        "<div class='sent_ID' style='text-align: left;'>" +
+        "小助手" +
+        "</div>" +
+        "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);' disabled>" +
+        message +
+        "</textarea>" +
+        "</div>";
+    }
+
+    conversation_box.scrollTop = conversation_box.scrollHeight;
+}
+
+async function SendMessage() {
     const user_message = document.getElementById("message").value;
 
     if(user_message.length == 0) return;
 
     document.getElementById("message").value = "";
-    // console.log(message);
 
     if (!didSendMessage) {
         document.querySelector(
@@ -122,54 +158,29 @@ async function SendMessage() {
     }
     didSendMessage = 1;
 
-    const conversation_box = document.querySelector(
-        "body > div > div > div.dialog > div.conversation"
-    );
+    appendMessage("user", user_message);
 
-    conversation_box.innerHTML +=
-        "<div class='sent_dialog'>" +
-        "<div class='sent_ID'>" +
-        username +
-        "</div>" +
-        "<textarea class='sent_content' disabled>" +
-        user_message +
-        "</textarea >" +
-        "</div>";
+    // Get the selected course id
+    let course_id = courseObjList[course_status.indexOf(1)].id;
 
-    conversation_box.scrollTop = conversation_box.scrollHeight;
-
-    // Get the selected course name
-    const course_name = document.querySelector(
-        "body > div > div > div > div.top-label > div.flex > button"
-    ).textContent;
-
-    const response = await fetch("/student_conversation", {
+    await fetch("/student_conversation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            thread_id: thread_id,
-            course_name: course_name,
+            token: localStorage.getItem("token"),
+            course_id: course_id,
             user_message: user_message,
         }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        appendMessage("system", data.message);
+    })
+    .catch((error) => {
+        console.error(error);
     });
-
-    const data = await response.json();
-    const response_message = data.message || "No response";
-
-    if (response.ok) {
-        conversation_box.innerHTML +=
-            "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
-            "<div class='sent_ID' style='text-align: left;'>" +
-            "小助手" +
-            "</div>" +
-            "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);' disabled>" +
-            response_message +
-            "</textarea>" +
-            "</div>";
-    }
-    conversation_box.scrollTop = conversation_box.scrollHeight;
 }
 
 document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "none"
