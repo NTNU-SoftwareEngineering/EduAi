@@ -118,12 +118,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //頁面每10分鐘刷新一次(=頁面變成預設尚未選擇課程狀態)
     if (studentName && savedTime && currentTime - savedTime >10 * 60 * 1000) {
-        
         localStorage.removeItem("selectedCourse");
         localStorage.removeItem("studentName");
         localStorage.removeItem("savedTime");
         localStorage.removeItem("selectedClass");
-
     } else if (studentName) {
         selectedStuName.textContent = studentName;
         selectedCourseName.textContent = savedCourse;
@@ -242,8 +240,8 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "tcfb_interaction_edu.html";
     });
 
-    document.getElementById("trend-btn").addEventListener("click", function() {
-        window.location.href = "tcfb_trend_edu.html";
-        });
+    // document.getElementById("trend-btn").addEventListener("click", function() {
+    //     window.location.href = "tcfb_trend_edu.html";
+    //     });
     
 });

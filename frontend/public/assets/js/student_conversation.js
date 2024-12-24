@@ -1,6 +1,6 @@
 let dropdown_expand = 0;
 let didSendMessage = 0;
-let username = "王小明"; //backend should modify and offer the username of the account
+let username = "";
 
 let courseList = []; // course name only
 let courseId = -1;
@@ -13,7 +13,6 @@ async function loadCourse() { // fetch course data from backend
     course_status = new Array(courseList.length);
     for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
 }
-document.addEventListener("DOMContentLoaded", loadCourse);
 
 async function updateTopicText () {
     const token = localStorage.getItem('token');
@@ -32,7 +31,26 @@ async function updateTopicText () {
     }
 }
 
-function select_course(index){
+document.addEventListener("DOMContentLoaded", async function () {
+    await loadCourse();
+
+    await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken: localStorage.getItem('token'),
+			wsfunction: 'core_webservice_get_site_info'
+		}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        username = data.fullname;
+    });
+});
+
+async function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
 
@@ -49,17 +67,43 @@ function select_course(index){
     const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
-    
 
     document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
     <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
     </svg>'
 
-    
-    dropdownMenuCSSModify()
-}
+    // Clear conversation box
+    const conversation_box = document.querySelector("body > div > div > div.dialog > div.conversation");
+    conversation_box.innerHTML = "";
 
+    dropdownMenuCSSModify();
+
+    // Get conversation data
+    await fetch("/student_conversation/init", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem("token"),
+            course_id: courseObjList[index].id,
+            course_name: courseObjList[index].fullname,
+        }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        const messages = data.messages;
+
+        // Append history messages
+        for (let i = 0; i < messages.length; i++) {
+            appendMessage(messages[i].role, messages[i].content);
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+}
 
 function dropdownMenuCSSModify(){
 
@@ -106,16 +150,7 @@ function detectEnter(ele) {
     }
 }
 
-async function SendMessage() {
-    //這邊之後應該要結合後端的訊息紀錄
-
-    const message = document.getElementById("message").value;
-
-    if(message.length == 0) return;
-
-    document.getElementById("message").value = "";
-    // console.log(message);
-
+function appendMessage(role, message) {
     if (!didSendMessage) {
         document.querySelector(
             "body > div > div > div.dialog > div.botton-tip"
@@ -130,7 +165,8 @@ async function SendMessage() {
         "body > div > div > div.dialog > div.conversation"
     );
 
-    conversation_box.innerHTML +=
+    if (role == "user") {
+        conversation_box.innerHTML +=
         "<div class='sent_dialog'>" +
         "<div class='sent_ID'>" +
         username +
@@ -139,34 +175,52 @@ async function SendMessage() {
         message +
         "</textarea >" +
         "</div>";
+    }
+    else if (role == "ai") {
+        conversation_box.innerHTML +=
+        "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
+        "<div class='sent_ID' style='text-align: left;'>" +
+        "小助手" +
+        "</div>" +
+        "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);' disabled>" +
+        message +
+        "</textarea>" +
+        "</div>";
+    }
 
     conversation_box.scrollTop = conversation_box.scrollHeight;
+}
 
-    const response = await fetch("/student_conversation", {
+async function SendMessage() {
+    const user_message = document.getElementById("message").value;
+
+    if(user_message.length == 0) return;
+
+    document.getElementById("message").value = "";
+
+    appendMessage("user", user_message);
+
+    // Get the selected course id
+    let course_id = courseObjList[course_status.indexOf(1)].id;
+
+    await fetch("/student_conversation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            message: message,
+            token: localStorage.getItem("token"),
+            course_id: course_id,
+            user_message: user_message,
         }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        appendMessage("ai", data.message);
+    })
+    .catch((error) => {
+        console.error(error);
     });
-
-    const data = await response.json();
-    const response_message = data.choices[0]?.message?.content || "No response";
-
-    if (response.ok) {
-        conversation_box.innerHTML +=
-            "<div class='sent_dialog' style='margin-left: 0%;margin-right: 50%'>" +
-            "<div class='sent_ID' style='text-align: left;'>" +
-            "小助手" +
-            "</div>" +
-            "<textarea class='sent_content' style='background: var(--status_y_50, #FFF6E8);' disabled>" +
-            response_message +
-            "</textarea>" +
-            "</div>";
-    }
-    conversation_box.scrollTop = conversation_box.scrollHeight;
 }
 
 document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "none"

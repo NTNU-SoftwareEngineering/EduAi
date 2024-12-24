@@ -308,7 +308,7 @@ async function add_group_member(groupid, userid) {
 async function show_group_info(){
     try {
         // Step 1: Get groups from the course
-        const groups = await get_group_from_course(temp_courseid);
+        const groups = await get_group_from_course(courseId);
         console.log("Groups:", groups);
     
         // Step 2: Fetch members for each group
@@ -359,8 +359,8 @@ async function updateStudent(){
 
         const courseid = selectedCourseObj.id;
         if ( !courseid ) console.error(`Cannot find course id for: ${selectCourseList.value}`);
-
-        const userid = await get_student_from_course(courseid)
+        console.log(courseid)
+        const userid = await get_student_from_course(courseId)
         console.log('hi')
         console.log(userid)
         for(const id of userid){
@@ -459,7 +459,7 @@ questionInput.addEventListener('input', function(){
 
 //random group
 const groupBtn = document.querySelector(".group-button");
-groupBtn.addEventListener('click', randomGroup);
+groupBtn.addEventListener('click', random_group);
 
 const group_color_code = ["#F9F7FB", "#FFFAF3", "#F8FFF8", "#F3FBFF"];
 const group_student_color_code = ["#E4D9F5", "#FFECD0", "#D9F8D9", "#C9E9FF"];
@@ -468,11 +468,11 @@ const madarian = ["一", "二", "三", "四", "五", "六", "七", "八", "九",
                 "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"];
 
 async function random_group() {
-    const groups_old = await get_group_from_course(temp_courseid)
+    const groups_old = await get_group_from_course(courseId)
     for(let i=0;i<groups_old.length;i++){
         delete_group(groups_old[i].id)
     }
-    const participant = await get_student_from_course(temp_courseid)
+    const participant = await get_student_from_course(courseId)
     console.log(`parti:${participant}`)
     const participant_length = participant.length
     console.log(`parti_l:${participant_length}`)
@@ -482,11 +482,11 @@ async function random_group() {
         .map(({ value }) => value)
         console.log(`parti_s:${participant_suffle}`)
     // const groupNum = document.querySelector(".teams-num-selector > input").value;
-    const groupNum = 3
+    const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     for(let i = 0; i<groupNum;i++)
-        await create_group(temp_courseid, `group ${i + 1}`)
-    const groups = await get_group_from_course(temp_courseid)
+        await create_group(courseId, `group ${i + 1}`)
+    const groups = await get_group_from_course(courseId)
     console.log(groups)
     let groupids = []
     for(let i = 0;i<groups.length;i++){
@@ -501,8 +501,19 @@ async function random_group() {
         }
         else add_group_member(groupids[Math.floor(i/group_member_num)],participant[i])
     }
-    const groups_new = await get_group_from_course(temp_courseid)
+    let groups_new = []
     console.log(groups_new)
+    for(let i = 0;i<groupids.length;i++){
+        const gr_me = await get_group_member(groupids[i]);
+        console.log(gr_me[0].userids)//array
+        let team = [];
+        for(let i = 0;i<gr_me[0].userids;i++){
+            const name = get_user_fullname_by_id(gr_me[0].userids[i])
+            team.push({id:gr_me[0].userids[i],name:name});
+        }
+        groups_new.push(team);
+    }
+    //TODO: display groups_new
 }
 
 function randomGroup() {
@@ -513,27 +524,30 @@ function randomGroup() {
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
     const groupArray = [];
-    let studentsPerGroup = Math.floor(studentArray.length / groupNum);
-    let remainder = studentArray.length % groupNum;
 
-    let index = 0;
-    for (let i = 0; i < groupNum; i++) {
 
-        groupArray.push([]);
-        for (let j = 0; j < studentsPerGroup; j++) {
-            groupArray[i].push(studentArray[index]);
-            index++;
-        }
-    }
+    // let studentsPerGroup = Math.floor(studentArray.length / groupNum);
+    // let remainder = studentArray.length % groupNum;
 
-    while (remainder > 0) {
-        const randomIndex = Math.floor(Math.random() * groupNum);
-        if (groupArray[randomIndex].length < studentsPerGroup + 1) {
-            groupArray[randomIndex].push(studentArray[index]);
-            index++;
-            remainder--;
-        }
-    }
+
+    // let index = 0;
+    // for (let i = 0; i < groupNum; i++) {
+
+    //     groupArray.push([]);
+    //     for (let j = 0; j < studentsPerGroup; j++) {
+    //         groupArray[i].push(studentArray[index]);
+    //         index++;
+    //     }
+    // }
+
+    // while (remainder > 0) {
+    //     const randomIndex = Math.floor(Math.random() * groupNum);
+    //     if (groupArray[randomIndex].length < studentsPerGroup + 1) {
+    //         groupArray[randomIndex].push(studentArray[index]);
+    //         index++;
+    //         remainder--;
+    //     }
+    // }
 
     displayGroups(groupArray);
     console.log(groupArray);

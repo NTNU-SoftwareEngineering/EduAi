@@ -4,6 +4,7 @@ const showPwdButton = document.getElementById('showPwd');
 const pwdInput = document.getElementById('pwd');
 const container = document.querySelector("body > div");
 const signInForm = document.getElementById('signInForm');
+let loginBtnCanClick = 1
 // 確保表單存在
 if (signInForm) {
 
@@ -24,6 +25,9 @@ if (signInForm) {
 	console.log("錯誤訊息顯示區域已添加至登入表單");
 	// 表單提交處理
 	signInForm.addEventListener('submit', async (e) => {
+		if(!loginBtnCanClick) return;
+		loginBtnCanClick = 0;
+		document.querySelector("#login").setAttribute("disabled" , "disabled")
 		e.preventDefault();
 		console.log("登入表單提交事件觸發");
 		// 更新變數
@@ -33,11 +37,14 @@ if (signInForm) {
 		console.log("密碼:", password);  // 輸出密碼
 		if (!username || !password) {
 			errorDisplay.textContent = '請輸入使用者名稱和密碼';
+			loginBtnCanClick = 1
+			document.querySelector("#login").removeAttribute("disabled")
 			return;
 		}
 		try {
 		// 發送登入請求
 		console.log("開始發送登入請求...");
+		
 		const response = await fetch('http://localhost:8080/moodle/login/token.php', {
 			method: 'POST',
 			headers: {
@@ -49,6 +56,7 @@ if (signInForm) {
 			service: 'software_engineering',  // API 對應的服務名稱，需確認
 			}),
 		});
+		
 		console.log("API 回應狀態:", response.status);  // 檢查 API 回應狀態碼
 		const data = await response.json();
 		console.log("API 回應數據:", data);  // 輸出 API 回應數據
@@ -74,6 +82,8 @@ if (signInForm) {
 				window.location.href = 'student_user_data_edu.html';  // 請替換為實際的頁面
 			else window.location.href = 'teacher_user_data_edu.html';
 		} else {
+			loginBtnCanClick = 1;
+			document.querySelector("#login").removeAttribute("disabled")
 			console.warn("登入失敗，伺服器未返回 token");
 			// 根據後端返回的錯誤訊息，顯示相應的提示
 			if (data.errorcode === 'invalidlogin') {
@@ -85,6 +95,8 @@ if (signInForm) {
 			}
 		}
 		} catch (err) {
+			loginBtnCanClick = 1;
+			document.querySelector("#login").removeAttribute("disabled")
 			console.error("捕獲到錯誤:", err);  // 打印錯誤訊息
 			errorDisplay.textContent = '登入失敗，請檢查網路連接或聯繫管理員';
 			alert('登入失敗，請檢查網路連接或聯繫管理員');  // 彈出失敗訊息

@@ -104,119 +104,156 @@ function core_expand_toggle(){
 function eventDelete(idx){
     eventList[idx] = 0
     toDelete = document.querySelectorAll("#event" + idx)
+  
     for(var i=0;i<toDelete.length;i++) toDelete[i].remove()
 
     var cnt = 0
     for(var i=0;i<5;i++) if(eventList[i]) cnt += 1
-    if(cnt == 0) document.querySelector(".event-row").style.display = "flex"
+    if(cnt == 0) document.querySelector(".event-row").style.display = "none"
     
 }
 
-function eventAdd(){
+async function cnt_event(){
+  for(var i=0;i<5;i++) if(!eventList[i]) return i
+  return 5
+}
 
-    var idx = 0 
-    while(idx < 5 && eventList[idx] == 1) idx += 1
-    if(idx == 5) return
+async function eventAdd(){
 
-    eventList[idx] = 1
+  
+  var idx = await cnt_event()
+  
+  if(idx == 5) return
 
-    document.querySelector(".event-row").style.display = "flex"
+  eventList[idx] = 1
 
-    const parentEle = document.querySelector(".event-label")
-    parentEle.innerHTML += 
-    `
-    <div class="event-row" id="event${idx}" style="background: #FFF;">
-              <input class="event-row-title-input" placeholder="請輸入活動名稱">
-              <button class="event-delete-btn" onclick="eventDelete(${idx})"></button>
-            </div>
-            <div class="event-row" id="event${idx}">
-              <input class="event-row-title" style="width: 45%;" placeholder="請輸入學習內容及實施方式"></input>
-              <input class="event-row-title" style="width: 17.5%;" placeholder="請輸入時間"></input>
-              <input class="event-row-title" style="width: 37.5%;" placeholder="請輸入標準答案"></input>
-            </div>
-    `
+  document.querySelector(".event-row").style.display = "flex"
+
+  const parentEle = document.querySelector(".event-label")
+
+  var div1 = document.createElement('div');
+  div1.className = 'event-row';
+  div1.id = 'event' + idx;
+  div1.style.background = '#FFF';
+
+  var input1 = document.createElement('input');
+  input1.className = 'event-row-title-textarea';
+  input1.placeholder = '請輸入活動名稱';
+
+  var button1 = document.createElement('button');
+  button1.className = 'event-delete-btn';
+  button1.onclick = function() { eventDelete(idx); };
+
+  div1.appendChild(input1);
+  div1.appendChild(button1);
+
+  var div2 = document.createElement('div');
+  div2.className = 'event-row';
+  div2.id = 'event' + idx;
+
+  var input2 = document.createElement('input');
+  input2.className = 'event-row-title';
+  input2.style.width = '45%';
+  input2.placeholder = '請輸入學習內容及實施方式';
+
+  var input3 = document.createElement('input');
+  input3.className = 'event-row-title';
+  input3.style.width = '17.5%';
+  input3.placeholder = '請輸入時間';
+
+  var input4 = document.createElement('input');
+  input4.className = 'event-row-title';
+  input4.style.width = '37.5%';
+  input4.placeholder = '請輸入標準答案';
+
+  div2.appendChild(input2);
+  div2.appendChild(input3);
+  div2.appendChild(input4);
+
+  parentEle.appendChild(div1);
+  parentEle.appendChild(div2);
 
 }
 
 // below are codes for custom select box
 
-var x, i, j, l, ll, selElmnt, a, b, c;
-/* Look for any elements with the class "custom-select": */
-x = document.getElementsByClassName("class-selector");
-l = x.length;
-for (i = 0; i < l; i++) {
-  selElmnt = x[i].getElementsByTagName("select")[0];
-  ll = selElmnt.length;
-  /* For each element, create a new DIV that will act as the selected item: */
-  a = document.createElement("DIV");
-  a.setAttribute("class", "select-selected");
-  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-  x[i].appendChild(a);
-  /* For each element, create a new DIV that will contain the option list: */
-  b = document.createElement("DIV");
-  b.setAttribute("class", "select-items select-hide");
-  for (j = 1; j < ll; j++) {
-    /* For each option in the original select element,
-    create a new DIV that will act as an option item: */
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /* When an item is clicked, update the original select box,
-        and the selected item: */
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-          if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-    /* When the select box is clicked, close any other select boxes,
-    and open/close the current select box: */
-    e.stopPropagation();
-    closeAllSelect(this);
-    this.nextSibling.classList.toggle("select-hide");
-    this.classList.toggle("select-arrow-active");
-  });
-}
+// var x, i, j, l, ll, selElmnt, a, b, c;
+// /* Look for any elements with the class "custom-select": */
+// x = document.getElementsByClassName("class-selector");
+// l = x.length;
+// for (i = 0; i < l; i++) {
+//   selElmnt = x[i].getElementsByTagName("select")[0];
+//   ll = selElmnt.length;
+//   /* For each element, create a new DIV that will act as the selected item: */
+//   a = document.createElement("DIV");
+//   a.setAttribute("class", "select-selected");
+//   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+//   x[i].appendChild(a);
+//   /* For each element, create a new DIV that will contain the option list: */
+//   b = document.createElement("DIV");
+//   b.setAttribute("class", "select-items select-hide");
+//   for (j = 1; j < ll; j++) {
+//     /* For each option in the original select element,
+//     create a new DIV that will act as an option item: */
+//     c = document.createElement("DIV");
+//     c.innerHTML = selElmnt.options[j].innerHTML;
+//     c.addEventListener("click", function(e) {
+//         /* When an item is clicked, update the original select box,
+//         and the selected item: */
+//         var y, i, k, s, h, sl, yl;
+//         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+//         sl = s.length;
+//         h = this.parentNode.previousSibling;
+//         for (i = 0; i < sl; i++) {
+//           if (s.options[i].innerHTML == this.innerHTML) {
+//             s.selectedIndex = i;
+//             h.innerHTML = this.innerHTML;
+//             y = this.parentNode.getElementsByClassName("same-as-selected");
+//             yl = y.length;
+//             for (k = 0; k < yl; k++) {
+//               y[k].removeAttribute("class");
+//             }
+//             this.setAttribute("class", "same-as-selected");
+//             break;
+//           }
+//         }
+//         h.click();
+//     });
+//     b.appendChild(c);
+//   }
+//   x[i].appendChild(b);
+//   a.addEventListener("click", function(e) {
+//     /* When the select box is clicked, close any other select boxes,
+//     and open/close the current select box: */
+//     e.stopPropagation();
+//     closeAllSelect(this);
+//     this.nextSibling.classList.toggle("select-hide");
+//     this.classList.toggle("select-arrow-active");
+//   });
+// }
 
-function closeAllSelect(elmnt) {
-  /* A function that will close all select boxes in the document,
-  except the current select box: */
-  var x, y, i, xl, yl, arrNo = [];
-  x = document.getElementsByClassName("select-items");
-  y = document.getElementsByClassName("select-selected");
-  xl = x.length;
-  yl = y.length;
-  for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
-    }
-  }
-  for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-      x[i].classList.add("select-hide");
-    }
-  }
-}
+// function closeAllSelect(elmnt) {
+//   /* A function that will close all select boxes in the document,
+//   except the current select box: */
+//   var x, y, i, xl, yl, arrNo = [];
+//   x = document.getElementsByClassName("select-items");
+//   y = document.getElementsByClassName("select-selected");
+//   xl = x.length;
+//   yl = y.length;
+//   for (i = 0; i < yl; i++) {
+//     if (elmnt == y[i]) {
+//       arrNo.push(i)
+//     } else {
+//       y[i].classList.remove("select-arrow-active");
+//     }
+//   }
+//   for (i = 0; i < xl; i++) {
+//     if (arrNo.indexOf(i)) {
+//       x[i].classList.add("select-hide");
+//     }
+//   }
+// }
 
-/* If the user clicks anywhere outside the select box,
-then close all select boxes: */
-document.addEventListener("click", closeAllSelect);
+// /* If the user clicks anywhere outside the select box,
+// then close all select boxes: */
+// document.addEventListener("click", closeAllSelect);
