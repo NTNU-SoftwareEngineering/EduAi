@@ -4,7 +4,7 @@
     flex-direction: column;
 
     width: 20%;
-    height: 120vh;
+    height: 98%;
     margin: 1rem .5rem;
 
     background-color: transparent;
@@ -20,11 +20,18 @@ textarea{
     border: transparent;
     outline: none;
 
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 0;
+    padding: 0.5rem;
     
 
 }
+
+.content.row {
+    display: flex;
+    justify-content: start; /* 避免 center 導致不對齊 */
+    align-items: center;
+}
+
 
 .event-label{
 
@@ -138,11 +145,11 @@ textarea{
 
 .student_content{
     width: 100%;
-    height: 90%;
+    height: 100%;
     
-    padding: 2rem 1rem;
+    padding: 7rem 1rem;
     padding-top: 0;
-    margin-top: 25%;
+    margin-top: 15%;
 }
 
 .class_empty_hint {
@@ -247,7 +254,7 @@ textarea{
     flex-direction: column;
 
     width: 100%;
-    height: 80%;
+    height: 100%;
     border-radius: .5rem;
     background: var(--pri_white, #FFF);
 
@@ -255,7 +262,7 @@ textarea{
 
 .select-class {
     top: 0;
-    height:  15%;
+    height: auto;
     width: 100%;
     display: flex;
     align-items: center;
@@ -271,16 +278,27 @@ textarea{
 
 
 
-/* .select-class select{
-    outline: none;
+.select-class select{
+    display: flex;
     width: 100%;
-    color: var(--sec_gray500, #8E8E93);
-    background-color: #fff;
-    border-radius: .5rem;
-    font-size: 1.25rem;
-    height: 100%;
-    padding: 1rem;
-} */
+    height: 4.58rem;
+    padding: 5% 10% 5% 10% ; 
+    
+    font-size: 1.3rem;
+    /* border: none; */
+    border-radius: 8px;
+    /* align-items: center; */
+    background: var(--pri_white, #FFF);
+    margin: 1.5rem 1.25rem 0rem 1.25rem;
+    color:grey;
+    background-image: url("../images/student_feedback/down.svg") ;
+    background-repeat: no-repeat;
+    background-position:95%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
 
 .select-class .intro {
     
@@ -350,6 +368,7 @@ textarea{
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .form-label-large{
@@ -428,7 +447,7 @@ textarea{
     color: var(--white, var(--pri_white, #FFF));
     text-align: center;
     font-family: "Noto Sans TC", sans-serif;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.375rem; /* 157.143% */
@@ -443,6 +462,7 @@ textarea{
 
     width: 2rem; 
     height: 2rem;
+    font-weight: 500;
 
     margin-bottom: 0;
 
@@ -465,10 +485,9 @@ textarea{
 
 .footer {
 
-    margin-top: 1.7rem;
-    margin-left: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
     width: 100%;
-    display: flex;
     
     height: 0;
 
@@ -480,11 +499,12 @@ textarea{
     background-position: 0 0;
     background-size: 100% 100%;
 
-    width: 2rem; height: 2rem;
+    width: 2.5rem; height: 2.5rem;
 
     margin-right: .5rem;
+    margin-left: 1.5rem;
 
-    margin-bottom: 0;
+    margin-bottom: .3rem;
 
 }
 
@@ -509,7 +529,7 @@ textarea{
     background-position: 0 0;
     background-size: 100% 100%;
 
-    width: 2rem; height: 2rem;
+    width: 2.5rem; height: 2.5rem;
     margin: 1.25rem 1.25rem;
 
     margin-right: .5rem;
@@ -524,7 +544,7 @@ textarea{
     background-position: 0 0;
     background-size: 100% 100%;
 
-    width: 2rem; height: 2rem;
+    width: 2.5rem; height: 2.5rem;
     margin: 1.25rem 1.5rem;
 
     margin-left: auto;
@@ -535,7 +555,7 @@ textarea{
 
 .footer .intro {
 
-    font-size: 1.25vw;
+    font-size: 14px;
     
     font: bold;
     font-style: normal;
@@ -551,18 +571,7 @@ textarea{
     margin-bottom: 0.75rem;
 }
 
-.select-class .class-selector {
-    display: flex;
-    align-items: center;
-    position: relative;
-    
-    width: 100%;
-    height: 35%;
-    
-    margin-top: 1rem;
-}
-
-.class-selector select {
+/* .class-selector select {
     display: none;
 }
 
@@ -570,25 +579,25 @@ textarea{
     background-color: #F2F2F7;
     width: 100%;
     border-radius: 0.83rem;
-}
+} */
   
   /* Style the arrow inside the select element: */
-.select-selected:after {
+/* .select-selected:after {
     position: absolute;
     content: url('../images/select-arrow.svg');
     right: 10px;
-}
+} */
   
   /* style the items (options), including the selected item: */
-.select-items div, .select-selected {
+/* .select-items div, .select-selected {
     color: #8E8E93;
     font-size: 1.46rem;
     padding: .83rem 1.67rem;
     cursor: pointer;
-}
+} */
   
   /* Style items (options): */
-.select-items {
+/* .select-items {
     position: absolute;
     background-color: #F2F2F7;
     top: 0;
@@ -596,14 +605,14 @@ textarea{
     right: 0;
     z-index: 99;
     border-radius: 0.83rem;
-}
+} */
   
   /* Hide the items when the select box is closed: */
-.select-hide {
+/* .select-hide {
     display: none;
 }
 
 .same-as-selected {
     background: url('../images/select-check.svg') no-repeat right;
     margin-right: 10px;
-}
+} */
