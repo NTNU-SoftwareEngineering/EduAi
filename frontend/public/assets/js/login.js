@@ -27,6 +27,7 @@ if (signInForm) {
 	signInForm.addEventListener('submit', async (e) => {
 		if(!loginBtnCanClick) return;
 		loginBtnCanClick = 0;
+		document.querySelector("#login").setAttribute("disabled" , "disabled")
 		e.preventDefault();
 		console.log("登入表單提交事件觸發");
 		// 更新變數
@@ -37,6 +38,7 @@ if (signInForm) {
 		if (!username || !password) {
 			errorDisplay.textContent = '請輸入使用者名稱和密碼';
 			loginBtnCanClick = 1
+			document.querySelector("#login").removeAttribute("disabled")
 			return;
 		}
 		try {
@@ -81,6 +83,7 @@ if (signInForm) {
 			else window.location.href = 'teacher_user_data_edu.html';
 		} else {
 			loginBtnCanClick = 1;
+			document.querySelector("#login").removeAttribute("disabled")
 			console.warn("登入失敗，伺服器未返回 token");
 			// 根據後端返回的錯誤訊息，顯示相應的提示
 			if (data.errorcode === 'invalidlogin') {
@@ -93,6 +96,7 @@ if (signInForm) {
 		}
 		} catch (err) {
 			loginBtnCanClick = 1;
+			document.querySelector("#login").removeAttribute("disabled")
 			console.error("捕獲到錯誤:", err);  // 打印錯誤訊息
 			errorDisplay.textContent = '登入失敗，請檢查網路連接或聯繫管理員';
 			alert('登入失敗，請檢查網路連接或聯繫管理員');  // 彈出失敗訊息
