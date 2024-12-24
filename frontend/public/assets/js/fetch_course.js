@@ -98,3 +98,51 @@ async function get_role_from_course(courseid,userid){
         }
     }
 } 
+async function get_student_from_course(courseid){
+    // change class information
+    const wsfunction = 'core_enrol_get_enrolled_users'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+            courseid:courseid
+		}),
+	});
+    const data = await response.json()
+    console.log(data);
+    if (data.exception) {
+        throw new Error(`Error fetching course participants: ${data.message}`);
+    }
+
+    // Filter out users with the "Teacher" role
+    const userIds = data
+        .filter(user => !user.roles.some(role => role.roleid === 3)) // Adjust roleid if necessary
+        .map(user => user.id); // Extract only user IDs
+
+    console.log("User IDs (Without Teachers):", userIds);
+    return userIds; // Return an array of user IDs
+}
+async function get_user_fullname_by_id(userid){
+    // change class information
+    const wsfunction = 'core_user_get_users_by_field'
+    const wstoken = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken,  
+			wsfunction,  // API 對應的服務名稱，需確認
+		}),
+	});
+    const data = await response.json()
+    // console.log("aaa")
+    // console.log(data)
+    return data[0].fullname
+}

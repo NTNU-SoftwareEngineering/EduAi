@@ -18,6 +18,27 @@ async function loadCourse() { // fetch course data from backend
         course_select_ele.appendChild(option);
     });
 }
+async function add_student() {
+    const studentContainer = document.getElementsByClassName("student-container");
+    
+    const inner_html = 
+            `<div class="student-item">
+                <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="12" fill="white"/>
+                    <g transform="translate(3, 3)" > 
+                    <path d="M13.1007 13.6036C13.4692 13.5268 13.6887 13.1411 13.5056 12.8122C13.1019 12.0871 12.4658 11.4499 11.6522 10.9644C10.6044 10.339 9.32046 10 7.99966 10C6.67885 10 5.39495 10.339 4.34709 10.9643C3.53347 11.4499 2.89745 12.0871 2.49373 12.8122C2.3106 13.1411 2.53009 13.5268 2.89863 13.6036C6.26317 14.3048 9.73614 14.3048 13.1007 13.6036Z" fill="#8665CD"/>
+                    <circle cx="8.00033" cy="5.33333" r="3.33333" fill="#8665CD"/>
+                    </g> 
+                </svg>
+                </div>
+                <div class="student-info">
+                    <p class="name">${1}</p>
+                    <p class="class">${1}</p>
+                </div>
+            </div>`
+    
+}
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 
