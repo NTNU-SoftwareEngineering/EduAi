@@ -1,6 +1,8 @@
 ## EduAi
 
-**EduAi** is a web application based on **Moodle** backend that allows teachers and students to access and manage their Moodle data through a web interface. It provides a user-friendly interface for students to view their **course information**, **discussion**, and even **interact with LLM**. <br>At the same time, **teachers** can upload **teaching plans**, get the **feedback**, and **analysis** of students' speech in the discussion. Which means teachers can easily understand the **students' learning status** and **adjust the teaching plan** in time.
+**EduAi** is a web application based on **Moodle** backend that allows teachers and students to access and manage their Moodle data through a web interface. It provides a user-friendly interface for students to view their **course information**, **discussion**, and even **interact with LLM**. <br><br>At the same time, **teachers** can upload **teaching plans**, get the **feedback**, and **analysis** of students' speech in the discussion. Which means teachers can easily understand the **students' learning status** and **adjust the teaching plan** in time.
+
+This project is also derived from **NTNU Software Engineering Course**.
 
 #### Features
 
@@ -11,6 +13,7 @@
 - **Teaching Plan**: Upload teaching plans, and get the **feedback** analyzed by **LLM**.
 - **Speech Analysis**: Analyze the speech of students in the discussion, and get the **feedback** analyzed by **LLM**.
 - **User Management**: Manage user information, including **username**, **fullname**, **email**, and **password**.
+- **Student Learning Analysis**: Analyze the learning status of students by **LLM**.
 
 
 #### Getting Started
