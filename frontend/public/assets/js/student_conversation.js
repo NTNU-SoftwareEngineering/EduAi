@@ -1,6 +1,6 @@
 let dropdown_expand = 0;
 let didSendMessage = 0;
-let username = "王小明"; //backend should modify and offer the username of the account
+let username = "";
 
 /*let courseList = [
     "09/14 輔導課",
@@ -21,7 +21,25 @@ async function loadCourse() { // fetch course data from backend
     course_status = new Array(courseList.length);
     for (var i = 0; i < courseList.length; i++) course_status[i] = 0;
 }
-document.addEventListener("DOMContentLoaded", loadCourse);
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await loadCourse();
+
+    await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		body: new URLSearchParams({
+			wstoken: localStorage.getItem('token'),
+			wsfunction: 'core_webservice_get_site_info'
+		}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        username = data.fullname;
+    });
+});
 
 async function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
