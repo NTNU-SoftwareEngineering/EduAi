@@ -86,7 +86,7 @@ async function createAssignment ( token, courseId ) {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-            wstoken: 'b69e3cf2abe404972aaa8c73a21cffc3',
+            wstoken: token,
             wsfunction: 'core_course_edit_module',
             moodlewsrestformat: 'json',
             action: 'duplicate',

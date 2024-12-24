@@ -107,7 +107,7 @@ async function onTopicSubmit () {
     console.log(selectedObj);
 
     console.log('updating course...（儲存討論題目中）');
-    if ( ! await updateActivityName('b69e3cf2abe404972aaa8c73a21cffc3', courseId, selectedObj.value) ) {
+    if ( ! await updateActivityName(token, courseId, selectedObj.value) ) {
         console.error('error when updateCourseActivity');
         return;
     }
