@@ -9,8 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 let app = express();
 const port = 3000;
 
-let aiApp;
+let aiApp = await initChat();
 
+// Init Groq chat with Langchain
 async function initChat() {
     const llm = new ChatGroq({
         model: 'llama-3.3-70b-versatile',
@@ -43,8 +44,6 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.post('/student_conversation/init', async function (req, res) {
-    aiApp = await initChat();
-
     const thread_id = uuidv4();
 
     res.status(200).send({
@@ -62,30 +61,36 @@ app.post('/student_conversation', async function (req, res) {
         return;
     }
 
-    const config = {
-        configurable: {
-            thread_id: thread_id,
+    try {
+        const config = {
+            configurable: {
+                thread_id: thread_id,
+            }
         }
+
+        const input = [
+            {
+                role: 'system',
+                content: '你是一位就職於國中課程的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。',
+            },
+            {
+                role: 'user',
+                content: user_message,
+            }
+        ];
+
+        const output = await aiApp.invoke({messages: input}, config);
+        console.log("User message: " + user_message);
+        console.log("AI response : " + output.messages[output.messages.length - 1].content);
+
+        res.status(200).send({
+            message: output.messages[output.messages.length - 1].content
+        });
     }
-
-    const input = [
-        {
-            role: 'system',
-            content: '你是一位就職於國中課程的助教，你的任務是協助學生學習課程內容。你總是使用繁體中文與使用者溝通。',
-        },
-        {
-            role: 'user',
-            content: user_message,
-        }
-    ];
-
-    const output = await aiApp.invoke({messages: input}, config);
-
-    console.log(output);
-
-    res.status(200).send({
-        message: output.messages[output.messages.length - 1].content
-    });
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 

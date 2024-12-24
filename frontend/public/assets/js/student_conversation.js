@@ -23,7 +23,7 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
-function select_course(index){
+async function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
 
@@ -37,17 +37,24 @@ function select_course(index){
     const dropdown_menu = document.querySelector("#course-select");
 
     dropdown_menu.innerHTML = ''
-    
 
     document.querySelector("body > div > div > div > div.top-label > div.flex > button").innerHTML = courseList[index] + 
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">\
     <path d="M6 9L12 15L18 9" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\
     </svg>'
 
-    
     dropdownMenuCSSModify()
-}
 
+    // Initialize conversation thread
+    await fetch("/student_conversation/init", {
+        method: "POST",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // console.log(data);
+        localStorage.setItem("thread_id", data.thread_id);
+    });
+}
 
 function dropdownMenuCSSModify(){
 
