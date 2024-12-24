@@ -80,6 +80,7 @@ async function onCourseChange() {
     } catch (error) {
         if ( error instanceof SyntaxError ) {
             alert('請先上傳教案，或重新上傳教案。');
+            selectCourseList.selectedIndex = 0;
             return;
         }
         console.error(`解析教案發生錯誤: ${error.message}`);
