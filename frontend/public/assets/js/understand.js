@@ -150,8 +150,7 @@ async function updateAssignmentId() {
 
             // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
             const sortedAssignments = assignments
-                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
-                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+                .sort((a, b) => b.id - a.id);
 
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];
@@ -235,7 +234,7 @@ function fetchSubmissionData() {
             const data = {};
             text.split('\n').forEach(line => {
                 console.log('line:', line); // Debug
-                const [key, value] = line.split('：');
+                const [key, value] = line.split(/[：:]/);
                 console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();
