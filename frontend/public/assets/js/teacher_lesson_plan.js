@@ -49,7 +49,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         source: document.getElementById("lesson-plan-source").value,
         facilities: document.getElementById("lesson-plan-facilities").value,
         goal: document.getElementById("lesson-plan-goal").value,
-        activity: document.getElementById("lesson-plan-activity").value, // 新增的活動欄位
+        //  activity: document.getElementById("lesson-plan-activity").value, // 新增的活動欄位
     };
 
     if (courseId < 0) {

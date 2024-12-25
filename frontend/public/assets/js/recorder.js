@@ -211,7 +211,7 @@ async function triggerSTT(){
 		formData.append('audio', audioBlob, 'audio-file.wav');
 		formData.append('token' , wstoken_webservice);
 
-		const response = await fetch('http://localhost:5001/transcribe', {
+		const response = await fetch('https://eduai-transcribe.andy-lu.dev/transcribe', {
 			method: 'POST',
 			body: formData,
 		});
