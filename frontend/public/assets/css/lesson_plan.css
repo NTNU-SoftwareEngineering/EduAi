@@ -54,6 +54,19 @@ textarea{
 }
 
 .event-row-title{
+    color: var(--light-text---el-text-color-secondary, #000000);
+    background: var(--bg, #F9FAFC);
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.375rem; /* 137.5% */
+    padding-left: 1rem;
+    border: none;
+    outline: none;
+}
+
+.event-row-title-textareacontent{
     color: var(--light-text---el-text-color-secondary, #909399);
     background: var(--bg, #F9FAFC);
     font-family: "Noto Sans TC", sans-serif;
@@ -64,11 +77,9 @@ textarea{
     padding-left: 1rem;
     border: none;
     outline: none;
-
 }
 
 .event-row-title-textarea{
-
     color: var(--light-text---el-text-color-secondary, #909399);
     text-align: center;
     font-family: "Noto Sans TC", sans-serif;

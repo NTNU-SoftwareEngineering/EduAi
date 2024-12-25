@@ -152,17 +152,17 @@ async function eventAdd(){
   div2.id = 'event' + idx;
 
   var input2 = document.createElement('input');
-  input2.className = 'event-row-title event-description';
+  input2.className = 'event-row-title-textareacontent event-description';
   input2.style.width = '45%';
   input2.placeholder = '請輸入學習內容及實施方式';
 
   var input3 = document.createElement('input');
-  input3.className = 'event-row-title event-time';
+  input3.className = 'event-row-title-textareacontent event-time';
   input3.style.width = '17.5%';
-  input3.placeholder = '請輸入時間';
+  input3.placeholder = '請輸入時間(min)，ex. 5';
 
   var input4 = document.createElement('input');
-  input4.className = 'event-row-title event-answer';
+  input4.className = 'event-row-title-textareacontent event-answer';
   input4.style.width = '37.5%';
   input4.placeholder = '請輸入標準答案';
 
