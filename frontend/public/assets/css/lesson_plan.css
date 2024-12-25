@@ -303,9 +303,8 @@ textarea{
 }
 
 .select-class .intro {
-    
+    font-size: 1.46rem;
     color: var(--pri_white, #FFFFFF);
-
 }
 
 .lesson_plan{
@@ -591,6 +590,7 @@ textarea{
     font: bold;
     font-style: normal;
     font-weight: 400;
+    font-size: 1.46rem;
     line-height: 1.75rem;
     letter-spacing: 1px;
     margin-bottom: auto;
@@ -598,7 +598,7 @@ textarea{
     text-align: left;
     
     margin: 1.5rem 0rem;
-    margin-right: 2rem;
+    margin-right: auto;
     margin-bottom: 0.75rem;
 }
 
