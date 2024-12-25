@@ -165,7 +165,10 @@ async function getActivityName( token, courseId ) {
         })
     })
     .then ( ret => ret.json() )
-    .then ( ret => ret[0].shortname )
+    .then ( ret => {
+        console.log('取得課程內容：', ret);
+        return ret[0].shortname }
+    )
     .catch ( error => console.error(error.message) );
 }
 
