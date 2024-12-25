@@ -54,6 +54,16 @@ async function updateCourseId() {
             </div>
         `;
     });
+
+    document.querySelectorAll('.student-item').forEach((student) => {
+        student.addEventListener("click", () => {
+            console.log(student.querySelector('.name').textContent);
+            studentId = studentsIdList[studentsNameList.indexOf(student.querySelector('.name').textContent)];
+            console.log("studentId: ", studentId);
+
+            // TODO: fetch student's response
+        });
+    });
 }
 selectCourseList.addEventListener("change", updateCourseId);
 
