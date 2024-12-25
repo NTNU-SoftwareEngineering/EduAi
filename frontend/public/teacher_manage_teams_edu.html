@@ -43,22 +43,35 @@
             <div class="select-class">
                 <div class="footer">
                    <div class="book-icon"></div>
-                   <div class="intro">選擇班級</div>
+                   <div class="intro">選擇課程</div>
                 </div>
                 <div class="class-selector">
-                  <select name="class" id="select-class">
-                    <option value="">請選擇班級</option>
-                    <option value="class1">class1</option>
+                  <select name="class" id="select-course">
+                    <option value="course1">請選擇課程</option>
+                    <!-- <option value="class1">class1</option>
                     <option value="class2">class2</option>
-                    <option value="class3">class3</option>
+                    <option value="class3">class3</option> -->
                   </select>
                 </div>
-                <div class="course-selector">
+                <!-- <div class="course-selector">
                   <select name="class" id="select-course">
                     <option value="course1">請選擇課程</option>
                   </select>
                 </div>
-            </div>
+            </div> -->
+
+            <!-- <div class = "course-selection">
+              <div class="footer">
+                <div class="book-icon"></div>
+                <span class="intro">選擇課程</span>      
+              </div> 
+              <select id="course-select" class = "course-select" >
+                  <option value="" disabled selected>請選擇課程</option>
+                  <option value="資訊課">資訊課</option>
+                  <option value="輔導課">輔導課</option>
+              </select>-->
+            </div> 
+
 
             <div class="teams-num">
               <div class="footer">
@@ -111,10 +124,10 @@
               </button>
             </div>
             <div class="info-content">
-              <div class="class">
+              <!-- <div class="class">
                 <div class="class-icon"></div>
                 <span class="intro">班級：</span>
-              </div>
+              </div> -->
               <div class="class-count">
                 <div class="count-icon"></div>
                 <span class="intro">班級人數: </span>
@@ -143,9 +156,9 @@
 
     
   </body>
-  <script src="assets/js/lib.js"></script>
   <script src="assets/js/manage_teams_edu.js"></script>
   <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/lib.js"></script>
   <script src="./assets/js/token.js"></script>
   <script src="./assets/js/logout.js"></script>
 </html>
