@@ -109,7 +109,7 @@ document.querySelector("#message").setAttribute("disabled" , "disabled")
 
 // 更新 assignmentId
 async function updateAssignmentId() {
-	const assignmentUrl = `https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+	const assignmentUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
