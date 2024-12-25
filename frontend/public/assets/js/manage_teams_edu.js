@@ -1,8 +1,9 @@
 let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
-const selectClassList = document.querySelector('#select-class')
-const selectCourseList = document.querySelector('#select-course')
+const selectClassList = document.querySelector('#select-class');
+const selectCourseList = document.querySelector('#select-course');
+const selectActivityList = document.querySelector('#activity-selector');
 
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
@@ -18,7 +19,10 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
-function updateCourseId() {
+async function onCourseChange() {
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login_edu.html';
+
     console.log( "select course: " + selectCourseList.value );
     selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
     if ( !selectedCourseObj ) {
@@ -33,11 +37,97 @@ function updateCourseId() {
         console.error(`Cannot find course id for: ${selectCourseList.value}`);
         return;
     }
-    console.log( "update courseid: " + courseId );
+    console.log( "update courseid: " + courseId ); 
+    
+    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得課程活動內容
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_get_courses',
+            moodlewsrestformat: 'json',
+            'options[ids][0]': courseId
+        })
+    })
+    .then ( ret => ret.json() )
+
+    if ( !response[0].summary ) {
+        alert('此課程尚未上傳教案');
+        // console.log(selectCourseList.selectedIndex);
+        selectCourseList.selectedIndex = 0;
+        return;
+    }
+
+    try {
+        // 更改'選擇活動'欄位
+        const lesson_plan = JSON.parse(response[0].summary);
+        // const activities = lesson_plan.activities
+        const activities = [
+            { name: '活動一', len: 5},
+            { name: '活動二', len: 7},
+        ]
+        selectActivityList.innerHTML = '<option value="">請選擇活動名稱</option>';
+        activities.forEach ( act => {
+            const option = document.createElement('option');
+            option.setAttribute('time', act.len);
+            option.textContent = act.name;
+            option.value = act.name;
+            selectActivityList.appendChild(option);
+        });
+
+    } catch (error) {
+        if ( error instanceof SyntaxError ) {
+            alert('請先上傳教案，或重新上傳教案。');
+            selectCourseList.selectedIndex = 0;
+            return;
+        }
+        console.error(`解析教案發生錯誤: ${error.message}`);
+    }
 }
-selectCourseList.addEventListener("change", updateCourseId);
+selectCourseList.addEventListener("change", onCourseChange);
 
+const submitBtn = document.querySelector('#send-button');
+async function onTopicSubmit () {
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login_edu.html';
 
+    if ( courseId==-1 || !selectActivityList.selectedIndex || !selectActivityList.value ) {
+        alert('請先選擇課程及活動');
+        return;
+    }
+    
+    getActivityName(token, courseId);
+    console.log('檢查該課程是否有正在進行的活動(fetch upcoming event)');
+    const valid = await checkCourseActivity(token, courseId);
+    if ( !valid ) {
+        alert('該課程已有進行中的討論，請等待討論結束再送出新的題目');
+        return;
+    }
+    console.log('沒有進行中的活動');
+
+    const selectedObj = selectActivityList.options[selectActivityList.selectedIndex];
+    console.log(selectedObj);
+
+    console.log('updating course...（儲存討論題目中）');
+    if ( ! await updateActivityName(token, courseId, selectedObj.value) ) {
+        console.error('error when updateCourseActivity');
+        return;
+    }
+
+    console.log( 'creating calendar event...' );
+    createCourseActivity(token, courseId, selectedObj.getAttribute('time'));
+
+    console.log( 'creating new assignment...' );
+    const mod_id = await createAssignment(token, courseId);
+    if ( mod_id == -1 ) {
+        console.error('error when createAssignment');
+        return;
+    }
+    console.log( `new assignment created: module_id=${mod_id}` );
+}
+submitBtn.addEventListener('click', onTopicSubmit);
 
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0

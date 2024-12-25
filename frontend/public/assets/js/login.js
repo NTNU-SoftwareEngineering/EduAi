@@ -53,7 +53,7 @@ if (signInForm) {
 			body: new URLSearchParams({
 			username,  // 使用者名稱
 			password,  // 密碼
-			service: 'new_service',  // API 對應的服務名稱，需確認
+			service: 'software_engineering',  // API 對應的服務名稱，需確認
 			}),
 		});
 		

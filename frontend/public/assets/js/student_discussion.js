@@ -7,7 +7,6 @@ let course_status = [];
 let courseId = -1; // 還未選擇課程
 let assignmentId = -1; // 還未選擇作業(這個變數是要給record.js用的)
 
-
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
@@ -17,6 +16,23 @@ async function loadCourse() { // fetch course data from backend
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
+async function updateTopicText () {
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login_edu.html';
+    
+    const topic_ele = document.getElementById('question');
+    const check = await checkCourseActivity(token, courseId);
+    if ( check ) { // 沒有正在進行的討論
+        topic_ele.innerHTML = "目前沒有進行中的討論活動";
+    } else {
+        try {
+            topic_ele.innerHTML = await getActivityName(token, courseId);
+        } catch ( err ) {
+            console.err(err);
+        }
+    }
+}
+
 function select_course(index){
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
@@ -24,6 +40,7 @@ function select_course(index){
 
 	courseId = courseObjList[index].id; // 同步更新 courseId
 	updateAssignmentId(); // 同步更新 assignmentId
+    updateTopicText();
 
     document.querySelector("body > div > div > div > div.top-label > div.flex.course-container").style.display = "flex"
     document.querySelector("body > div > div > div > div.botton-tip").style.display = 'none'
@@ -58,7 +75,7 @@ function select_course(index){
 function dropdownMenuCSSModify(){
 
     const dropdown_menu = document.querySelectorAll("#course-select");
-
+    
     dropdown_expand = dropdown_expand ? 0 : 1;
 
     if(dropdown_expand){
