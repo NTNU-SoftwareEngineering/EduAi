@@ -84,13 +84,3 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         alert(`發生錯誤: ${error.message}`);
     }
 });
-
-// 模擬的 fetchCourses 函數（後端 API 替代）
-async function fetchCourses() {
-    // 假資料範例
-    return [
-        { id: 1, fullname: "數學課程" },
-        { id: 2, fullname: "科學課程" },
-        { id: 3, fullname: "歷史課程" }
-    ];
-}
