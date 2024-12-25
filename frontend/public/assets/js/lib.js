@@ -154,6 +154,7 @@ async function updateActivityName( token, courseId, activity_name ) {
 
 // return activity name when successfully
 async function getActivityName( token, courseId ) {
+    console.log(`get activities for courseid: ${courseId}`);
     return fetch ( `${HOSTNAME}/moodle/webservice/rest/server.php`, {
         method: 'POST',
         headers: {

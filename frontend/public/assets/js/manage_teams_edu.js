@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", loadCourse);
 async function onCourseChange() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
+    
+    document.querySelector('#question-content-text').innerHTML = "";
 
     console.log( "select course: " + selectCourseList.value );
     selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
@@ -74,13 +76,14 @@ async function onCourseChange() {
         for (const [idx, act] of Object.entries(activities)) {
             const option = document.createElement('option');
             option.setAttribute('time', act.time);
+            option.setAttribute('desc', act.description);
             option.textContent = act.name;
             option.value = idx;
             selectActivityList.appendChild(option);
         }
 
     } catch (error) {
-        if ( error instanceof SyntaxError ) {
+        if ( error instanceof SyntaxError || error instanceof TypeError ) {
             alert('請先上傳教案，或重新上傳教案。');
             selectCourseList.selectedIndex = 0;
             return;
@@ -89,6 +92,14 @@ async function onCourseChange() {
     }
 }
 selectCourseList.addEventListener("change", onCourseChange);
+
+selectActivityList.addEventListener('change', function () {
+    const selectedObj = selectActivityList.options[selectActivityList.selectedIndex];
+    let desc = selectedObj.getAttribute('desc');
+    if ( !desc ) desc = "";
+    // console.log(desc);
+    document.querySelector('#question-content-text').innerHTML = desc;
+})
 
 const submitBtn = document.querySelector('#send-button');
 async function onTopicSubmit () {
@@ -113,7 +124,7 @@ async function onTopicSubmit () {
     console.log(selectedObj);
 
     console.log('updating course...（儲存討論題目中）');
-    if ( ! await updateActivityName(token, courseId, selectedObj.value) ) {
+    if ( ! await updateActivityName(token, courseId, selectedObj.textContent) ) {
         console.error('error when updateCourseActivity');
         return;
     }
