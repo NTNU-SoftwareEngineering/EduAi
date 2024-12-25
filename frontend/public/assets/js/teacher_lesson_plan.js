@@ -63,7 +63,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
 
         console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`);
 
-        const ret = await fetch('http://localhost:8080/moodle/webservice/rest/server.php', {
+        const ret = await fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

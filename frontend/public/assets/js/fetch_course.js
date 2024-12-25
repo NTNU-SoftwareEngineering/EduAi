@@ -3,7 +3,7 @@ async function fetchCourses() {
     if ( !token ) window.location.href = 'login_edu.html';
     
 
-    return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+    return fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
 
         method: 'POST',
         headers: {
@@ -17,7 +17,7 @@ async function fetchCourses() {
     })
     .then( response => response.json() )
     .then( (data) => {
-        return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
+        return fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得該用戶註冊的課程列表
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -47,7 +47,7 @@ const ROOT_ASSIGNMENT_NAME = "!root_assignment!";
 // return new module id when success, -1 otherwise
 async function createAssignment ( token, courseId ) {
     const old_modules = new Set();
-    const mid = await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    const mid = await fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -80,7 +80,7 @@ async function createAssignment ( token, courseId ) {
     
     if ( mid == -1 ) return -1;
     
-    await fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    await fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -95,7 +95,7 @@ async function createAssignment ( token, courseId ) {
     })
     
     // return new mod id
-    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    return fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -126,7 +126,7 @@ async function createAssignment ( token, courseId ) {
 
 // return true when update successfully, false otherwise
 async function updateActivityName( token, courseId, activity_name ) {
-    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    return fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -152,7 +152,7 @@ async function updateActivityName( token, courseId, activity_name ) {
 
 // return activity name when successfully
 async function getActivityName( token, courseId ) {
-    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    return fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -172,7 +172,7 @@ async function getActivityName( token, courseId ) {
 const EVENT_NAME = '!activity!';
 // return true when there's no ongoing activities(in this course), false otherwise
 async function checkCourseActivity (token, courseId ) {
-    return fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    return fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -199,7 +199,7 @@ async function checkCourseActivity (token, courseId ) {
 
 // return true when create activity successfully, false otherwise
 async function createCourseActivity (token, courseId, duration/*in seconds*/ ) {
-    fetch ( 'http://localhost:8080/moodle/webservice/rest/server.php', {
+    fetch ( 'https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -229,7 +229,7 @@ async function get_userid(){
     // change class information
     const wstoken = localStorage.getItem('token')
     const wsfunction='core_webservice_get_site_info'
-    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    const response = await fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -246,7 +246,7 @@ async function get_role_from_course(courseid,userid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+    const response = await fetch(`https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -272,7 +272,7 @@ async function get_student_from_course(courseid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+    const response = await fetch(`https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -301,7 +301,7 @@ async function get_user_fullname_by_id(userid){
     // change class information
     const wsfunction = 'core_user_get_users_by_field'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
+    const response = await fetch(`https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
