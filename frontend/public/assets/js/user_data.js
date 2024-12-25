@@ -10,7 +10,7 @@ let user = s[s.length-1].split('_')[0]
 const wstoken = localStorage.getItem('token')
 const wsfunction='core_webservice_get_site_info'
 async function getData(){
-	await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+	await fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,7 +28,7 @@ async function getData(){
 		username.value = data.username;
 		fullname.value = data.fullname;
 
-		return fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+		return fetch('https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
