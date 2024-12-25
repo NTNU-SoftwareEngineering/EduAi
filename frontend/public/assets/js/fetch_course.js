@@ -2,7 +2,9 @@ async function fetchCourses() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
     
+
     return fetch('http://localhost:8080/moodle/webservice/rest/server.php', { //取得用戶資訊（userid）
+
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
