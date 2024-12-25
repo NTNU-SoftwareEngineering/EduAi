@@ -646,4 +646,4 @@ function displayGroups(groupArray) {
         groupText.textContent = `第${madarian[index]}組 共${studentCount}人`;
         groupTitle.appendChild(groupText);
     });
-}
+}  
