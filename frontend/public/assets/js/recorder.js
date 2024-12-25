@@ -211,7 +211,7 @@ async function triggerSTT(){
 		formData.append('audio', audioBlob, 'audio-file.wav');
 		formData.append('token' , wstoken_webservice);
 
-		const response = await fetch('http://localhost:5001/transcribe', {
+		const response = await fetch('https://eduai-transcribe.andy-lu.dev/transcribe', {
 			method: 'POST',
 			body: formData,
 		});
@@ -233,7 +233,7 @@ async function triggerSTT(){
 
 // 創建草稿區域，並回傳 item ID
 async function createDraftArea() {
-    const response = await fetch(`http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=core_files_get_unused_draft_itemid&moodlewsrestformat=json`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=core_files_get_unused_draft_itemid&moodlewsrestformat=json`, {
         method: 'POST'
     });
     const result = await response.json();
@@ -252,7 +252,7 @@ async function uploadFileToDraftArea(fileBlob, filename, itemid) {
     formData.append('itemid', itemid);
     formData.append('file', fileBlob, filename);
 
-    const response = await fetch(`http://localhost:8080/moodle/webservice/upload.php?token=${wstoken_webservice}`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/upload.php?token=${wstoken_webservice}`, {
         method: 'POST',
         body: formData
     });
@@ -267,7 +267,7 @@ async function uploadFileToDraftArea(fileBlob, filename, itemid) {
 
 // 將itemId陣列中所有檔案上傳至Moodle作業區
 async function uploadFilesToMoodleAssignment(itemId){
-	const saveSubmissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
+	const saveSubmissionUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
     const saveSubmissionData = new URLSearchParams();
 
     saveSubmissionData.append('assignmentid', assignmentId);

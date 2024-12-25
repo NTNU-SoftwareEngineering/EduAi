@@ -136,6 +136,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         facilities: document.getElementById("lesson-plan-facilities").value,
         goal: document.getElementById("lesson-plan-goal").value,
         activities: activities,
+
     };
 
     try {
@@ -144,7 +145,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
 
         console.log(`正在上傳教案：${JSON.stringify(lessonPlanData)}`);
 
-        const ret = await fetch('http://localhost:8080/moodle/webservice/rest/server.php', {
+        const ret = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -160,6 +161,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
 
         console.log(`上傳教案結果：`);
         console.log(ret);
+        alert('教案上傳成功');
 
     } catch (error) {
         alert(`發生錯誤: ${error.message}`);

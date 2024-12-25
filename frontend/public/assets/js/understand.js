@@ -24,11 +24,13 @@ function updateCourseId() {
     }
     console.log( "update courseid: " + courseId );
 
+    localStorage.setItem('courseId', courseId);//記錄下來
+
     // 預設清空 assignmentId 並更新 llmFeedbackUrl
     assignmentId = -1;
     llmFeedbackUrl = null;
 
-    updateAssignmentId(); // 同步更新 assignmentId
+    // updateAssignmentId(); // 同步更新 assignmentId
 }
 selectCourseList.addEventListener("change", updateCourseId);
 
@@ -49,53 +51,19 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         course_select_ele.appendChild(option);
     });
+
+    const savedCourse = localStorage.getItem("selectedCourse");
+    if(savedCourse)
+        {
+            const courseSelect = document.getElementById("course-select");
+            courseSelect.value = savedCourse;
+        }else{
+            console.log("刷新頁面了")
+        }
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 document.addEventListener("DOMContentLoaded", function() {
-    // var datas = {
-    //     "資訊課": {
-            
-    //         basic:6,
-    //         deep:4,
-    //         basicdescription: "學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。",
-    //         deepdescription: "學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。",
-    //         errleft:"學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。",
-    //         errright:"幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。"
-    //     },
-    //     "輔導課": {
-            
-    //         basic:9,
-    //         deep:3,
-    //         basicdescription: "學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。",
-    //         deepdescription: "學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。",
-    //         errleft:"學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。",
-    //         errright:"幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。"
-    //     },
-        
-        
-    // };
-    
-    // const courseSelect = document.getElementById("course-select");
-    // const selectedCourseName = document.getElementById("selected-course-name");
-
-    // courseSelect.addEventListener("change", function() {
-    //     const selectedCourse = courseSelect.value;
-    //     // console.log("selectedCourse",selectedCourse)
-    //     selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
-    //     if (selectedCourse && datas[selectedCourse]) {
-    //         const data = datas[selectedCourse];
-    //         // console.log("data:",data)
-    //         // console.log("理解度:",data.理解度評語)
-    //         updateInfoCards(data);
-    //     } else {
-    //         // console.log("data:",data);
-            
-    //     }
-       
-    // });
-
-    
 
     const courseSelect = document.getElementById("course-select");
     const selectedCourseName = document.getElementById("selected-course-name");
@@ -112,6 +80,8 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (savedCourse) {
         selectedCourseName.textContent = savedCourse;
         courseSelect.value = savedCourse;
+        updateAssignmentId();//
+
     }
 
     courseSelect.addEventListener("change", function() {
@@ -120,6 +90,9 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("selectedCourse", selectedCourse);
         selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
         localStorage.setItem("savedTime", Date.now());
+
+        updateAssignmentId();
+
 
             // const data = datas[selectedCourse];
             // console.log("data:",data)
@@ -140,7 +113,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function updateAssignmentId() {
     const token = localStorage.getItem('token');
-	const assignmentUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+    const savedCourseId = localStorage.getItem('courseId');
+
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
+
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
@@ -150,8 +126,7 @@ async function updateAssignmentId() {
 
             // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
             const sortedAssignments = assignments
-                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
-                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+                .sort((a, b) => b.id - a.id);
 
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];
@@ -163,6 +138,7 @@ async function updateAssignmentId() {
                     fetchSubmissionData(); // 將後續 Fetch 的邏輯放到此處
                 } else {
                     console.warn('未能獲取有效的 llmFeedbackUrl');
+                    clearfbdata();
                 }
                 // console.log('最新開放的作業 ID:', latestAssignment.id);
                 // console.log('作業名稱:', latestAssignment.name);
@@ -185,7 +161,7 @@ async function getSubmissionUrl() {
         return;
     }
     const token = localStorage.getItem('token');
-    const submissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
+    const submissionUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
     try {
         const submissionResponse = await fetch(submissionUrl);
         const data = await submissionResponse.json();
@@ -235,7 +211,7 @@ function fetchSubmissionData() {
             const data = {};
             text.split('\n').forEach(line => {
                 console.log('line:', line); // Debug
-                const [key, value] = line.split('：');
+                const [key, value] = line.split(':');
                 console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();
@@ -286,4 +262,15 @@ function updateInfoCards(data) {
     document.querySelector("#errleft").textContent =`${data['理解程度報告-待加強的觀念與知識']}`;
     document.querySelector("#errleft").style.margin ="0px";
     document.querySelector("#errleft").style.color = "#363636";
+}
+
+
+function clearfbdata(){
+    localStorage.removeItem('courseId');
+        
+    // 重置全域變數
+    courseId = -1;
+    assignmentId = -1;
+    llmFeedbackUrl = null;
+    location.reload();
 }

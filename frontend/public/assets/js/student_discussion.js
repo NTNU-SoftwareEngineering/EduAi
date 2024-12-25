@@ -109,7 +109,7 @@ document.querySelector("#message").setAttribute("disabled" , "disabled")
 
 // 更新 assignmentId
 async function updateAssignmentId() {
-	const assignmentUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
@@ -119,8 +119,7 @@ async function updateAssignmentId() {
 
             // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
             const sortedAssignments = assignments
-                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
-                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+                .sort((a, b) => b.id - a.id);
 
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];

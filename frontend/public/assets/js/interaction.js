@@ -5,7 +5,7 @@ let assignmentId = -1; // 還未選擇作業: -1
 let llmFeedbackUrl = null; // 作業提交資訊 URL (其實就是去把作業區的回饋llm.txt的內容抓出來)
 const selectCourseList = document.querySelector('#course-select')
 
-function updateCourseId() {
+function updateCourseId( ) {
     console.log( "select course: " + selectCourseList.value );
     selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
     if ( !selectedCourseObj ) {
@@ -24,13 +24,15 @@ function updateCourseId() {
     }
     console.log( "update courseid: " + courseId );
 
+    localStorage.setItem('courseId', courseId);//記錄下來
     // 預設清空 assignmentId 並更新 llmFeedbackUrl
     assignmentId = -1;
     llmFeedbackUrl = null;
 
-    updateAssignmentId(); // 同步更新 assignmentId
+    // updateAssignmentId(); // 同步更新 assignmentId
 }
 selectCourseList.addEventListener("change", updateCourseId);
+
 
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
@@ -43,61 +45,31 @@ async function loadCourse() { // fetch course data from backend
 
     // 將靜態網頁預填的選項清空
     course_select_ele.innerHTML = '<option value="" disabled selected>請選擇課程</option>';
-    
+
+
     courseList.forEach ( course => {
         const option = document.createElement('option');
         option.value = course;
         option.textContent = course;
         course_select_ele.appendChild(option);
     });
+
+    const savedCourse = localStorage.getItem("selectedCourse");
+    if(savedCourse)
+        {
+            const courseSelect = document.getElementById("course-select");
+            courseSelect.value = savedCourse;
+        }else{
+            console.log("刷新頁面了")
+        }
+
 }
+
+
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // var datas = {
-    //     "資訊課": {
-            
-    //         basic:8,
-    //         deep:7,
-    //         inter:6,
-    //         basicdescription: "學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。",
-    //         deepdescription: "學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。",
-    //         interdes:"學生與同學的交流良好，能夠分享自己的意見和與同學討論。",
-    //         errleft:"內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內",
-    //     },
-    //     "輔導課": {
-            
-    //         basic:9,
-    //         deep:3,
-    //         inter:5,
-    //         basicdescription: "學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。學生積極多與討論，多次發言分享自己的想法。",
-    //         deepdescription: "學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。學生偶爾沒有聽清楚同學的意見或沒有回應同學的問題。",
-    //         interdes:"學生與同學的交流良好，能夠分享自己的意見和與同學討論。學生與同學的交流良好，能夠分享自己的意見和與同學討論。學生與同學的交流良好，能夠分享自己的意見和與同學討論。學生與同學的交流良好，能夠分享自己的意見和與同學討論。",
-    //         errleft:"內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內文內",
-    //     },
-        
-        
-    // };
-    
-    // const courseSelect = document.getElementById("course-select");
-    // const selectedCourseName = document.getElementById("selected-course-name");
-
-    // courseSelect.addEventListener("change", function() {
-    //     const selectedCourse = courseSelect.value;
-    //     // console.log("selectedCourse",selectedCourse)
-    //     selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
-    //     if (selectedCourse && datas[selectedCourse]) {
-    //         const data = datas[selectedCourse];
-    //         // console.log("data:",data)
-    //         // console.log("理解度:",data.理解度評語)
-    //         updateInfoCards(data);
-    //     } else {
-    //         // console.log("data:",data);
-            
-    //     }
-       
-    // });
 
     const courseSelect = document.getElementById("course-select");
     const selectedCourseName = document.getElementById("selected-course-name");
@@ -106,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentTime = Date.now();
 
     const savedCourse = localStorage.getItem("selectedCourse");
+    // console.log("savedCourse",savedCourse);
     //頁面每10分鐘刷新一次(=頁面變成預設尚未選擇課程狀態)
     if (savedCourse && savedTime && currentTime - savedTime > 10 * 60 * 1000) {
         
@@ -114,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (savedCourse) {
         selectedCourseName.textContent = savedCourse;
         courseSelect.value = savedCourse;
+        updateAssignmentId();//
     }
 
 
@@ -123,6 +97,11 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("selectedCourse", selectedCourse);
         selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
         localStorage.setItem("savedTime", Date.now());
+        // fetchSubmissionData();
+        updateAssignmentId();
+
+
+        // courseSelect.value = selectCourseList.value;
 
             // const data = datas[selectedCourse];
             // console.log("data:",data)
@@ -143,18 +122,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function updateAssignmentId() {
     const token = localStorage.getItem('token');
-	const assignmentUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
+        // console.log("data:",data);
 		// 分析回傳的數據，找出最新開放的作業
         if (data.courses && data.courses.length > 0) {
             const assignments = data.courses[0].assignments;
 
             // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
             const sortedAssignments = assignments
-                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
-                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+                .sort((a, b) => b.id - a.id);
 
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];
@@ -166,6 +145,7 @@ async function updateAssignmentId() {
                     fetchSubmissionData(); // 將後續 Fetch 的邏輯放到此處
                 } else {
                     console.warn('未能獲取有效的 llmFeedbackUrl');
+                    clearfbdata();
                 }
                 // console.log('最新開放的作業 ID:', latestAssignment.id);
                 // console.log('作業名稱:', latestAssignment.name);
@@ -188,7 +168,7 @@ async function getSubmissionUrl() {
         return;
     }
     const token = localStorage.getItem('token');
-    const submissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
+    const submissionUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
     try {
         const submissionResponse = await fetch(submissionUrl);
         const data = await submissionResponse.json();
@@ -230,6 +210,7 @@ function fetchSubmissionData() {
         .then(response => {
             if (!response.ok) {
                 throw new Error('無法讀取檔案');
+                
             }
             return response.text();
         })
@@ -238,7 +219,7 @@ function fetchSubmissionData() {
             const data = {};
             text.split('\n').forEach(line => {
                 console.log('line:', line); // Debug
-                const [key, value] = line.split('：');
+                const [key, value] = line.split(':');
                 console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();
@@ -277,5 +258,16 @@ function updateInfoCards(data) {
     document.querySelector("#errleft").textContent =`${data['互動反饋報告-學生學習風格評語']}`;
     document.querySelector("#errleft").style.margin ="0px";
     document.querySelector("#errleft").style.color = "#363636";
+
+}
+
+function clearfbdata(){
+    localStorage.removeItem('courseId');
+        
+    // 重置全域變數
+    courseId = -1;
+    assignmentId = -1;
+    llmFeedbackUrl = null;
+    location.reload();
 
 }
