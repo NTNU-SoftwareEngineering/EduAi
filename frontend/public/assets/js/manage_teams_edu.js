@@ -128,6 +128,7 @@ async function onTopicSubmit () {
         return;
     }
     console.log( `new assignment created: module_id=${mod_id}` );
+    alert(`討論開始：${selectedObj.getAttribute('time')}分鐘`);
 }
 submitBtn.addEventListener('click', onTopicSubmit);
 
