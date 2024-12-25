@@ -34,7 +34,7 @@ async function updateTopicText () {
 document.addEventListener("DOMContentLoaded", async function () {
     await loadCourse();
 
-    await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',

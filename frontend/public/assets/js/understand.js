@@ -115,7 +115,8 @@ async function updateAssignmentId() {
     const token = localStorage.getItem('token');
     const savedCourseId = localStorage.getItem('courseId');
 
-	const assignmentUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
+
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
@@ -160,7 +161,7 @@ async function getSubmissionUrl() {
         return;
     }
     const token = localStorage.getItem('token');
-    const submissionUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
+    const submissionUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
     try {
         const submissionResponse = await fetch(submissionUrl);
         const data = await submissionResponse.json();

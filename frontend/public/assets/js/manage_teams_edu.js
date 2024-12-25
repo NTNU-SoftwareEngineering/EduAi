@@ -39,7 +39,7 @@ async function onCourseChange() {
     }
     console.log( "update courseid: " + courseId ); 
     
-    const response = await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php', { //取得課程活動內容
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得課程活動內容
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -165,7 +165,7 @@ async function get_group_from_course(courseid){
     // change class information
     const wsfunction = 'core_group_get_course_groups'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -185,7 +185,7 @@ async function get_group_member(groupids){
     // change class information
     const wsfunction = 'core_group_get_group_members'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupids}`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupids}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -203,7 +203,7 @@ async function get_user_fullname_by_id(userid){
     // change class information
     const wsfunction = 'core_user_get_users_by_field'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json&field=id&values[0]=${userid}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -222,7 +222,7 @@ async function delete_group(groupid){
     // change class information
     const wsfunction = 'core_group_delete_groups'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupid}`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json&groupids[0]=${groupid}`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -241,7 +241,7 @@ async function get_student_from_course(courseid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
     const wstoken = localStorage.getItem('token')
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json`, {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
@@ -269,7 +269,7 @@ async function get_student_from_course(courseid){
 async function create_group(courseid, name) {
     const wsfunction = 'core_group_create_groups';
     const wstoken = localStorage.getItem('token'); // Moodle API token
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&groups[0][courseid]=${courseid}&groups[0][name]=${name}&groups[0][description]=aaa`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json&groups[0][courseid]=${courseid}&groups[0][name]=${name}&groups[0][description]=aaa`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -292,7 +292,7 @@ async function create_group(courseid, name) {
 async function add_group_member(groupid, userid) {
     const wsfunction = 'core_group_add_group_members';
     const wstoken = localStorage.getItem('token'); // Moodle API token
-    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json&members[0][groupid]=${groupid}&members[0][userid]=${userid}`, {
+    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php?moodlewsrestformat=json&members[0][groupid]=${groupid}&members[0][userid]=${userid}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

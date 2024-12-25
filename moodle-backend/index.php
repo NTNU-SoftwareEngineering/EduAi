@@ -29,7 +29,7 @@ if (!file_exists('./config.php')) {
 
 require_once('config.php');
 
-header("Access-Control-Allow-Origin: https://eduai.andy-lu.dev"); // 允許來自 https://eduai.andy-lu.dev 的請求
+header("Access-Control-Allow-Origin: http://localhost:3000"); // 允許來自 https://eduai.andy-lu.dev 的請求
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");   // 允許的 HTTP 方法
 header("Access-Control-Allow-Headers: Content-Type, Authorization");  // 允許的 headers
 

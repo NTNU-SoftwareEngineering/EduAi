@@ -21,12 +21,12 @@ $CFG->dboptions = array (
 );
 
 // 网站地址和数据目录
-$CFG->wwwroot   = 'https://eduai-api.andy-lu.dev/moodle';  // 您的 Moodle 网站 URL
+$CFG->wwwroot   = 'http://localhost:8080/moodle';  // 您的 Moodle 网站 URL
 $CFG->dataroot  = '/var/www/moodledata';  // Moodle 数据目录的路径
 $CFG->admin     = 'admin';  // 管理目录
 
 $CFG->directorypermissions = 0755;  // 目录权限设置
-$CFG->corsalloweddomains = array("https://eduai.andy-lu.dev");  // 允许的 CORS 域名
+$CFG->corsalloweddomains = array("http://localhost:3000");  // 允许的 CORS 域名
 
 $CFG->authloginviaemail = true;
 
