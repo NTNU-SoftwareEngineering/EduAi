@@ -45,7 +45,7 @@ if (signInForm) {
 		// 發送登入請求
 		console.log("開始發送登入請求...");
 		
-		const response = await fetch('http://localhost:8080/moodle/login/token.php', {
+		const response = await fetch('https://eduai-api.andy-lu.dev/moodle/login/token.php', {
 			method: 'POST',
 			headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
