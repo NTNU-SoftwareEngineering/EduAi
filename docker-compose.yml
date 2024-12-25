@@ -37,7 +37,7 @@ services:
       MOODLE_DB_NAME: moodle_db
       MOODLE_DB_USER: moodleuser
       MOODLE_DB_PASSWORD: yourpassword
-      MOODLE_URL: https:/eduai-api.andy-lu.dev
+      MOODLE_URL: https://eduai-api.andy-lu.dev
 
 
   db:

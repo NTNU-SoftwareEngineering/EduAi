@@ -233,7 +233,7 @@ async function triggerSTT(){
 
 // 創建草稿區域，並回傳 item ID
 async function createDraftArea() {
-    const response = await fetch(`https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=core_files_get_unused_draft_itemid&moodlewsrestformat=json`, {
+    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=core_files_get_unused_draft_itemid&moodlewsrestformat=json`, {
         method: 'POST'
     });
     const result = await response.json();
@@ -252,7 +252,7 @@ async function uploadFileToDraftArea(fileBlob, filename, itemid) {
     formData.append('itemid', itemid);
     formData.append('file', fileBlob, filename);
 
-    const response = await fetch(`https:/eduai-api.andy-lu.dev/moodle/webservice/upload.php?token=${wstoken_webservice}`, {
+    const response = await fetch(`https://eduai-api.andy-lu.dev/moodle/webservice/upload.php?token=${wstoken_webservice}`, {
         method: 'POST',
         body: formData
     });
@@ -267,7 +267,7 @@ async function uploadFileToDraftArea(fileBlob, filename, itemid) {
 
 // 將itemId陣列中所有檔案上傳至Moodle作業區
 async function uploadFilesToMoodleAssignment(itemId){
-	const saveSubmissionUrl = `https:/eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
+	const saveSubmissionUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${wstoken_webservice}&wsfunction=mod_assign_save_submission&moodlewsrestformat=json`;
     const saveSubmissionData = new URLSearchParams();
 
     saveSubmissionData.append('assignmentid', assignmentId);
