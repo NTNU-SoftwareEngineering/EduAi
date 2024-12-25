@@ -117,7 +117,6 @@ body {
     border-left: 3rem ; 
     width: 25.5rem;
     display: flex;
-
 }
 
 .left-side-bar{
@@ -168,6 +167,7 @@ body {
 }
 
 .select-class .intro {
+    font-size: 1.46rem;
     color: var(--pri_white, #FFFFFF);
 }
 
@@ -184,7 +184,9 @@ body {
     border-radius: 10px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     width: 100%;
-    height: 35%;
+    height: auto;
+    min-height: 30%;
+    max-height: 35%;
     margin-top: 0.5rem;
     padding: 1rem;
 }
@@ -213,22 +215,35 @@ body {
 
 .student_content{
     width: 100%;
-    height: 100%;
+    height: 85%;
     max-height: 100%;
     
-    padding: 4.5rem 0.5rem;
-    padding-top: 0;
+    padding: 0 0.5rem;
+    /* padding-top: 0; */
     /* margin-top: 15%; */
+}
+
+.selected-class_student_list div .image{
+
+    background: url("../images/teacher_lesson_plan/people.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+
 }
 
 .class_empty_hint {
     width: 100%;
-    height: 100%;
+    height: 80%;
     border-radius: .5rem;
     border: 1px dashed var(--sec_gray100, #C7C7CC);
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--sec_gray900, #C7C7CC);
 }
 
 /* 學生項目樣式 */
@@ -330,6 +345,7 @@ body {
     line-height: 2rem; 
     letter-spacing: 1px;
 
+    margin-right: auto;
 }
 
 .select-course {

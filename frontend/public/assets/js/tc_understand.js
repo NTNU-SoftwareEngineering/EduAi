@@ -1,6 +1,7 @@
 let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
+let studentId = -1; // 還未選擇學生: -1
 const selectCourseList = document.querySelector('#class');
 
 async function loadCourse() { // fetch course data from backend
@@ -16,6 +17,45 @@ async function loadCourse() { // fetch course data from backend
     });
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
+
+async function updateCourseId() {
+    console.log("select course: " + selectCourseList.value);
+    const selectedCourseObj = courseObjList.find(course => course.fullname === selectCourseList.value);
+    if (!selectedCourseObj) {
+        // 還未選擇課程，或後端無此課程
+        courseId = -1;
+        console.error(`Cannot find course: ${selectCourseList.value}`);
+        return;
+    }
+
+    courseId = selectedCourseObj.id;
+    if (!courseId) {
+        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        return;
+    }
+    console.log("update courseid: " + courseId);
+
+    let studentListElement = document.getElementsByClassName("selected-class_student_list")[0];
+    studentListElement.innerHTML = "";
+
+    let studentsIdList = await get_student_from_course(courseId);
+    let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
+
+    document.getElementsByClassName("class_empty_hint")[0].style.display = 'none'
+    document.getElementsByClassName("selected-class_student_list")[0].style.display = 'block'
+
+    studentsNameList.forEach((student_name) => {
+        studentListElement.innerHTML += `
+            <div class="student-item">
+                <div class="image"></div>
+                <div class="student-info">
+                    <div class="name">${student_name}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+selectCourseList.addEventListener("change", updateCourseId);
 
 document.addEventListener("DOMContentLoaded", function() {
     // var datas = {
@@ -99,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //     selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
     // });
 
-    const courseSelect = document.getElementById("course-select");
+    const courseSelect = document.getElementById("select-class");
     const classSelect = document.getElementById("class-select");
     
     const selectedStuName = document.getElementById("selected-student-name");
