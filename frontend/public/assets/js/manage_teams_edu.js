@@ -63,19 +63,21 @@ async function onCourseChange() {
     try {
         // 更改'選擇活動'欄位
         const lesson_plan = JSON.parse(response[0].summary);
-        // const activities = lesson_plan.activities
-        const activities = [
-            { name: '活動一', len: 5},
-            { name: '活動二', len: 7},
-        ]
+        // console.log(lesson_plan);
+        const activities = lesson_plan.activities;
+        // const activities = [
+        //     { name: '活動一', len: 5},
+        //     { name: '活動二', len: 7},
+        // ]
         selectActivityList.innerHTML = '<option value="">請選擇活動名稱</option>';
-        activities.forEach ( act => {
+
+        for (const [idx, act] of Object.entries(activities)) {
             const option = document.createElement('option');
-            option.setAttribute('time', act.len);
+            option.setAttribute('time', act.time);
             option.textContent = act.name;
-            option.value = act.name;
+            option.value = idx;
             selectActivityList.appendChild(option);
-        });
+        }
 
     } catch (error) {
         if ( error instanceof SyntaxError ) {
