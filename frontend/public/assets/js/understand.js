@@ -125,8 +125,7 @@ async function updateAssignmentId() {
 
             // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
             const sortedAssignments = assignments
-                .filter(a => a.allowsubmissionsfromdate) // 確保有開放時間
-                .sort((a, b) => b.allowsubmissionsfromdate - a.allowsubmissionsfromdate);
+                .sort((a, b) => b.id - a.id);
 
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];
@@ -161,7 +160,7 @@ async function getSubmissionUrl() {
         return;
     }
     const token = localStorage.getItem('token');
-    const submissionUrl = `http://localhost:8080/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
+    const submissionUrl = `https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submission_status&moodlewsrestformat=json&assignid=${assignmentId}`;
     try {
         const submissionResponse = await fetch(submissionUrl);
         const data = await submissionResponse.json();

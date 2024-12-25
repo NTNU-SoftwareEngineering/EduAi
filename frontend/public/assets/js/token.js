@@ -3,7 +3,7 @@
 async function checkTokenVaild() {
     const wstoken = localStorage.getItem('token')
     const wsfunction='core_webservice_get_site_info'
-    const response = await fetch('http://localhost:8080/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
+    const response = await fetch('https://eduai-api.andy-lu.dev/moodle/webservice/rest/server.php?moodlewsrestformat=json', {
 		method: 'POST',
 		headers: {
 		'Content-Type': 'application/x-www-form-urlencoded',
