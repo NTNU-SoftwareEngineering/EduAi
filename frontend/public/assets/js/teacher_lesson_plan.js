@@ -141,6 +141,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
 
         console.log(`上傳教案結果：`);
         console.log(ret);
+        alert('教案上傳成功');
 
     } catch (error) {
         alert(`發生錯誤: ${error.message}`);
