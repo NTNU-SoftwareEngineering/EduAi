@@ -80,6 +80,10 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                 act_name = activityElement.querySelector(".event-name").value;
                 name_check = true;
             }
+            else{
+                act_name = "團體討論";
+                name_check = true;
+            }
 
             if (activityElement.querySelector(".event-description") != null) {
                 act_description = activityElement.querySelector(".event-description").value;
@@ -100,7 +104,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                     return;
                 }
                 if (!time_check) {
-                    act_time = 0;
+                    act_time = 5;
                 }
 
                 activities[idx] = {

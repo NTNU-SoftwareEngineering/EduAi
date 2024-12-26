@@ -1,5 +1,6 @@
 let dropdown_expand = 0;
 let didSendMessage = 0;
+let canSendMessage = 1;
 let username = "";
 
 let courseList = []; // course name only
@@ -189,14 +190,17 @@ function appendMessage(role, message) {
     }
 
     conversation_box.scrollTop = conversation_box.scrollHeight;
+    canSendMessage = 1
 }
 
 async function SendMessage() {
-    const user_message = document.getElementById("message").value;
+    const user_message = document.querySelector("#message").value;
+    document.querySelector("#message").value = '';
+    console.log(user_message.length)
 
-    if(user_message.length == 0) return;
-
-    document.getElementById("message").value = "";
+    if(user_message.length <= 1 || !canSendMessage) return;
+    canSendMessage = 0
+    
 
     appendMessage("user", user_message);
 
@@ -217,8 +221,10 @@ async function SendMessage() {
     .then((response) => response.json())
     .then((data) => {
         appendMessage("ai", data.message);
+        
     })
     .catch((error) => {
+        canSendMessage = 1
         console.error(error);
     });
 }
