@@ -14,6 +14,7 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         selectCourseList.appendChild(option);
     });
+    selectCourseList.selectedIndex = 0;
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
@@ -103,21 +104,17 @@ function showLessonPlanData(lessonPlanData) {
 
     for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
         activityElement.innerHTML += `
-            <div class="event-row" id="event0" style="background: rgb(255, 255, 255);">
+            <div class="event-row" id="event${idx}" style="background: rgb(255, 255, 255);">
                 <input class="event-row-title-textarea event-name" placeholder="請輸入活動名稱" maxlength="20" value="${activity.name}">
-                <button class="event-delete-btn"></button>
+                <button class="event-delete-btn" id="event${idx}" onclick="eventDelete(this.id)"></button>
             </div>
-            <div class="event-row" id="event0">
+            <div class="event-row" id="event${idx}">
                 <input class="event-row-title-textareacontent event-description" placeholder="請輸入學習內容及實施方式" maxlength="40" style="width: 45%;" value="${activity.description}">
                 <input class="event-row-title-textareacontent event-time" placeholder="請輸入時間(min)，ex. 5" type="number" min="0" max="99" style="width: 17.5%;" value="${activity.time}">
                 <input class="event-row-title-textareacontent event-answer" placeholder="請輸入標準答案" maxlength="50" style="width: 37.5%;" value="${activity.answer}">
             </div>
         `;
     }
-    // for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
-    //     activityElement.innerHTML += `
-    //         <div class="event-row" id="event${idx}">
-    //             <div class="event-name
 }
 
 function getIndex(indexAttr) {
@@ -129,48 +126,23 @@ document.getElementById("submitButton").addEventListener("click", async () => {
     let activityElements = document.getElementById("lesson-plan-activity").querySelectorAll(".event-row");
 
     let act_name, act_description, act_time, act_answer;
-    let name_check = false, time_check = false, last_check = false;
 
     if (courseId < 0) {
         alert('請先選擇課程');
         return;
     }
 
-    console.log(activityElements);  
-
     activityElements.forEach((activityElement) => {
         if (activityElement.hasAttribute('id')) {
             let idx = getIndex(activityElement.getAttribute('id'));
 
             if (activityElement.querySelector(".event-name") != null) {
-                act_name = activityElement.querySelector(".event-name").value;
-                if(act_name.length == 0)act_name = "團體討論";
-                name_check = true;
+                act_name = activityElement.querySelector(".event-name").value || "團體討論";
             }
-            
-
-            if (activityElement.querySelector(".event-description") != null) {
-                act_description = activityElement.querySelector(".event-description").value;
-            }
-
-            if (activityElement.querySelector(".event-time") != null) {
-                act_time = activityElement.querySelector(".event-time").value;
-                time_check = true;
-            }
-
-            if (activityElement.querySelector(".event-answer") != null) {
-                act_answer = activityElement.querySelector(".event-answer").value;
-                last_check = true;
-            }
-            last_check = true;
-
-            if (last_check) {
-                if (!name_check) {
-                    return;
-                }
-                if (!time_check) {
-                    act_time = "5";
-                }
+            else {
+                act_description = activityElement.querySelector(".event-description").value || "";
+                act_time = activityElement.querySelector(".event-time").value || "5";
+                act_answer = activityElement.querySelector(".event-answer").value || "";
 
                 activities[idx] = {
                     name: act_name,
@@ -178,25 +150,19 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                     time: act_time,
                     answer: act_answer,
                 };
-                name_check = false;
-                time_check = false;
-                last_check = false;
             }
         }
     });
 
-    for (const [idx, activity] of Object.entries(activities)) {
-        if (activity.name === "") {
-            alert(`活動${idx}名稱不可為空`);
-            return;
-        }
-    }
+    let mainCoreValue = "";
 
-    let mainCoreValue = document.getElementById("lesson-plan-main_core_value")
-    .querySelector(".core-btn-selected")
-    .parentElement
-    .getElementsByClassName("core-label")[0]
-    .textContent;
+    if (document.getElementById("lesson-plan-main_core_value").querySelector(".core-btn-selected") !== null) {
+        mainCoreValue = document.getElementById("lesson-plan-main_core_value")
+            .querySelector(".core-btn-selected")
+            .parentElement
+            .getElementsByClassName("core-label")[0]
+            .textContent;
+    }
 
     const lessonPlanData = {
         name: document.getElementById("lesson-plan-name").value,
