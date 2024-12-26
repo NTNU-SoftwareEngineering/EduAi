@@ -103,11 +103,11 @@ function showLessonPlanData(lessonPlanData) {
 
     for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
         activityElement.innerHTML += `
-            <div class="event-row" id="event0" style="background: rgb(255, 255, 255);">
+            <div class="event-row" id="event${idx}" style="background: rgb(255, 255, 255);">
                 <input class="event-row-title-textarea event-name" placeholder="請輸入活動名稱" maxlength="20" value="${activity.name}">
                 <button class="event-delete-btn"></button>
             </div>
-            <div class="event-row" id="event0">
+            <div class="event-row" id="event${idx}">
                 <input class="event-row-title-textareacontent event-description" placeholder="請輸入學習內容及實施方式" maxlength="40" style="width: 45%;" value="${activity.description}">
                 <input class="event-row-title-textareacontent event-time" placeholder="請輸入時間(min)，ex. 5" type="number" min="0" max="99" style="width: 17.5%;" value="${activity.time}">
                 <input class="event-row-title-textareacontent event-answer" placeholder="請輸入標準答案" maxlength="50" style="width: 37.5%;" value="${activity.answer}">
