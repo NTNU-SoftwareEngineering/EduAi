@@ -13,7 +13,7 @@ class AudioRecorder extends AudioWorkletProcessor {
     process (inputs, outputs, parameters) {
       const buffer = []
       const channel = 0
-  
+      console.log(inputs);
       for (let t = 0; t < inputs[0][channel].length; t += 1) {
         if (parameters.isRecording[0] === 1) { // <2>
           buffer.push(inputs[0][channel][t])

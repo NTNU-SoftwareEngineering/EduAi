@@ -18,6 +18,7 @@ if (signInForm) {
 	const errorDisplay = document.createElement('p');
 	errorDisplay.style.color = 'red';
 	errorDisplay.style.marginTop = '10px';
+	errorDisplay.style.display = "none";
 	signInForm.appendChild(errorDisplay);  // 將錯誤訊息元素添加到登入表單內
 	// 確認 DOM 元素是否正確加載
 	console.log("使用者名稱輸入框:", usernameInput);
