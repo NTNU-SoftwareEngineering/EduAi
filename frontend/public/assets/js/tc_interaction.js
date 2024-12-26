@@ -7,11 +7,13 @@ let assignmentId = [-1]; // 還未選擇作業: -1
 let llmFeedbackUrl = null; // 作業提交資訊 URL (其實就是去把作業區的回饋llm.txt的內容抓出來)
 const selectCourseList = document.querySelector('#class');
 const courseSelect = document.getElementById("class");
+const selectedStuName = document.getElementById("selected-student-name");
+
 
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
-    console.log("courseList: ", courseList);
+    // console.log("courseList: ", courseList);
 
     courseList.forEach(course => {
         const option = document.createElement('option');
@@ -24,7 +26,7 @@ async function loadCourse() { // fetch course data from backend
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 async function updateCourseId() {
-    console.log("select course: " + selectCourseList.value);
+    // console.log("select course: " + selectCourseList.value);
     const selectedCourseObj = courseObjList.find(course => course.fullname === selectCourseList.value);
     if (!selectedCourseObj) {
         // 還未選擇課程，或後端無此課程
@@ -34,11 +36,13 @@ async function updateCourseId() {
     }
 
     courseId = selectedCourseObj.id;
+    localStorage.setItem('courseId', courseId);//記錄下來
+
     if (!courseId) {
         console.error(`Cannot find course id for: ${selectCourseList.value}`);
         return;
     }
-    console.log("update courseid: " + courseId);
+    // console.log("update courseid: " + courseId);
 
     let studentListElement = document.getElementsByClassName("selected-class_student_list")[0];
     studentListElement.innerHTML = "";
@@ -64,7 +68,13 @@ async function updateCourseId() {
     document.querySelectorAll('.student-item').forEach((student) => {
         student.addEventListener("click", () => {
             console.log(student.querySelector('.name').textContent);
+            localStorage.setItem("savedTime", Date.now());
+            localStorage.setItem("studentName", student.querySelector('.name').textContent);
+            selectedStuName.textContent =  localStorage.getItem("studentName");
             studentId = studentsIdList[studentsNameList.indexOf(student.querySelector('.name').textContent)];
+            localStorage.setItem("studentId",studentId);
+
+
             console.log("studentId: ", studentId);
             // TODO: fetch student's response
             updateAssignmentId();
@@ -75,11 +85,11 @@ selectCourseList.addEventListener("change", updateCourseId);
 
 document.addEventListener("DOMContentLoaded", function() {
    
-    
-    const selectedStuName = document.getElementById("selected-student-name");
+    // const selectedStuName = document.getElementById("selected-student-name");
     const selectedCourseName = document.getElementById("selected-course-name");
     const studentItems = document.querySelectorAll('.student-item');
-
+    // console.log("123123selectedStuName; ", selectedStuName);
+    // console.log("123123selectedCourseName; ", selectedCourseName);
 
     const savedTime = localStorage.getItem("savedTime");
     const currentTime = Date.now();
@@ -93,10 +103,14 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.removeItem("studentName");
         localStorage.removeItem("savedTime");
         localStorage.removeItem("selectedClass");
+        localStorage.removeItem('courseId');
+        
     } else if (studentName) {
         selectedStuName.textContent = studentName;
         selectedCourseName.textContent = savedCourse;
         courseSelect.value = savedCourse;
+        updateAssignmentId();
+
         // classSelect.value = saveddClass;
 
     }
@@ -112,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     courseSelect.addEventListener("change", function() {
         const selectedCourse = courseSelect.value;
+        console.log("123123selectedCourse: ", selectedCourse);
         localStorage.setItem("selectedCourse", selectedCourse);
         selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
     });
@@ -131,14 +146,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function updateAssignmentId() {
     const token = localStorage.getItem('token');
-    const savedCourseId = courseId;
+    // const savedCourseId = courseId;
+    const savedCourseId = localStorage.getItem('courseId');
 
 	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
 
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
-        console.log("assignment data: ", data);
+        // console.log("assignment data: ", data);
 		// 分析回傳的數據，找出最新開放的作業
         if (data.courses && data.courses.length > 0) {
             const assignments = data.courses[0].assignments;
@@ -150,10 +166,15 @@ async function updateAssignmentId() {
             if (sortedAssignments.length > 0) {
                 const latestAssignment = sortedAssignments[0];
 				assignmentId[0] = latestAssignment.id; // 同步更新 assignmentId
-                console.log('最新開放的作業 ID:', latestAssignment.id);
+                // assignmentId[0] = latestAssignment.id;
+                localStorage.setItem("assignmentId", assignmentId[0]);
+                // assignmentId = localStorage.getItem('assignmentId');
+                // localStorage.setItem("sub.userid", sub.userid);
+
+                // console.log('最新開放的作業 ID:', latestAssignment.id);
                 llmFeedbackUrl = await getSubmissionUrl();
                 if (llmFeedbackUrl) {
-                    console.log('更新的 llmFeedbackUrl:', llmFeedbackUrl);
+                    // console.log('更新的 llmFeedbackUrl:', llmFeedbackUrl);
                     fetchSubmissionData(); // 將後續 Fetch 的邏輯放到此處
                 } else {
                     console.warn('未能獲取有效的 llmFeedbackUrl');
@@ -175,6 +196,7 @@ async function updateAssignmentId() {
 }
 
 async function getSubmissionUrl() {
+    
     if (assignmentId[0] === -1) {
         console.error('尚未選擇作業');
         return;
@@ -184,17 +206,22 @@ async function getSubmissionUrl() {
     try {
         const submissionResponse = await fetch(submissionUrl);
         const data = await submissionResponse.json();
-        console.log('作業提交資訊:', data);
-
+        // console.log('作業提交資訊:', data);
+        console.log('assignmentId:', assignmentId);
         // 確認是否有提交資訊
         if (data.assignments && data.assignments.length > 0) {
-
+            console.log('作業提交資訊:', data.assignments);
             const assignment = data.assignments.find(a => a.assignmentid === assignmentId[0]);
-            
+            console.log('選擇的作業:', assignment);
             if (assignment && assignment.submissions) {
+                // console.log('作業提交:', assignment.submissions);
+                const savedStudentId = localStorage.getItem('studentId');
+                console.log('savedstudentId:', savedStudentId);
+                console.log('studentId:', studentId);
+
                 // 根據 userId 找到該學生的提交
-                const studentSubmission = assignment.submissions.find((sub) => sub.userid === studentId);
-                console.log('選擇的學生作業:', studentSubmission);
+                const studentSubmission = assignment.submissions.find((sub) => sub.userid == savedStudentId);
+                // console.log('選擇的學生作業:', studentSubmission);
                 if (studentSubmission && studentSubmission.plugins) {
                     // 遍歷 plugins，找到包含檔案的部分
                     for (const plugin of studentSubmission.plugins) {
@@ -206,7 +233,7 @@ async function getSubmissionUrl() {
                                 const targetFile = files.find(file => file.filename === "llm.txt");
                                 if (targetFile) {
                                     const fileUrl = `${targetFile.fileurl}?token=${token}`; // 添加 Token 授權下載
-                                    console.log(`找到目標檔案的 URL: ${fileUrl}`);
+                                    // console.log(`找到目標檔案的 URL: ${fileUrl}`);
                                     return fileUrl;
                                 }
                             }
@@ -215,6 +242,7 @@ async function getSubmissionUrl() {
                 }
             }
             console.warn(`未找到該學生 (userId: ${userId}) 的目標檔案: llm.txt`);
+            clearfbdata();
             return null;
         } else {
             console.warn('沒有找到任何提交檔案');
@@ -228,22 +256,22 @@ async function getSubmissionUrl() {
 
 // 獨立封裝 Fetch 作業的邏輯
 function fetchSubmissionData() {
-    console.log('開始讀取作業提交資訊:', llmFeedbackUrl);
+    // console.log('開始讀取作業提交資訊:', llmFeedbackUrl);
     fetch(llmFeedbackUrl)
         .then(response => {
             if (!response.ok) {
                 throw new Error('無法讀取檔案');
             }
-            console.log('讀取檔案成功:', response);
+            // console.log('讀取檔案成功:', response);
             return response.text();
         })
         .then(text => {
-            console.log('讀取檔案成功:\n', text);
+            // console.log('讀取檔案成功:\n', text);
             const data = {};
             text.split('\n').forEach(line => {
-                console.log('line:', line); // Debug
+                // console.log('line:', line); // Debug
                 const [key, value] = line.split(/[：:]/);
-                console.log('key:', key, 'value:', value); // Debug
+                // console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();
                 }
@@ -283,4 +311,17 @@ function updateInfoCards(data) {
     document.querySelector("#errleft").style.margin ="0px";
     document.querySelector("#errleft").style.color = "#363636";
 
+}
+
+
+function clearfbdata(){
+    // localStorage.removeItem('courseId');
+    localStorage.removeItem('studentId');
+
+        
+    // 重置全域變數
+    courseId = -1;
+    assignmentId[0] = -1;
+    llmFeedbackUrl = null;
+    location.reload();
 }
