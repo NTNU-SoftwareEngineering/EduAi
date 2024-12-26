@@ -9,6 +9,7 @@ setInterval(() => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const current_user = document.querySelector(".current-user");
+    current_user.textContent = "您好";
 
     try {
         const user_id  = await get_userid();
@@ -31,6 +32,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     catch (error) {
         console.error(error);
-        current_user.textContent = "您好";
     }
 });
