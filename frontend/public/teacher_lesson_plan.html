@@ -119,52 +119,54 @@
             <textarea class="form-textarea-large" id="lesson-plan-place" placeholder="請輸入教學場域分析" maxlength="1000"/></textarea>
             
           </div>
-          <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="form-label-large">
-              <div>總綱核心素養</div>
+          <div id="lesson-plan-main_core_value">
+            <div class="content row m-3 mt-4 d-flex flex-row" style=" height: 3rem; justify-content: center;">
+              <div class="form-label-large">
+                <div>總綱核心素養</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row">
+                <button class="core-btn" id="core-A1"></button>
+                <div class="core-label">A1 身心素質與自我精進</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+                <button class="core-btn" id="core-A2"></button>
+                <div class="core-label">A2 系統思考與解決問題</div>
+              </div>
+              <button class="core-expand-btn" onclick="core_expand_toggle()"></button>
             </div>
-            <div class="rounded_selectBox d-flex flex-row">
-              <button class="core-btn" id="core-A1"></button>
-              <div class="core-label">A1 身心素質與自我精進</div>
+            <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+              <div class="rounded_selectBox d-flex flex-row">
+                <button class="core-btn" id="core-A3"></button>
+                <div class="core-label">A3 規劃執行與創新應變</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row">
+                <button class="core-btn" id="core-B1"></button>
+                <div class="core-label">B1 符號運用與溝通表達</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;"> 
+                <button class="core-btn" id="core-B2"></button>
+                <div class="core-label">B2 科技資訊與媒體素養</div>
+              </div>
             </div>
-            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
-              <button class="core-btn" id="core-A2"></button>
-              <div class="core-label">A2 系統思考與解決問題</div>
+            <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+              <div class="rounded_selectBox d-flex flex-row">
+                <button class="core-btn" id="core-B3"></button>
+                <div class="core-label">B3 藝術涵養與美感素養</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row">
+                <button class="core-btn" id="core-C1"></button>
+                <div class="core-label">C1 道德實踐與公民意識</div>
+              </div>
+              <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+                <button class="core-btn" id="core-C2"></button>
+                <div class="core-label">C2 人際關係與團隊合作</div>
+              </div>
             </div>
-            <button class="core-expand-btn" onclick="core_expand_toggle()"></button>
-          </div>
-          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="rounded_selectBox d-flex flex-row">
-              <button class="core-btn" id="core-A3"></button>
-              <div class="core-label">A3 規劃執行與創新應變</div>
-            </div>
-            <div class="rounded_selectBox d-flex flex-row">
-              <button class="core-btn" id="core-B1"></button>
-              <div class="core-label">B1 符號運用與溝通表達</div>
-            </div>
-            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;"> 
-              <button class="core-btn" id="core-B2"></button>
-              <div class="core-label">B2 科技資訊與媒體素養</div>
-            </div>
-          </div>
-          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="rounded_selectBox d-flex flex-row">
-              <button class="core-btn" id="core-B3"></button>
-              <div class="core-label">B3 藝術涵養與美感素養</div>
-            </div>
-            <div class="rounded_selectBox d-flex flex-row">
-              <button class="core-btn" id="core-C1"></button>
-              <div class="core-label">C1 道德實踐與公民意識</div>
-            </div>
-            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
-              <button class="core-btn" id="core-C2"></button>
-              <div class="core-label">C2 人際關係與團隊合作</div>
-            </div>
-          </div>
-          <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
-            <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
-              <button class="core-btn" id="core-C3" ></button>
-              <div class="core-label">C3 多元文化與國際理解</div>
+            <div class="content core-expand-toggle-label row m-3 mt-4 flex-row" style=" height: 3rem; justify-content: center;">
+              <div class="rounded_selectBox d-flex flex-row" style="margin-right: auto;">
+                <button class="core-btn" id="core-C3" ></button>
+                <div class="core-label">C3 多元文化與國際理解</div>
+              </div>
             </div>
           </div>
 

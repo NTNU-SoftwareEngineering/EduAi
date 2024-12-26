@@ -55,7 +55,8 @@ textarea{
 }
 
 .event-row-title{
-    color: var(--light-text---el-text-color-secondary, #000000);
+    /* color: var(--light-text---el-text-color-secondary, #000000); */
+    color: var(--light-text---el-text-color-secondary, #909399);
     background: var(--bg, #F9FAFC);
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
@@ -68,7 +69,8 @@ textarea{
 }
 
 .event-row-title-textareacontent{
-    color: var(--light-text---el-text-color-secondary, #909399);
+    /* color: var(--light-text---el-text-color-secondary, #909399); */
+    color: var(--grey900, #303133);
     background: var(--bg, #F9FAFC);
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
@@ -81,7 +83,8 @@ textarea{
 }
 
 .event-row-title-textarea{
-    color: var(--light-text---el-text-color-secondary, #909399);
+    /* color: var(--light-text---el-text-color-secondary, #909399); */
+    color: var(--grey900, #303133);
     text-align: center;
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
@@ -392,7 +395,8 @@ textarea{
 
 .form-label div , .form-label-large div{
 
-    color: var(--grey900, #303133);
+    /* color: var(--grey900, #303133); */
+    color: var(--light-text---el-text-color-secondary, #909399);
 
     /* 內文 */
     font-family: "Noto Sans TC", sans-serif;
@@ -413,7 +417,8 @@ textarea{
     background: var(--bgcolor, #F2F2F7);
     outline: none;
     border: none;
-    color: var(--light-text---el-text-color-placeholder, #A8ABB2);
+    /* color: var(--light-text---el-text-color-placeholder, #A8ABB2); */
+    color: var(--grey900, #303133);
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
@@ -430,7 +435,8 @@ textarea{
     background: var(--bgcolor, #F2F2F7);
     outline: none;
     border: none;
-    color: var(--light-text---el-text-color-placeholder, #A8ABB2);
+    /* color: var(--light-text---el-text-color-placeholder, #A8ABB2); */
+    color: var(--grey900, #303133);
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.125rem;
     font-style: normal;
