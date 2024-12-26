@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", loadCourse);
 async function onCourseChange() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
-    
+
     document.querySelector('#question-content-text').innerHTML = "";
 
     console.log( "select course: " + selectCourseList.value );
@@ -40,7 +40,7 @@ async function onCourseChange() {
     }
     console.log( "update courseid: " + courseId ); 
     
-    const response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得課程活動內容
+    let response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得課程活動內容
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -62,15 +62,10 @@ async function onCourseChange() {
     }
 
     try {
-        // 更改'選擇活動'欄位
-        const lesson_plan = JSON.parse(response[0].summary);
-        // console.log(lesson_plan);
-        const activities = lesson_plan.activities;
-        // const activities = [
-        //     { name: '活動一', len: 5},
-        //     { name: '活動二', len: 7},
-        // ]
+         // 更改'選擇活動'欄位
         selectActivityList.innerHTML = '<option value="">請選擇活動名稱</option>';
+        const lesson_plan = JSON.parse(response[0].summary);
+        const activities = lesson_plan.activities;
 
         for (const [idx, act] of Object.entries(activities)) {
             const option = document.createElement('option');
@@ -351,6 +346,8 @@ async function show_group_info(){
 }
 // show_group_info()
 async function updateInfo(){
+
+    // change class count information
     let countInfo = document.querySelector(".info-content > .class-count > .intro");
     let classList = document.querySelector(".group-info");
 
