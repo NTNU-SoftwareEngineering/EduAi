@@ -42,9 +42,9 @@ span {
 
 }
 
-
-
-
+.no-hover {
+    pointer-events: none;
+}
 
 .wrapper {
     display: flex;
