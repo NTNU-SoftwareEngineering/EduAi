@@ -1,8 +1,7 @@
 let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
-const selectClassList = document.querySelector('#select-class');
-const selectCourseList = document.querySelector('#select-course');
+const selectCourseList = document.querySelector('#class');
 const selectActivityList = document.querySelector('#activity-selector');
 
 async function loadCourse() { // fetch course data from backend
@@ -82,6 +81,8 @@ async function onCourseChange() {
             selectActivityList.appendChild(option);
         }
 
+        updateStudent();
+        updateInfo();
     } catch (error) {
         if ( error instanceof SyntaxError || error instanceof TypeError ) {
             alert('請先上傳教案，或重新上傳教案。');
@@ -146,10 +147,6 @@ submitBtn.addEventListener('click', onTopicSubmit);
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0
 
-selectClassList.addEventListener('change', updateStudent);
-selectClassList.addEventListener('change', updateInfo);
-
-
 //  分組上下箭頭
 
 const upArrow = document.querySelector('.adj-btn .plus');
@@ -167,11 +164,6 @@ downArrow.addEventListener('click', function(){
     }
 });
 
-
-const temp_courseid = 2;
-// test class 1
-class1 = {
-};
 async function get_group_from_course(courseid){
     // change class information
     const wsfunction = 'core_group_get_course_groups'
@@ -349,67 +341,64 @@ async function show_group_info(){
 }
 // show_group_info()
 async function updateInfo(){
-    // change class information
-    let classInfo = document.querySelector(".info-content > .class > .intro");
-    classInfo.innerHTML = "班級：";
-    classInfo.innerHTML += selectClassList.value;
+    let countInfo = document.querySelector(".info-content > .class-count > .intro");
+    let classList = document.querySelector(".group-info");
+
+    await get_student_from_course(courseId)
+    .then(async (userids) => {
+        // userids.forEach(async (userid) => {
+        //     const name = await get_user_fullname_by_id(userid);
+        //     studentNames.push(name);
+        // });
+        countInfo.innerHTML = "班級人數：" + userids.length;
+    });
+
+    classList.style.backgroundImage = "none";
 
     // change class count information
-    let countInfo = document.querySelector(".info-content > .class-count > .intro");
-    countInfo.innerHTML = "班級人數：";
-    countInfo.innerHTML += Object.keys(class1).length;
+    // let countInfo = document.querySelector(".info-content > .class-count > .intro");
+    // countInfo.innerHTML = "班級人數：";
+    // countInfo.innerHTML += Object.keys(class1).length;
 
-    //clear background image
-    let classList = document.querySelector(".group-info");
-    classList.style.backgroundImage = "none";
+    // //clear background image
+    // let classList = document.querySelector(".group-info");
+    // classList.style.backgroundImage = "none";
 }
 const color_code = ["#F3F0F7", "#FFF6E8", "#F0FFF0", "#E8F6FF"];
 const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
-    try{
-        selectedCourseObj = courseObjList.find( course => course.fullname === selectCourseList.value);
-        if ( !selectedCourseObj ) console.error(`Cannot find course: ${selectCourseList.value}`);
+    try {
+        let studentsIdList = await get_student_from_course(courseId);
+        let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
 
-        const courseid = selectedCourseObj.id;
-        if ( !courseid ) console.error(`Cannot find course id for: ${selectCourseList.value}`);
-        console.log(courseid)
-        const userid = await get_student_from_course(courseId)
-        console.log('hi')
-        console.log(userid)
-        for(const id of userid){
-            const user_name = await get_user_fullname_by_id(id)
-            // console.log(`id:${id}`)
-            // console.log(`name:${user_name}`)
-            class1[id] = user_name
-        }
-        console.log(class1)
+        let studentList = document.querySelector(".group-content");
+        studentList.innerHTML = "";
+
+        studentsNameList.forEach((student_name) => {
+            const studentDiv = document.createElement('div');
+            studentDiv.className = 'student';
+
+            const colorIndex = Math.floor((studentsNameList.indexOf(student_name)) % 4);
+            studentDiv.style.backgroundColor = color_code[colorIndex];
+
+            //icon div
+            const innerDiv = document.createElement('div');
+            innerDiv.id = colors[colorIndex];
+            innerDiv.className = 'student-icon';
+            studentDiv.appendChild(innerDiv);
+
+            //info div
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'info';
+            infoDiv.textContent = student_name;
+            studentDiv.appendChild(infoDiv);
+
+            studentList.appendChild(studentDiv);
+        });
     }
     catch (error) {
         console.error("Error:", error);
-    }
-    let studentList = document.querySelector(".group-content");
-    studentList.innerHTML = "";
-    for (const [key, value] of Object.entries(class1)) {
-        const studentDiv = document.createElement('div');
-        studentDiv.className = 'student';
-
-        const colorIndex = Math.floor((key-1) % 4);
-        studentDiv.style.backgroundColor = color_code[colorIndex];
-
-        //icon div
-        const innerDiv = document.createElement('div');
-        innerDiv.id = colors[colorIndex];
-        innerDiv.className = 'student-icon';
-        studentDiv.appendChild(innerDiv);
-
-        //info div
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'info';
-        infoDiv.textContent = `${key}號 ${value}`;
-        studentDiv.appendChild(infoDiv);
-
-        studentList.appendChild(studentDiv);
     }
 }
 
@@ -545,7 +534,7 @@ async function random_group() {
             const infoDiv = document.createElement('div');
             infoDiv.className = 'info';
             console.log(`${groups_new[i][j].id}號 ${groups_new[i][j].name}`);
-            infoDiv.textContent = `${groups_new[i][j].id}號 ${groups_new[i][j].name}`;
+            infoDiv.textContent = `${groups_new[i][j].name}`;
             studentDiv.appendChild(infoDiv);
             groupArray[i].push(studentDiv);
         }
