@@ -274,7 +274,7 @@ async function get_role_from_course(courseid,userid){
         }
     }
 }
-async function get_student_from_course(courseid){
+async function get_student_from_course(courseid){ // {id1, name1}
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
     const wstoken = localStorage.getItem('token')
@@ -298,7 +298,7 @@ async function get_student_from_course(courseid){
     // Filter out users with the "Teacher" role
     const userIds = data
         .filter(user => !user.roles.some(role => role.roleid === 3)) // Adjust roleid if necessary
-        .map(user => user.id); // Extract only user IDs
+        // .map(user => user.id); // Extract only user IDs
 
     console.log("User IDs (Without Teachers):", userIds);
     return userIds; // Return an array of user IDs
