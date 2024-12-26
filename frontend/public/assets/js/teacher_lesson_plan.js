@@ -123,6 +123,12 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         }
     }
 
+    let mainCoreValue = document.getElementById("lesson-plan-main_core_value")
+    .querySelector(".core-btn-selected")
+    .parentElement
+    .getElementsByClassName("core-label")[0]
+    .textContent;
+
     const lessonPlanData = {
         name: document.getElementById("lesson-plan-name").value,
         author: document.getElementById("lesson-plan-author").value,
@@ -130,13 +136,13 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         time: document.getElementById("lesson-plan-time").value,
         motivation: document.getElementById("lesson-plan-motivation").value,
         place: document.getElementById("lesson-plan-place").value,
+        mainCoreValue: mainCoreValue,
         coreValue: document.getElementById("lesson-plan-core_value").value,
         coreImportance: document.getElementById("lesson-plan-core_importance").value,
         source: document.getElementById("lesson-plan-source").value,
         facilities: document.getElementById("lesson-plan-facilities").value,
         goal: document.getElementById("lesson-plan-goal").value,
         activities: activities,
-
     };
 
     try {

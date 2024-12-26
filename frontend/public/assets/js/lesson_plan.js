@@ -68,9 +68,14 @@ function core_selected(para){
         core_select = para;
         for(var i=0;i<core_select_btns.length;i++){
 
-            if(para != i) core_select_btns[i].style.backgroundImage = "";
-            else core_select_btns[i].style.backgroundImage = "url('./assets/images/teacher_lesson_plan/Checkbox.svg')";
-
+            if(para != i) {
+                core_select_btns[i].style.backgroundImage = "";
+                core_select_btns[i].classList.remove("core-btn-selected");
+            }
+            else {
+                core_select_btns[i].style.backgroundImage = "url('./assets/images/teacher_lesson_plan/Checkbox.svg')";
+                core_select_btns[i].classList.add("core-btn-selected");
+            }
         }
     }
 
