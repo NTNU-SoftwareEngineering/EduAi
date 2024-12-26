@@ -212,8 +212,7 @@ function fetchSubmissionData() {
         .then(response => {
             if (!response.ok) {
                 throw new Error('無法讀取檔案');
-                
-            }
+            } 
             return response.text();
         })
         .then(text => {
@@ -221,7 +220,7 @@ function fetchSubmissionData() {
             const data = {};
             text.split('\n').forEach(line => {
                 console.log('line:', line); // Debug
-                const [key, value] = line.split(':');
+                const [key, value] = line.split(/[：:]/);
                 console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();

@@ -92,12 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("savedTime", Date.now());
 
         updateAssignmentId();
-
-
-            // const data = datas[selectedCourse];
-            // console.log("data:",data)
-            // console.log("理解度:",data.理解度評語)
-            // updateInfoCards(data);
     });
 
     // 設定按鈕切換頁面
@@ -211,7 +205,7 @@ function fetchSubmissionData() {
             const data = {};
             text.split('\n').forEach(line => {
                 console.log('line:', line); // Debug
-                const [key, value] = line.split(':');
+                const [key, value] = line.split(/[：:]/);
                 console.log('key:', key, 'value:', value); // Debug
                 if (key && value) {
                     data[key.trim()] = value.trim();

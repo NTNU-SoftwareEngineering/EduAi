@@ -2,6 +2,8 @@ let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
 let studentId = -1; // 還未選擇學生: -1
+let assignmentId = [-1]; // 還未選擇作業: -1
+let llmFeedbackUrl = null; // 作業提交資訊 URL (其實就是去把作業區的回饋llm.txt的內容抓出來)
 const selectCourseList = document.querySelector('#class');
 
 async function loadCourse() { // fetch course data from backend
@@ -61,94 +63,14 @@ async function updateCourseId() {
             console.log(student.querySelector('.name').textContent);
             studentId = studentsIdList[studentsNameList.indexOf(student.querySelector('.name').textContent)];
             console.log("studentId: ", studentId);
-
             // TODO: fetch student's response
+            updateAssignmentId();
         });
     });
 }
 selectCourseList.addEventListener("change", updateCourseId);
 
 document.addEventListener("DOMContentLoaded", function() {
-    // var datas = {
-    //     "資訊課": {
-    //         "王小明": {
-    //             basic: 6,
-    //             deep: 4,
-    //             basicdescription: "學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。",
-    //             deepdescription: "學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。",
-    //             errleft: "學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。",
-    //             errright: "幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。"
-    //         },
-    //         "李小華": {
-    //             basic: 5,
-    //             deep: 6,
-    //             basicdescription: "學生有基本的幸福感概念理解，但對具體應用還缺乏認識。",
-    //             deepdescription: "在深入理解方面，未能很好地識別幸福感的不同層面，例如主觀幸福感與客觀幸福感。",
-    //             errleft: "學生對幸福感與快樂的區別存在模糊理解，且在討論中經常忽略科學理據。",
-    //             errright: "加強對幸福感不同種類的理解以及幸福感與快樂的區別。"
-    //         },
-    //         "張小強": {
-    //             basic: 8,
-    //             deep: 4,
-    //             basicdescription: "學生在課堂中積極參與，並對幸福感的基本概念有清楚認識。",
-    //             deepdescription: "在深入知識方面尚有不足，特別是在幸福感的影響因素上。",
-    //             errleft: "學生將幸福感僅理解為情緒反應，並未提到社會支持等重要因素。",
-    //             errright: "應更深入理解幸福感的多層面，特別是影響幸福感的外部因素。"
-    //         }
-    //     },
-    //     "輔導課": {
-    //         "王小明": {
-    //             basic: 9,
-    //             deep: 3,
-    //             basicdescription: "學生對於幸福感的基本概念有一些了解，例如提到了「幸福感是情緒上的感受」、「幸福感與快樂相關」等。但是，學生對於幸福感的定義和相關理論缺乏深入的理解。",
-    //             deepdescription: "學生對於幸福感相關的深入知識表現不足，例如沒有提到幸福感的種類（例如主觀幸福感、客觀幸福感）、幸福感的影響因素等。",
-    //             errleft: "學生說「幸福感就是快樂，不過是兩種不同的詞彙」、「幸福感沒有什麼科學理據」。這些話表明學生對於幸福感的概念和理據缺乏明確。",
-    //             errright: "幸福感的定義和理據，幸福感的影響因素（例如個性、生活事件、社會支持等），幸福感與快樂的區別。"
-    //         },
-    //         "李小華": {
-    //             basic: 5,
-    //             deep: 6,
-    //             basicdescription: "學生有基本的幸福感概念理解，但對具體應用還缺乏認識。",
-    //             deepdescription: "在深入理解方面，未能很好地識別幸福感的不同層面，例如主觀幸福感與客觀幸福感。",
-    //             errleft: "學生對幸福感與快樂的區別存在模糊理解，且在討論中經常忽略科學理據。",
-    //             errright: "加強對幸福感不同種類的理解以及幸福感與快樂的區別。"
-    //         },
-    //         "張小強": {
-    //             basic: 8,
-    //             deep: 4,
-    //             basicdescription: "學生在課堂中積極參與，並對幸福感的基本概念有清楚認識。",
-    //             deepdescription: "在深入知識方面尚有不足，特別是在幸福感的影響因素上。",
-    //             errleft: "學生將幸福感僅理解為情緒反應，並未提到社會支持等重要因素。",
-    //             errright: "應更深入理解幸福感的多層面，特別是影響幸福感的外部因素。"
-    //         }
-    //     }
-    // };
-    
-    
-    // const courseSelect = document.getElementById("course-select");
-    // const selectedCourseName = document.getElementById("selected-course-name");
-    // const selectedStuName = document.getElementById("selected-student-name");
-    // const studentItems = document.querySelectorAll('.student-item');
-
-    // studentItems.forEach(item => {
-    //     item.addEventListener('click', function() {
-    //         const studentName = item.querySelector('.name').innerText;
-    //         const selectedCourse = courseSelect.value;
-
-    //         selectedStuName.textContent = studentName;
-
-    //         // 檢查是否有選擇課程且資料存在
-    //         if (selectedCourse && datas[selectedCourse] && datas[selectedCourse][studentName]) {
-    //             const data = datas[selectedCourse][studentName];
-    //             updateInfoCards(data);
-    //         } 
-    //     });
-    // });
-
-    // courseSelect.addEventListener("change", function() {
-    //     const selectedCourse = courseSelect.value;
-    //     selectedCourseName.textContent = selectedCourse ? selectedCourse : "";
-    // });
 
     const courseSelect = document.getElementById("select-class");
     const classSelect = document.getElementById("class-select");
@@ -176,27 +98,6 @@ document.addEventListener("DOMContentLoaded", function() {
         courseSelect.value = savedCourse;
         // classSelect.value = saveddClass;
 
-        fetch('assets/data/response.txt')
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('無法讀取檔案');
-                }
-                return response.text();
-            })
-            .then(text => {
-                const data = {};
-                text.split('\n').forEach(line => {
-                const [key, value] = line.split(':');
-                if (key && value) {
-                    data[key.trim()] = value.trim();
-                }
-                });
-                updateInfoCards(data);
-            })
-            .catch(error => {
-                console.error('讀取檔案時發生錯誤:', error);
-            });
-
     }
 
     studentItems.forEach(item => {
@@ -205,29 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
             selectedStuName.textContent = studentName;
             localStorage.setItem("savedTime", Date.now());
             localStorage.setItem("studentName", studentName);
-            
-            fetch('assets/data/response.txt')
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('無法讀取檔案');
-                }
-                return response.text();
-            })
-            .then(text => {
-                const lines = text.split('\n'); 
-                const data = {};
-                lines.forEach(line => {
-                const [key, value] = line.split(':');
-                if (key && value) {
-                    data[key.trim()] = value.trim();
-                }
-                });
-                updateInfoCards(data);
-            })
-            .catch(error => {
-                console.error('讀取檔案時發生錯誤:', error);
-            });
-
         });
     });
 
@@ -242,46 +120,6 @@ document.addEventListener("DOMContentLoaded", function() {
     //     localStorage.setItem("selectedClass", selectedClass);
     // });
 
-    function updateInfoCards(data) {
-   
-        document.querySelector("#deep-id").textContent = `${data['理解程度報告-深入知識理解-評分']}/10`;
-        document.querySelector("#basic-id").textContent = `${data['理解程度報告-基本概念理解-評分']}/10`;
-        document.querySelector("#deep-ids").textContent = `${data['理解程度報告-深入知識理解-評分']}`;
-        document.querySelector("#deep-ids").style.color = "#000000";
-        document.querySelector("#deep-ids").style.fontSize = "3.46rem";
-        document.querySelector("#deep-ids").style.fontWeight ="900";
-
-        document.querySelector("#basic-ids").textContent = `${data['理解程度報告-基本概念理解-評分']}`;
-        document.querySelector("#basic-ids").style.fontWeight ="900";
-        document.querySelector("#basic-ids").style.color = "#000000";
-        document.querySelector("#basic-ids").style.fontSize = "3.46rem";
-        
-        document.querySelector("#ten-idB").textContent = "/10";
-        document.querySelector("#ten-idB").style.fontWeight ="900";
-
-        document.querySelector("#ten-idA").textContent = "/10";
-        document.querySelector("#ten-idA").style.fontWeight ="900";
-
-        document.querySelector("#basic-des").textContent =`${data['理解程度報告-基本概念理解-內容']}`;
-        document.querySelector("#basic-des").style.margin ="0px";
-        document.querySelector("#basic-des").style.color = "#363636";
-
-
-        document.querySelector("#deep-des").textContent =`${data['理解程度報告-深入知識理解-內容']}`;
-        document.querySelector("#deep-des").style.margin ="0px";
-        document.querySelector("#deep-des").style.color = "#363636";
-
-
-        document.querySelector("#errright").textContent =`${data['理解程度報告-錯誤整理']}`;
-        document.querySelector("#errright").style.margin ="0px";
-        document.querySelector("#errright").style.color = "#363636";
-
-
-        document.querySelector("#errleft").textContent =`${data['理解程度報告-待加強的觀念與知識']}`;
-        document.querySelector("#errleft").style.margin ="0px";
-        document.querySelector("#errleft").style.color = "#363636";
-    
-    }
 
     // 設定按鈕切換頁面
 
@@ -290,3 +128,180 @@ document.addEventListener("DOMContentLoaded", function() {
     //     });
     
 });
+
+async function updateAssignmentId() {
+    const token = localStorage.getItem('token');
+    const savedCourseId = courseId;
+
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
+
+	try {
+		const assignmentResponse = await fetch(assignmentUrl);
+		const data = await assignmentResponse.json();
+        console.log("assignment data: ", data);
+		// 分析回傳的數據，找出最新開放的作業
+        if (data.courses && data.courses.length > 0) {
+            const assignments = data.courses[0].assignments;
+
+            // 排序作業，根據 allowsubmissionsfromdate 找出最新開放的作業
+            const sortedAssignments = assignments
+                .sort((a, b) => b.id - a.id);
+                
+            if (sortedAssignments.length > 0) {
+                const latestAssignment = sortedAssignments[0];
+				assignmentId[0] = latestAssignment.id; // 同步更新 assignmentId
+                console.log('最新開放的作業 ID:', latestAssignment.id);
+                llmFeedbackUrl = await getSubmissionUrl();
+                if (llmFeedbackUrl) {
+                    console.log('更新的 llmFeedbackUrl:', llmFeedbackUrl);
+                    fetchSubmissionData(); // 將後續 Fetch 的邏輯放到此處
+                } else {
+                    console.warn('未能獲取有效的 llmFeedbackUrl');
+                    // clearfbdata();
+                }
+                // console.log('最新開放的作業 ID:', latestAssignment.id);
+                // console.log('作業名稱:', latestAssignment.name);
+                // console.log('開放時間:', new Date(latestAssignment.allowsubmissionsfromdate * 1000));
+            } else {
+                // console.log('找不到任何作業。');
+            }
+        } else {
+            // console.log('找不到課程或作業。');
+        }
+	}
+	catch (error) {
+		console.error('無法取得作業 ID:', error);
+	}
+}
+
+async function getSubmissionUrl() {
+    if (assignmentId[0] === -1) {
+        console.error('尚未選擇作業');
+        return;
+    }
+    const token = localStorage.getItem('token');
+    const submissionUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_submissions&moodlewsrestformat=json&assignmentids[]=${assignmentId}`;
+    try {
+        const submissionResponse = await fetch(submissionUrl);
+        const data = await submissionResponse.json();
+        console.log('作業提交資訊:', data);
+
+        // 確認是否有提交資訊
+        if (data.assignments && data.assignments.length > 0) {
+
+            const assignment = data.assignments.find(a => a.assignmentid === assignmentId[0]);
+            
+            if (assignment && assignment.submissions) {
+                // 根據 userId 找到該學生的提交
+                const studentSubmission = assignment.submissions.find((sub) => sub.userid === studentId);
+                console.log('選擇的學生作業:', studentSubmission);
+                if (studentSubmission && studentSubmission.plugins) {
+                    // 遍歷 plugins，找到包含檔案的部分
+                    for (const plugin of studentSubmission.plugins) {
+                        if (plugin.fileareas && plugin.fileareas.length > 0) {
+                            for (const filearea of plugin.fileareas) {
+                                const files = filearea.files;
+
+                                // 在 files 中找到目標檔案
+                                const targetFile = files.find(file => file.filename === "llm.txt");
+                                if (targetFile) {
+                                    const fileUrl = `${targetFile.fileurl}?token=${token}`; // 添加 Token 授權下載
+                                    console.log(`找到目標檔案的 URL: ${fileUrl}`);
+                                    return fileUrl;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            console.warn(`未找到該學生 (userId: ${userId}) 的目標檔案: llm.txt`);
+            return null;
+        } else {
+            console.warn('沒有找到任何提交檔案');
+            return null;
+        }
+    }
+    catch (error) {
+        console.error('無法取得作業提交資訊:', error);
+    }
+}
+
+// 獨立封裝 Fetch 作業的邏輯
+function fetchSubmissionData() {
+    console.log('開始讀取作業提交資訊:', llmFeedbackUrl);
+    fetch(llmFeedbackUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('無法讀取檔案');
+            }
+            console.log('讀取檔案成功:', response);
+            return response.text();
+        })
+        .then(text => {
+            console.log('讀取檔案成功:\n', text);
+            const data = {};
+            text.split('\n').forEach(line => {  
+                console.log('line:', line); // Debug
+                const [key, value] = line.split(/[：:]/);
+                console.log('key:', key, 'value:', value); // Debug
+                if (key && value) {
+                    data[key.trim()] = value.trim();
+                }
+            });
+            updateInfoCards(data);
+        })
+        .catch(error => {
+            console.error('讀取檔案時發生錯誤:', error);
+        });
+}
+
+function updateInfoCards(data) {
+   
+    document.querySelector("#deep-id").textContent = `${data['理解程度報告-深入知識理解-評分']}/10`;
+    document.querySelector("#basic-id").textContent = `${data['理解程度報告-基本概念理解-評分']}/10`;
+    document.querySelector("#deep-ids").textContent = `${data['理解程度報告-深入知識理解-評分']}`;
+    document.querySelector("#deep-ids").style.color = "#000000";
+    document.querySelector("#deep-ids").style.fontSize = "3.46rem";
+    document.querySelector("#deep-ids").style.fontWeight ="900";
+
+    document.querySelector("#basic-ids").textContent = `${data['理解程度報告-基本概念理解-評分']}`;
+    document.querySelector("#basic-ids").style.fontWeight ="900";
+    document.querySelector("#basic-ids").style.color = "#000000";
+    document.querySelector("#basic-ids").style.fontSize = "3.46rem";
+    
+    document.querySelector("#ten-idB").textContent = "/10";
+    document.querySelector("#ten-idB").style.fontWeight ="900";
+
+    document.querySelector("#ten-idA").textContent = "/10";
+    document.querySelector("#ten-idA").style.fontWeight ="900";
+
+    document.querySelector("#basic-des").textContent =`${data['理解程度報告-基本概念理解-內容']}`;
+    document.querySelector("#basic-des").style.margin ="0px";
+    document.querySelector("#basic-des").style.color = "#363636";
+
+
+    document.querySelector("#deep-des").textContent =`${data['理解程度報告-深入知識理解-內容']}`;
+    document.querySelector("#deep-des").style.margin ="0px";
+    document.querySelector("#deep-des").style.color = "#363636";
+
+
+    document.querySelector("#errright").textContent =`${data['理解程度報告-錯誤整理']}`;
+    document.querySelector("#errright").style.margin ="0px";
+    document.querySelector("#errright").style.color = "#363636";
+
+
+    document.querySelector("#errleft").textContent =`${data['理解程度報告-待加強的觀念與知識']}`;
+    document.querySelector("#errleft").style.margin ="0px";
+    document.querySelector("#errleft").style.color = "#363636";
+
+}
+
+function clearfbdata(){
+    localStorage.removeItem('courseId');
+        
+    // 重置全域變數
+    courseId = -1;
+    assignmentId[0] = -1;
+    llmFeedbackUrl = null;
+    location.reload();
+}
