@@ -38,8 +38,9 @@ async function updateCourseId() {
     let studentListElement = document.getElementsByClassName("selected-class_student_list")[0];
     studentListElement.innerHTML = "";
 
-    let studentsIdList = await get_student_from_course(courseId);
-    let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
+    let studentObjList = await get_student_from_course(courseId);
+    let studentsIdList = studentObjList.map( obj => obj.id );
+    let studentsNameList = studentObjList.map( obj => obj.fullname );
 
     document.getElementsByClassName("class_empty_hint")[0].style.display = 'none'
     document.getElementsByClassName("selected-class_student_list")[0].style.display = 'block'
