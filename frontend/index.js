@@ -188,13 +188,21 @@ app.post('/llm', async function(req, res){
 
     var input = "";
     try {
-        input = req.body.message;
+        input = req.body.message; // 這個是逐字稿
+        lesson_plan = req.body.lesson_plan; // 這個是課程大綱
         const prompt = 'prompt.txt';
 
         if (input === undefined) {
             res.status(400).send('Bad request');
             return;
         }
+
+        if (lesson_plan === undefined) {
+            res.status(400).send('Bad request');
+            return;
+        }
+
+        input += "\n" + lesson_plan;
 
         if (fs.existsSync(prompt)) {
             input += "\n" + fs.readFileSync(prompt, 'utf-8') + '\n';
