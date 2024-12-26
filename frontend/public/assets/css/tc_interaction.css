@@ -89,10 +89,10 @@ body {
 
 .summary{
     height: 3.5rem;
+    display: flex;
     font-family: "Noto Sans TC";
     font-size: 1.46rem;
     font-style: normal;
-    display: flex;
     align-items: center;
     justify-content: center;
     padding-left:1rem;
@@ -110,13 +110,13 @@ body {
 }
 .footer {
     z-index: 1;
-    margin-top: 1.2rem;
-    margin-left: 1.2rem;
-    padding-left: 1.2rem;
+    /* margin-top: 0.5rem;
+    margin-left: 0.5rem; */
+    /* padding-left: 1.2rem; */
+    padding: 0.5rem 1rem 1rem 1rem;
     border-left: 3rem ; 
     width: 25.5rem;
     display: flex;
-
 }
 
 .left-side-bar{
@@ -131,34 +131,31 @@ body {
 
 }
 
-.course-selection {
+.select-class {
+    top: 0;
+    height: auto;
     width: 100%;
-    position: relative;
-    border-radius: 8px;
-    background-color: #9879da;
-    height: 14rem;
-    
-    transform-origin: 0 0;
-    /* margin: 0rem 1rem 0rem 1rem; */
-}
-.course-selection .footer{
-    height : 4rem;
-    width: 100%;
-}
-
-.course-select{
-
     display: flex;
-    width: 90%; 
-    height: 40%; 
-    padding: 5% 10% 5% 10% ;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    background-color: var(--pri_p300, #9879DA);
+    padding: 1.67rem;
+}
+
+.select-class select{
+    display: flex;
+    width: 100%;
+    height: 4.58rem;
+    padding: 5% 10% 5% 10% ; 
     
-    font-size:1.3rem;
-    
+    font-size: 1.3rem;
+    /* border: none; */
     border-radius: 8px;
     /* align-items: center; */
     background: var(--pri_white, #FFF);
-    margin: 0rem 1.25rem 1rem 1.25rem;
+    margin: 1.5rem 1.25rem 0rem 1.25rem;
     color:grey;
     background-image: url("../images/student_feedback/down.svg") ;
     background-repeat: no-repeat;
@@ -169,18 +166,28 @@ body {
     outline: none;
 }
 
+.select-class .intro {
+    font-size: 1.46rem;
+    color: var(--pri_white, #FFFFFF);
+}
 
-
-
-
+.book-icon {
+    background: url("../images/teacher_lesson_plan/book.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem; height: 2.5rem;
+    margin-right: 0.8rem;
+}
 
 .student-list {
     background-color: #fff;
     border-radius: 10px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     width: 100%;
-    height: 35%;
-    margin-top: 1.5rem;
+    height: auto;
+    min-height: 30%;
+    max-height: 35%;
+    margin-top: 0.5rem;
     padding: 1rem;
 }
 
@@ -197,28 +204,46 @@ body {
 
     /* 內文 */
     font-family: "Noto Sans TC", sans-serif;
-    font-size: 1.3rem;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 22px; /* 157.143% */
     letter-spacing: 1px;
     margin: 0;
+    padding-top: 0.2rem;
 }
 
+.student_content{
+    width: 100%;
+    height: 85%;
+    max-height: 100%;
+    
+    padding: 0 0.5rem;
+    /* padding-top: 0; */
+    /* margin-top: 15%; */
+}
 
+.selected-class_student_list div .image{
 
-/* 圖示樣式 */
-.student-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: #eee;
+    background: url("../images/teacher_lesson_plan/people.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+
+}
+
+.class_empty_hint {
+    width: 100%;
+    height: 80%;
+    border-radius: .5rem;
+    border: 1px dashed var(--sec_gray100, #C7C7CC);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4b2b7f;
-    font-size: 1.2rem;
-    cursor: pointer;
+    color: var(--sec_gray900, #C7C7CC);
 }
 
 /* 學生項目樣式 */
@@ -241,21 +266,30 @@ body {
 }
 .student-item:hover {
     background-color: #E4DBF5;
-    
 }
 
 /* 學生圖示 */
 .student-icon {
-    background-color: #c7b8ff;
-    color: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    font-size: 1.2rem;
+    background: url("../images/teacher_lesson_plan/student.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2.5rem; height: 2.5rem;
+    /* margin: 1.25rem 1.25rem; */
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+}
+
+.switch-icon {
+    background: url("../images/teacher_lesson_plan/switch.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem; height: 2.5rem;
+    /* margin: 1.25rem 1.5rem; */
+    margin-left: auto;
+    margin-bottom: 0;
 }
 
 /* 學生資訊 */
@@ -282,13 +316,6 @@ body {
 
 }
 
-
-
-
-
-
-
-
 .footer .book-icon {
 
     background: url("../images/student_discussion/student_discussion_book-icon.svg") no-repeat;
@@ -302,7 +329,7 @@ body {
 
 .footer .intro {
 
-    color: var(--pri_white, #FFF);
+    color: var(--grey900, #303133);
     display: flex;
 
     flex-direction: column;
@@ -314,18 +341,17 @@ body {
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
-    font-weight: 700;
+    /* font-weight: 700; */
     line-height: 2rem; 
     letter-spacing: 1px;
 
+    margin-right: auto;
 }
 
 .select-course {
     padding-top: 1rem;
     height: 60%;
-    /* height: auto; */
     width: 110%;
-
     display: flex;
     flex-direction: column;
     border-radius: 8px;
@@ -380,7 +406,7 @@ body {
     padding: 20px;
     display: flex;
     justify-content: space-between; /* 讓子元素分散在兩邊 */
-    align-items: center; 
+    align-items: center; /* 垂直居中對齊 */
     margin-bottom: 2%;
     height: 28%;
 
@@ -420,7 +446,9 @@ body {
     text-align: start;
     /* font-weight: bold; */
     display: block;
+    font-family: "Noto Sans TC";
     font-size: 1.46rem;
+    font-style: normal;
     color: #8E8E93;
 }
 
@@ -436,10 +464,19 @@ body {
     margin-left: 5px;
 }
 
-.basic-understanding, .deep-understanding ,.inter-understanding{
+.basic-understanding, .deep-understanding, .inter-understanding {
     font-size: 0.9em;
     color: #666;
     margin: 1rem;
+}
+
+#understand-content .header .title svg{
+    width: 3rem !important;
+    height: 3rem !important;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    padding: .5rem;
+    margin-bottom: 1rem;
 }
 
 .section {
@@ -450,14 +487,20 @@ body {
     border-radius: 8px;
     border: 1px solid var(--sec_gray50, #E5E5EA);
     margin-bottom: 1.5%;
-
-   
-
+}
+.section.A, .section.B, .section.C {
+    border-radius: 8px;
+    /* background: var(--status_y_50, #FFF6E8); */
+    /* background-image: url('../images/student_feedback/Mask_group.svg'); */
+    background-repeat: no-repeat;
+    background-size: 22%;
+    background-position: top right;
+    
+    background-position: 58vw 3vh;
 }
 
-.section-title.A{
+.section-title.A, .section-title.B, .section-title.C {
     /* display: flex; */
-    /* margin-top: 1rem; */
     width: 23.5%;
     align-items: center;
     font-size: 1.4rem;
@@ -467,30 +510,6 @@ body {
     /* margin-bottom: 8px; */
 }
 
-.section-title.B {
-    /* display: flex; */
-    /* margin-top: 1rem; */
-
-    width: 23.5%;
-    align-items: center;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #363636;
-    /* border: 2px #363636 */
-    /* margin-bottom: 8px; */
-}
-.section-title.C {
-    /* display: flex; */
-    /* margin-top: 1rem; */
-
-    width: 23.5%;
-    align-items: center;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #363636;
-    /* border: 2px #363636 */
-    /* margin-bottom: 8px; */
-}
 .icon {
     background-color: #FFF6E8;
     /* color: #d96a00; */
@@ -519,53 +538,65 @@ body {
     background: var(--pri_white, #FFF);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
 }
-.scores{
-    color: var(--status_y_900, #FFBC57);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.scores {
+    /* margin-top: 1rem; */
+    font-size: 1.5rem;
+    color: #8E8E93;
+    /* font-size: 20px; */
+    /* font-style: normal; */
+    font-weight: 400;
 
-
-    width: 5rem;
-    height: 2.5rem;
-    font-family: "Noto Sans TC";
-    font-size: 1.46rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px; /* 142.857% */
-    letter-spacing: 1px;
-    border-radius: 100px;
-    background: var(--status_y_50, #FFF6E8);
-}
-.scores.B{
-    color: var(--pri_p500, #8665CD);
-    background: #F3F0F7;
 
 }
-.scores.C{
-    color: var(--blue_900, #4BB7FF);
-    background: var(--blue_50, #E8F6FF);
-}
-
-
 .scores p {
     font-size: 50px;
     font-weight: bold;
     color: #363636;
-    margin-right: 12px;
+    /* margin-right: 12px; */
 }
+
+
+.scores.A{
+    color: #FCCF8D;
+    background: #FFF6E8;
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+}
+.scores.B{
+    color: var(--pri_p500, #8665CD);
+    background: #F3F0F7;
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+}
+.scores.C{
+    color: var(--blue_900, #4BB7FF);
+    background: var(--blue_50, #E8F6FF);
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+}
+
+
 .description {
     color: #8E8E93;
     font-family: "Noto Sans TC", sans-serif;
     padding-left: 2rem;
-    /* line-height: 1.6; */
+    line-height: 1.6;
     font-size: 1.46rem;
-    margin-top: 1rem;
-    margin-left: 12rem;
-    max-width: 80%;
+    margin-top: 5rem;
+    margin-left: 22rem;
+    max-width: 70%;
     overflow-y: scroll;
     scrollbar-width: none; 
-
+    /* line-height: 22px; */
+    display: wrap;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -604,15 +635,15 @@ body {
 }
 .comment-box p {
     color: var(--sec_gray900, #8E8E93);
-    margin-top: 0rem;
-    margin-left: 34rem;
+    margin-top: 4rem;
+    margin-left: 14rem;
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 171.429% */
     letter-spacing: 1px;
-    max-height: 60%;
+    max-height: 70%;
     overflow-y: scroll;
     scrollbar-width: none; 
 

@@ -212,8 +212,7 @@ function fetchSubmissionData() {
         .then(response => {
             if (!response.ok) {
                 throw new Error('無法讀取檔案');
-                
-            }
+            } 
             return response.text();
         })
         .then(text => {
