@@ -37,9 +37,10 @@ async function updateCourseId() {
     let studentListElement = document.getElementsByClassName("selected-class_student_list")[0];
     studentListElement.innerHTML = "";
 
-    let studentsIdList = await get_student_from_course(courseId);
-    let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
-
+    let studentObjList = await get_student_from_course(courseId);
+    let studentsIdList = studentObjList.map( obj => obj.id );
+    let studentsNameList = studentObjList.map( obj => obj.fullname );
+    
     document.getElementsByClassName("class_empty_hint")[0].style.display = 'none'
     document.getElementsByClassName("selected-class_student_list")[0].style.display = 'block'
 
@@ -135,14 +136,18 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         return;
     }
 
+    console.log(activityElements);  
+
     activityElements.forEach((activityElement) => {
         if (activityElement.hasAttribute('id')) {
             let idx = getIndex(activityElement.getAttribute('id'));
 
             if (activityElement.querySelector(".event-name") != null) {
                 act_name = activityElement.querySelector(".event-name").value;
+                if(act_name.length == 0)act_name = "團體討論";
                 name_check = true;
             }
+            
 
             if (activityElement.querySelector(".event-description") != null) {
                 act_description = activityElement.querySelector(".event-description").value;
@@ -157,13 +162,14 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                 act_answer = activityElement.querySelector(".event-answer").value;
                 last_check = true;
             }
+            last_check = true;
 
             if (last_check) {
                 if (!name_check) {
                     return;
                 }
                 if (!time_check) {
-                    act_time = 0;
+                    act_time = "5";
                 }
 
                 activities[idx] = {
