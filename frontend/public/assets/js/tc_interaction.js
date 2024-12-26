@@ -1,10 +1,12 @@
 let courseList = []; // course name only
 let courseObjList = [];
+
 let courseId = -1; // 還未選擇課程
 let studentId = -1; // 還未選擇學生: -1
 let assignmentId = [-1]; // 還未選擇作業: -1
 let llmFeedbackUrl = null; // 作業提交資訊 URL (其實就是去把作業區的回饋llm.txt的內容抓出來)
 const selectCourseList = document.querySelector('#class');
+const courseSelect = document.getElementById("class");
 
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
@@ -17,6 +19,7 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         selectCourseList.appendChild(option);
     });
+    courseSelect.selectedIndex = 0;
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
@@ -71,9 +74,7 @@ async function updateCourseId() {
 selectCourseList.addEventListener("change", updateCourseId);
 
 document.addEventListener("DOMContentLoaded", function() {
-    
-    const courseSelect = document.getElementById("select-class");
-    const classSelect = document.getElementById("class-select");
+   
     
     const selectedStuName = document.getElementById("selected-student-name");
     const selectedCourseName = document.getElementById("selected-course-name");

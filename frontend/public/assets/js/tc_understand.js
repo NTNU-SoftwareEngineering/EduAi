@@ -2,6 +2,8 @@ let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
 let studentId = -1; // 還未選擇學生: -1
+
+const courseSelect = document.querySelector('#class');
 let assignmentId = [-1]; // 還未選擇作業: -1
 let llmFeedbackUrl = null; // 作業提交資訊 URL (其實就是去把作業區的回饋llm.txt的內容抓出來)
 const selectCourseList = document.querySelector('#class');
@@ -15,24 +17,25 @@ async function loadCourse() { // fetch course data from backend
         const option = document.createElement('option');
         option.value = course;
         option.textContent = course;
-        selectCourseList.appendChild(option);
+        courseSelect.appendChild(option);
     });
+    courseSelect.selectedIndex = 0;
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
 async function updateCourseId() {
-    console.log("select course: " + selectCourseList.value);
-    const selectedCourseObj = courseObjList.find(course => course.fullname === selectCourseList.value);
+    console.log("select course: " + courseSelect.value);
+    const selectedCourseObj = courseObjList.find(course => course.fullname === courseSelect.value);
     if (!selectedCourseObj) {
         // 還未選擇課程，或後端無此課程
         courseId = -1;
-        console.error(`Cannot find course: ${selectCourseList.value}`);
+        console.error(`Cannot find course: ${courseSelect.value}`);
         return;
     }
 
     courseId = selectedCourseObj.id;
     if (!courseId) {
-        console.error(`Cannot find course id for: ${selectCourseList.value}`);
+        console.error(`Cannot find course id for: ${courseSelect.value}`);
         return;
     }
     console.log("update courseid: " + courseId);
@@ -68,12 +71,11 @@ async function updateCourseId() {
         });
     });
 }
-selectCourseList.addEventListener("change", updateCourseId);
+courseSelect.addEventListener("change", updateCourseId);
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    const courseSelect = document.getElementById("select-class");
-    const classSelect = document.getElementById("class-select");
+    // const courseSelect = document.getElementById("select-class");
     
     const selectedStuName = document.getElementById("selected-student-name");
     const selectedCourseName = document.getElementById("selected-course-name");

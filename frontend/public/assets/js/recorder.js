@@ -183,14 +183,38 @@ async function uploadAudio(){
 		const transcriptBlob = new Blob([sttResult], { type: 'text/plain' });
 		uploadFileToDraftArea(transcriptBlob, 'transcript.txt', itemId);
 		
+		let lesson_plan_json = await getLesson_plan(wstoken_webservice, courseId);
+		const lesson_plan = JSON.parse(lesson_plan_json);
+		console.log('教案內容:', lesson_plan);
+
+		let lesson_plan_prompt = "以下是教案內容：\n";
+		if ( lesson_plan.motivation ) lesson_plan_prompt += `教學設計動機與理念: ${lesson_plan.motivation}\n`
+		if ( lesson_plan.coreValue ) lesson_plan_prompt += `領域核心素養: ${lesson_plan.coreValue}\n`
+		if ( lesson_plan.coreImportance ) lesson_plan_prompt += `領域學習重點: ${lesson_plan.coreImportance}\n`
+		if ( lesson_plan.course ) lesson_plan_prompt += `教材來源: ${lesson_plan.course}\n`
+		if ( lesson_plan.goal ) lesson_plan_prompt += `學習目標: ${lesson_plan.goal}\n`
+		const act_name = await getActivityName(wstoken_webservice, courseId);
+		console.log(act_name);
+		console.log(lesson_plan.activities);
+		for ( const key of Object.keys(lesson_plan.activities) ) {
+			const act = lesson_plan.activities[key];
+			console.log(act);
+			console.log(key);
+			if( act.name == act_name){
+				lesson_plan_prompt += `此次討論的主題: ${act.name}\n老師的參考解答: ${act.answer}\n`;
+			}
+		}
+		console.log(lesson_plan_prompt);
+		
 		// Step 5: 傳遞逐字稿給 LLM service
-		const llmResult = await fetch("llm", {
+		const llmResult = await fetch("http://localhost:3000/llm", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 				message: sttResult,
+				lesson_plan: lesson_plan_prompt,
 			}),
 		});
 		const llmResultJson = await llmResult.json();
@@ -221,7 +245,7 @@ async function triggerSTT(){
 		formData.append('audio', audioBlob, 'audio-file.wav');
 		formData.append('token' , wstoken_webservice);
 
-		const response = await fetch('http://localhost:5001/transcribe', {
+		const response = await fetch(`http://localhost:5001/transcribe`, {
 			method: 'POST',
 			body: formData,
 		});

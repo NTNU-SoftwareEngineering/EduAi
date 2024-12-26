@@ -33,12 +33,20 @@ async function updateTopicText () {
     }
 }
 
-function select_course(index){
+async function select_course(index){
+    const token = localStorage.getItem('token');
+    if ( !token ) window.location.href = 'login_edu.html';
+
+	courseId = courseObjList[index].id; // 同步更新 courseId
+    console.log(`檢查課程 ${courseId} 是否有活動進行中`);
+    const noactivity = await checkCourseActivity(token, courseId);
+    if ( noactivity ) {
+        alert('此課程尚無討論進行中，請重新選擇課程');
+        return;
+    }
     for(var i=0;i<courseList.length;i++) course_status[i] = 0
     course_status[index] = 1
     dropdown_expand = 1
-
-	courseId = courseObjList[index].id; // 同步更新 courseId
 	updateAssignmentId(); // 同步更新 assignmentId
     updateTopicText();
 
@@ -73,7 +81,7 @@ function select_course(index){
 
 
 function dropdownMenuCSSModify(){
-
+    
     const dropdown_menu = document.querySelectorAll("#course-select");
     
     dropdown_expand = dropdown_expand ? 0 : 1;

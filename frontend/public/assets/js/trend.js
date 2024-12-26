@@ -39,6 +39,7 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         course_select_ele.appendChild(option);
     });
+    selectCourseList.selectedIndex = 0;
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 

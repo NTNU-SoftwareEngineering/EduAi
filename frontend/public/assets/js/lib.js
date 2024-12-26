@@ -3,7 +3,6 @@ const HOSTNAME = "http://localhost:8080";
 async function fetchCourses() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
-    
 
     return fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得用戶資訊（userid）
 
@@ -45,6 +44,24 @@ async function fetchCourses() {
 }
 
 const ROOT_ASSIGNMENT_NAME = "!root_assignment!";
+
+async function getLesson_plan ( token, courseId ) {
+    return await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得課程活動內容
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            wstoken: token,
+            wsfunction: 'core_course_get_courses',
+            moodlewsrestformat: 'json',
+            'options[ids][0]': courseId
+        })
+    })
+    .then ( ret => ret.json() )
+    .then ( ret => ret[0].summary )
+    .catch ( e => console.error(e) );
+}
 
 // return new module id when success, -1 otherwise
 async function createAssignment ( token, courseId ) {
@@ -196,6 +213,7 @@ async function checkCourseActivity (token, courseId ) {
     .then ( ret => {
         const timestamp = ret.date.timestamp;
         const events = ret.events;
+        console.log('檢查是否有活動進行中, events: ', events);
         const progress_act = events.filter( e => e.name==EVENT_NAME && e.timestart+e.timeduration >= timestamp );
         return progress_act.length === 0;
     })

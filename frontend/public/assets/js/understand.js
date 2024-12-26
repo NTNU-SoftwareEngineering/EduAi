@@ -51,7 +51,7 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         course_select_ele.appendChild(option);
     });
-
+    console.log(document.referrer);
     const savedCourse = localStorage.getItem("selectedCourse");
     if(savedCourse)
         {
