@@ -306,12 +306,12 @@ async function updateInfo(){
     let classList = document.querySelector(".group-info");
 
     await get_student_from_course(courseId)
-    .then(async (userids) => {
+    .then( async (userObjs) => {
         // userids.forEach(async (userid) => {
         //     const name = await get_user_fullname_by_id(userid);
         //     studentNames.push(name);
         // });
-        countInfo.innerHTML = "班級人數：" + userids.length;
+        countInfo.innerHTML = "班級人數：" + userObjs.length;
     });
 
     classList.style.backgroundImage = "none";
@@ -330,8 +330,10 @@ const colors = ["purple", "yellow", "green", "blue"];
 
 async function updateStudent(){
     try {
-        let studentsIdList = await get_student_from_course(courseId);
-        let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
+        let studentsObjList = await get_student_from_course(courseId);
+        let studentsIdList = studentsObjList.map(userObj => userObj.id);
+        // let studentsNameList = await Promise.all(studentsIdList.map(id => get_user_fullname_by_id(id)));
+        let studentsNameList = studentsObjList.map(userObj => userObj.fullname);
 
         let studentList = document.querySelector(".group-content");
         studentList.innerHTML = "";
@@ -402,15 +404,18 @@ async function random_group() {
     for(let i=0;i<groups_old.length;i++){
         delete_group(groups_old[i].id)
     }
-    const participant = await get_student_from_course(courseId)
+    const partiObjs = await get_student_from_course(courseId);
+    // [{id:id1, name: name1},
+    //  {id:id2, name: name2},]
+    const participant = partiObjs.map(obj => obj.id);
     console.log(`parti:${participant}`)
-    const participant_length = participant.length
+    const participant_length = partiObjs.length
     console.log(`parti_l:${participant_length}`)
-    const participant_suffle = participant
+    const partiObjs_suffle = partiObjs
         .map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value)
-        console.log(`parti_s:${participant_suffle}`)
+    console.log(`parti_s:`, partiObjs_suffle);
     // const groupNum = document.querySelector(".teams-num-selector > input").value;
     const groupNum = document.querySelector(".teams-num-selector > input").value;
     console.log(groupNum);
@@ -422,17 +427,23 @@ async function random_group() {
     for(let i = 0;i<groups.length;i++){
         groupids.push(groups[i].id);
     }
-    console.log(`group:${groupids}`)
-    const group_member_num = Math.floor(participant_length/groupNum)
+    console.log(`group:${groupids}`);
+    const group_member_num = Math.floor(participant_length/groupNum);
+    const group_members = {};
+    groupids.forEach ( gid => group_members[gid] = [] )
+    
     for(let i = 0;i<participant_length;i++){
         // console.log(`${i} ${participant[i]}`)
-        if(i >= group_member_num * groupNum){
-            add_group_member(groupids[i%groupNum],participant_suffle[i])
-        }
-        else add_group_member(groupids[Math.floor(i/group_member_num)],participant_suffle[i])
+        const gid = ( i >= group_member_num * groupNum ) ? groupids[i%groupNum] : groupids[Math.floor(i/group_member_num)];
+        const uid = partiObjs_suffle[i].id;
+        add_group_member(gid, uid);
+        group_members[gid].push(partiObjs_suffle[i]);
     }
     let groups_new = []
-    for(let i = 0;i<groupids.length;i++){
+    groupids.forEach ( gid => {
+        groups_new.push(group_members[gid]);
+    })
+    /*for(let i = 0;i<groupids.length;i++){
         const gr_me = await get_group_member(groupids[i]);
         console.log(gr_me[0].userids)//array
         let team = [];
@@ -443,8 +454,9 @@ async function random_group() {
         }
         groups_new.push(team);
     }
+    groups_new = group_members;*/
     
-    console.log('new',groups_new)
+    console.log('new', groups_new)
     let groupArray = [];
     for(let i = 0;i<groups_new.length;i++){
         groupArray.push([]);
@@ -464,8 +476,8 @@ async function random_group() {
             //info div
             const infoDiv = document.createElement('div');
             infoDiv.className = 'info';
-            console.log(`${groups_new[i][j].id}號 ${groups_new[i][j].name}`);
-            infoDiv.textContent = `${groups_new[i][j].name}`;
+            console.log(`${groups_new[i][j].id}號 ${groups_new[i][j].fullname}`);
+            infoDiv.textContent = `${groups_new[i][j].fullname}`;
             studentDiv.appendChild(infoDiv);
             groupArray[i].push(studentDiv);
         }
