@@ -259,9 +259,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 設定按鈕切換頁面
-    document.getElementById("overview-btn").addEventListener("click", function() {
-        window.location.href = "tcfb_understand_edu.html";
-    });
 
     // document.getElementById("trend-btn").addEventListener("click", function() {
     //     window.location.href = "tcfb_trend_edu.html";
