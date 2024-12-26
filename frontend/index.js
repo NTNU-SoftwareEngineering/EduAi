@@ -19,7 +19,7 @@ let llmSystemPrompt = (course_name) => {
 // Init Groq chat with Langchain
 async function initChat() {
     const llm = new ChatGroq({
-        model: 'llama-3.3-70b-versatile',
+        model: 'llama-3.1-8b-instant',
         response_format: {
             "type": "json_object",
         },
@@ -47,6 +47,8 @@ async function initChat() {
 
 app.use(express.static('public'));
 app.use(express.json());
+
+
 
 app.post('/student_conversation/init', async function (req, res) {
     const token = req.body.token;

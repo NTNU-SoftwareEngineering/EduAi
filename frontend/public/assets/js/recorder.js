@@ -163,6 +163,11 @@ function deleteTempAudio(){
 async function uploadAudio(){
 	try{
 		// Step 1: 創建草稿區域
+		
+		document.querySelector("#send-file-btn").style.display = "none";
+  		document.querySelector("#delete-file-btn").style.display = "none";
+		await new Promise(resolve => setTimeout(resolve, 500));
+		alert("上傳錄音檔中，請稍候...")
 		const itemId = await createDraftArea();
 		// console.log("創建草稿區域的 item ID: ", itemId);
 		
@@ -189,6 +194,9 @@ async function uploadAudio(){
 			}),
 		});
 		const llmResultJson = await llmResult.json();
+		alert("錄音上傳完畢！")
+		document.querySelector("#send-file-btn").style.display = "block"
+		document.querySelector("#delete-file-btn").style.display = "block"
 		console.log("LLM服務回應: ", llmResultJson);
 		const llmMessage = llmResultJson.choices[0]?.message?.content || 'No response';
 		uploadFileToDraftArea(new Blob([llmMessage], { type: 'text/plain' }), 'llm.txt', itemId);
@@ -197,6 +205,8 @@ async function uploadAudio(){
 		uploadFilesToMoodleAssignment(itemId);
 	}
 	catch(err){
+		document.querySelector("#send-file-btn").style.display = "block"
+		document.querySelector("#delete-file-btn").style.display = "block"
 		console.error("處理上傳過程中出現錯誤：", err);
 	}
 }
