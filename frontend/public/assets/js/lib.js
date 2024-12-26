@@ -273,7 +273,7 @@ async function get_role_from_course(courseid,userid){
             return data[i].roles[0].roleid
         }
     }
-} 
+}
 async function get_student_from_course(courseid){
     // change class information
     const wsfunction = 'core_enrol_get_enrolled_users'
