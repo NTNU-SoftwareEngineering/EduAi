@@ -184,7 +184,7 @@ async function eventAdd(){
   input4.className = 'event-row-title-textareacontent event-answer';
   input4.style.width = '37.5%';
   input4.placeholder = '請輸入標準答案';
-  input4.maxLength = 50;
+  input4.maxLength = 500;
 
   div2.appendChild(input2);
   div2.appendChild(input3);
