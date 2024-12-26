@@ -122,7 +122,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function updateAssignmentId() {
     const token = localStorage.getItem('token');
-	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${courseId}`;
+    const savedCourseId = localStorage.getItem('courseId');
+
+	const assignmentUrl = `${HOSTNAME}/moodle/webservice/rest/server.php?wstoken=${token}&wsfunction=mod_assign_get_assignments&moodlewsrestformat=json&courseids[0]=${savedCourseId}`;
 	try {
 		const assignmentResponse = await fetch(assignmentUrl);
 		const data = await assignmentResponse.json();
