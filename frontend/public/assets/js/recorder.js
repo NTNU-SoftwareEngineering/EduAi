@@ -183,6 +183,9 @@ async function uploadAudio(){
 		const transcriptBlob = new Blob([sttResult], { type: 'text/plain' });
 		uploadFileToDraftArea(transcriptBlob, 'transcript.txt', itemId);
 		
+		let lesson_plan_json = await getLesson_plan(wstoken_webservice, courseId);
+		console.log(lesson_plan_json);
+		
 		// Step 5: 傳遞逐字稿給 LLM service
 		const llmResult = await fetch("llm", {
 			method: 'POST',
@@ -191,6 +194,7 @@ async function uploadAudio(){
 			},
 			body: JSON.stringify({
 				message: sttResult,
+				lesson_plan: "hello"
 			}),
 		});
 		const llmResultJson = await llmResult.json();
@@ -221,7 +225,7 @@ async function triggerSTT(){
 		formData.append('audio', audioBlob, 'audio-file.wav');
 		formData.append('token' , wstoken_webservice);
 
-		const response = await fetch('https://eduai-transcribe.andy-lu.dev/transcribe', {
+		const response = await fetch(`http://localhost:3000/transcribe`, {
 			method: 'POST',
 			body: formData,
 		});

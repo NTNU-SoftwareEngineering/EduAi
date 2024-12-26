@@ -1,5 +1,7 @@
 let courseList = []; // course name only
 let courseObjList = [];
+const courseSelect = document.getElementById("course-select");
+
 async function loadCourse() { // fetch course data from backend
     courseObjList = await fetchCourses();
     courseList = courseObjList.map(c => c.fullname);
@@ -17,6 +19,7 @@ async function loadCourse() { // fetch course data from backend
         option.textContent = course;
         course_select_ele.appendChild(option);
     });
+    courseSelect.selectedIndex = 0;
 }
 document.addEventListener("DOMContentLoaded", loadCourse);
 
@@ -100,8 +103,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // });
 
    
-    const courseSelect = document.getElementById("course-select");
-    const classSelect = document.getElementById("class-select");
     
     const selectedStuName = document.getElementById("selected-student-name");
     const selectedCourseName = document.getElementById("selected-course-name");

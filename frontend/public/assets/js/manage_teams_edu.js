@@ -41,21 +41,9 @@ async function onCourseChange() {
     }
     console.log( "update courseid: " + courseId ); 
     
-    let response = await fetch(`${HOSTNAME}/moodle/webservice/rest/server.php`, { //取得課程活動內容
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            wstoken: token,
-            wsfunction: 'core_course_get_courses',
-            moodlewsrestformat: 'json',
-            'options[ids][0]': courseId
-        })
-    })
-    .then ( ret => ret.json() )
+    let lesson_plan_json = await getLesson_plan(token, courseId);
 
-    if ( !response[0].summary ) {
+    if ( !lesson_plan_json ) {
         alert('此課程尚未上傳教案');
         // console.log(selectCourseList.selectedIndex);
         selectCourseList.selectedIndex = 0;
@@ -65,7 +53,7 @@ async function onCourseChange() {
     try {
          // 更改'選擇活動'欄位
         selectActivityList.innerHTML = '<option value="">請選擇活動名稱</option>';
-        const lesson_plan = JSON.parse(response[0].summary);
+        const lesson_plan = JSON.parse(lesson_plan_json);
         const activities = lesson_plan.activities;
 
         for (const [idx, act] of Object.entries(activities)) {
@@ -81,6 +69,7 @@ async function onCourseChange() {
         updateInfo();
     } catch (error) {
         if ( error instanceof SyntaxError || error instanceof TypeError ) {
+            console.log(`解析教案發生錯誤: ${error.message}`);
             alert('請先上傳教案，或重新上傳教案。');
             selectCourseList.selectedIndex = 0;
             return;
