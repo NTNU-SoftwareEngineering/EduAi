@@ -72,18 +72,18 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         return;
     }
 
+    console.log(activityElements);  
+
     activityElements.forEach((activityElement) => {
         if (activityElement.hasAttribute('id')) {
             let idx = getIndex(activityElement.getAttribute('id'));
 
             if (activityElement.querySelector(".event-name") != null) {
                 act_name = activityElement.querySelector(".event-name").value;
+                if(act_name.length == 0)act_name = "團體討論";
                 name_check = true;
             }
-            else{
-                act_name = "團體討論";
-                name_check = true;
-            }
+            
 
             if (activityElement.querySelector(".event-description") != null) {
                 act_description = activityElement.querySelector(".event-description").value;
@@ -98,13 +98,14 @@ document.getElementById("submitButton").addEventListener("click", async () => {
                 act_answer = activityElement.querySelector(".event-answer").value;
                 last_check = true;
             }
+            last_check = true;
 
             if (last_check) {
                 if (!name_check) {
                     return;
                 }
                 if (!time_check) {
-                    act_time = 5;
+                    act_time = "5";
                 }
 
                 activities[idx] = {
