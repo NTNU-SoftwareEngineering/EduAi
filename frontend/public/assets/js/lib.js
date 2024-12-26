@@ -138,7 +138,7 @@ async function updateActivityName( token, courseId, activity_name ) {
             wsfunction: 'core_course_update_courses',
             moodlewsrestformat: 'json',
             'courses[0][id]': courseId,
-            'courses[0][shortname]': activity_name
+            'courses[0][shortname]': `${courseId}_${activity_name}`
         })
     })
     .then ( ret => ret.json() )
@@ -170,8 +170,10 @@ async function getActivityName( token, courseId ) {
     .then ( ret => ret.json() )
     .then ( ret => {
         console.log('取得課程內容：', ret);
-        return ret[0].shortname }
-    )
+        const shortname = ret[0].shortname;
+        const idx = shortname.indexOf('_');
+        if ( idx != -1 && idx != shortname.length-1 ) return shortname.substring(idx+1);
+    } )
     .catch ( error => console.error(error.message) );
 }
 
