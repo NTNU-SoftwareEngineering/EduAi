@@ -81,6 +81,13 @@ input {
     height: 8rem;
     border-radius: 4rem;
 }
+/* 
+.avatar-wrapper {
+    width: 9rem; 
+    height: 9rem; 
+    border-radius: 100%; 
+    border: 0.2rem solid #1d1df6; 
+} */
 
 .avatar-icon {
     width: 40%;

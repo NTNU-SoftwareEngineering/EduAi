@@ -78,8 +78,7 @@
                 !-->
             </div>
             <div class="question">
-              題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題
-              題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題目內容題
+              目前沒有討論的題目
             </div>
           </div>
         </div>
@@ -115,7 +114,8 @@
         </div>
 
         <div class="send-message">
-          <textarea onkeydown="detectEnter(this)" id="message" class="message" type="text" placeholder="請先選擇課程"></textarea>
+          <!-- maxlength 限制1000字內容 -->
+          <textarea onkeydown="detectEnter(this)" id="message" class="message" type="text" placeholder="請先選擇課程" maxlength="1000"></textarea>
           <button class="send-button" onclick="SendMessage()"></button>
         </div>
       </div>
@@ -123,9 +123,9 @@
   </div>
 
   <!--student_discussion page JS-->
-    <script src="assets/js/lib.js"></script>
   <script src="./assets/js/student_conversation.js"></script>
   <script src="./assets/js/sidebar.js"></script>
+  <script src="assets/js/lib.js"></script> 
   <script src="./assets/js/token.js"></script>
   <script src="./assets/js/logout.js"></script>
 </body>

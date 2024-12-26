@@ -131,7 +131,7 @@ body {
 .course-selection {
     width: 100%;
     position: relative;
-    border-radius: 8px;
+    border-radius: 8px; 
     background-color: #9879da;
     height: 14rem;
     transform-origin: 0 0;
@@ -147,7 +147,6 @@ body {
     width: 90%; 
     height: 38%; 
     padding: 1% 10% 1% 10% ; 
-    
     font-size:1.3rem;
     /* border: none; */
     border-radius: 8px;
