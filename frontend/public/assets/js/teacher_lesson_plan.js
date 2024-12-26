@@ -192,11 +192,21 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         }
     }
 
-    let mainCoreValue = document.getElementById("lesson-plan-main_core_value")
-    .querySelector(".core-btn-selected")
-    .parentElement
-    .getElementsByClassName("core-label")[0]
-    .textContent;
+    let mainCoreValue = "";
+
+    if (document.getElementById("lesson-plan-main_core_value").querySelector(".core-btn-selected") !== null) {
+        mainCoreValue = document.getElementById("lesson-plan-main_core_value")
+            .querySelector(".core-btn-selected")
+            .parentElement
+            .getElementsByClassName("core-label")[0]
+            .textContent;
+    }
+
+    // let mainCoreValue = document.getElementById("lesson-plan-main_core_value")
+    // .querySelector(".core-btn-selected")
+    // .parentElement
+    // .getElementsByClassName("core-label")[0]
+    // .textContent;
 
     const lessonPlanData = {
         name: document.getElementById("lesson-plan-name").value,
