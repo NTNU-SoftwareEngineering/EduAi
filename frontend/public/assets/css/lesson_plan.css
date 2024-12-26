@@ -5,6 +5,7 @@
 
     width: 20%;
     height: 98%;
+    max-height: 100vh;
     margin: 1rem .5rem;
 
     background-color: transparent;
@@ -157,6 +158,7 @@ textarea{
 .student_content{
     width: 100%;
     height: 100%;
+    max-height: 100%;
     
     padding: 7rem 1rem;
     padding-top: 0;
@@ -190,7 +192,7 @@ textarea{
     border-radius: .5rem;
     background: var(--bgcolor, #F2F2F7);
     width: 100%;
-    height: 10%;
+    /* height: 10%; */
     margin-bottom: 1rem;
     padding-left: 1rem;
     display: flex;
@@ -231,7 +233,7 @@ textarea{
     line-height: 1.5rem; /* 171.429% */
     letter-spacing: 1px;
     height: 2rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
 }
 
 .selected-class_student_list div div .info{
@@ -265,7 +267,7 @@ textarea{
     flex-direction: column;
 
     width: 100%;
-    height: 100%;
+    max-height: 85%;
     border-radius: .5rem;
     background: var(--pri_white, #FFF);
 
@@ -312,9 +314,8 @@ textarea{
 }
 
 .select-class .intro {
-    
+    font-size: 1.46rem;
     color: var(--pri_white, #FFFFFF);
-
 }
 
 .lesson_plan{
@@ -534,6 +535,23 @@ textarea{
 
 }
 
+.student-item {
+    display: flex;
+    align-items: center;
+    background-color: #F2F2F7;
+    border-radius: 10px;
+    padding: 1rem;
+    max-height: 10%;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s;
+}
+
+.student-container{
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    max-height: 100%;
+}
+
 .student-icon {
 
     background: url("../images/teacher_lesson_plan/student.svg") no-repeat;
@@ -547,6 +565,18 @@ textarea{
 
     margin-bottom: 0;
 
+}
+
+/* 學生資訊 */
+.student-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-info .name {
+    font-size: 1.22rem;
+    font-weight: bold;
+    color: #8665CD;
 }
 
 .switch-icon {
@@ -571,6 +601,7 @@ textarea{
     font: bold;
     font-style: normal;
     font-weight: 400;
+    font-size: 1.46rem;
     line-height: 1.75rem;
     letter-spacing: 1px;
     margin-bottom: auto;
@@ -578,7 +609,7 @@ textarea{
     text-align: left;
     
     margin: 1.5rem 0rem;
-    margin-right: 2rem;
+    margin-right: auto;
     margin-bottom: 0.75rem;
 }
 

@@ -110,13 +110,13 @@ body {
 }
 .footer {
     z-index: 1;
-    margin-top: 1.2rem;
-    margin-left: 1.2rem;
-    padding-left: 1.2rem;
+    /* margin-top: 0.5rem;
+    margin-left: 0.5rem; */
+    /* padding-left: 1.2rem; */
+    padding: 0.5rem 1rem 1rem 1rem;
     border-left: 3rem ; 
     width: 25.5rem;
     display: flex;
-
 }
 
 .left-side-bar{
@@ -131,33 +131,31 @@ body {
 
 }
 
-.course-selection {
+.select-class {
+    top: 0;
+    height: auto;
     width: 100%;
-    position: relative;
-    border-radius: 8px;
-    background-color: #9879da;
-    height: 14rem;
-    transform-origin: 0 0;
-    /* margin: 0rem 1rem 0rem 1rem; */
-}
-.course-selection .footer{
-    height : 4rem;
-    width: 100%;
-}
-
-.course-select{
-
     display: flex;
-    width: 90%; 
-    height: 40%; 
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    background-color: var(--pri_p300, #9879DA);
+    padding: 1.67rem;
+}
+
+.select-class select{
+    display: flex;
+    width: 100%;
+    height: 4.58rem;
     padding: 5% 10% 5% 10% ; 
     
-    font-size:1.3rem;
+    font-size: 1.3rem;
     /* border: none; */
     border-radius: 8px;
     /* align-items: center; */
     background: var(--pri_white, #FFF);
-    margin: 0rem 1.25rem 1rem 1.25rem;
+    margin: 1.5rem 1.25rem 0rem 1.25rem;
     color:grey;
     background-image: url("../images/student_feedback/down.svg") ;
     background-repeat: no-repeat;
@@ -168,18 +166,28 @@ body {
     outline: none;
 }
 
+.select-class .intro {
+    font-size: 1.46rem;
+    color: var(--pri_white, #FFFFFF);
+}
 
-
-
-
+.book-icon {
+    background: url("../images/teacher_lesson_plan/book.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem; height: 2.5rem;
+    margin-right: 0.8rem;
+}
 
 .student-list {
     background-color: #fff;
     border-radius: 10px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     width: 100%;
-    height: 35%;
-    margin-top: 1.5rem;
+    height: auto;
+    min-height: 30%;
+    max-height: 35%;
+    margin-top: 0.5rem;
     padding: 1rem;
 }
 
@@ -196,28 +204,46 @@ body {
 
     /* 內文 */
     font-family: "Noto Sans TC", sans-serif;
-    font-size: 1.3rem;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 22px; /* 157.143% */
     letter-spacing: 1px;
     margin: 0;
+    padding-top: 0.2rem;
 }
 
+.student_content{
+    width: 100%;
+    height: 85%;
+    max-height: 100%;
+    
+    padding: 0 0.5rem;
+    /* padding-top: 0; */
+    /* margin-top: 15%; */
+}
 
+.selected-class_student_list div .image{
 
-/* 圖示樣式 */
-.student-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: #eee;
+    background: url("../images/teacher_lesson_plan/people.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    height: 3rem;
+    width: 3rem;
+    margin-left: 1rem;
+
+}
+
+.class_empty_hint {
+    width: 100%;
+    height: 80%;
+    border-radius: .5rem;
+    border: 1px dashed var(--sec_gray100, #C7C7CC);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4b2b7f;
-    font-size: 1.2rem;
-    cursor: pointer;
+    color: var(--sec_gray900, #C7C7CC);
 }
 
 /* 學生項目樣式 */
@@ -244,16 +270,26 @@ body {
 
 /* 學生圖示 */
 .student-icon {
-    background-color: #c7b8ff;
-    color: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    font-size: 1.2rem;
+    background: url("../images/teacher_lesson_plan/student.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+
+    width: 2.5rem; height: 2.5rem;
+    /* margin: 1.25rem 1.25rem; */
+
+    margin-right: .5rem;
+
+    margin-bottom: 0;
+}
+
+.switch-icon {
+    background: url("../images/teacher_lesson_plan/switch.svg") no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    width: 2.5rem; height: 2.5rem;
+    /* margin: 1.25rem 1.5rem; */
+    margin-left: auto;
+    margin-bottom: 0;
 }
 
 /* 學生資訊 */
@@ -280,13 +316,6 @@ body {
 
 }
 
-
-
-
-
-
-
-
 .footer .book-icon {
 
     background: url("../images/student_discussion/student_discussion_book-icon.svg") no-repeat;
@@ -300,7 +329,7 @@ body {
 
 .footer .intro {
 
-    color: var(--pri_white, #FFF);
+    color: var(--grey900, #303133);
     display: flex;
 
     flex-direction: column;
@@ -312,10 +341,11 @@ body {
     font-family: "Noto Sans TC", sans-serif;
     font-size: 1.46rem;
     font-style: normal;
-    font-weight: 700;
+    /* font-weight: 700; */
     line-height: 2rem; 
     letter-spacing: 1px;
 
+    margin-right: auto;
 }
 
 .select-course {
