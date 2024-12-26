@@ -588,7 +588,7 @@ function displayGroups(groupArray) {
         const group = document.createElement('div');
         group.className = 'group';
         group.id = `group${i + 1}`;
-        group.style.backgroundColor = group_color_code[i % 4];
+        group.style.backgroundColor = group_color_code[(i+3) % 4];
         //group title
         const groupTitle = document.createElement('div');
         groupTitle.className = 'group-title';
@@ -607,8 +607,8 @@ function displayGroups(groupArray) {
         groupStudent.className = 'group-student';
         group.appendChild(groupStudent);
         groupArray[i].forEach(student => {
-            student.style.backgroundColor = group_student_color_code[i % 4];
-            student.querySelector('.student-icon').id = colors[i % 4];
+            student.style.backgroundColor = group_student_color_code[(i+3) % 4];
+            student.querySelector('.student-icon').id = colors[(i+3) % 4];
             groupStudent.appendChild(student);
         });
 
