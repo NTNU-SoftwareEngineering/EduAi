@@ -103,6 +103,11 @@ button.signButton:focus {
 	outline: none;
 }
 
+button.signButton:disabled {
+	background-color: dimgray;
+	border: 1px solid dimgrey;
+}
+
 button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
