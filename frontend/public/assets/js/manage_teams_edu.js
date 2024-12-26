@@ -1,7 +1,6 @@
 let courseList = []; // course name only
 let courseObjList = [];
 let courseId = -1; // 還未選擇課程: -1
-const selectClassList = document.querySelector('#select-class');
 const selectCourseList = document.querySelector('#select-course');
 const selectActivityList = document.querySelector('#activity-selector');
 
@@ -22,7 +21,7 @@ document.addEventListener("DOMContentLoaded", loadCourse);
 async function onCourseChange() {
     const token = localStorage.getItem('token');
     if ( !token ) window.location.href = 'login_edu.html';
-    
+
     document.querySelector('#question-content-text').innerHTML = "";
 
     console.log( "select course: " + selectCourseList.value );
@@ -146,8 +145,8 @@ submitBtn.addEventListener('click', onTopicSubmit);
 
 document.querySelector("body > div > div > div.left-side-bar > div.teams-num > div.teams-num-selector > input[type=text]").value = 0
 
-selectClassList.addEventListener('change', updateStudent);
-selectClassList.addEventListener('change', updateInfo);
+selectCourseList.addEventListener('change', updateStudent);
+selectCourseList.addEventListener('change', updateInfo);
 
 
 //  分組上下箭頭
@@ -349,10 +348,6 @@ async function show_group_info(){
 }
 // show_group_info()
 async function updateInfo(){
-    // change class information
-    let classInfo = document.querySelector(".info-content > .class > .intro");
-    classInfo.innerHTML = "班級：";
-    classInfo.innerHTML += selectClassList.value;
 
     // change class count information
     let countInfo = document.querySelector(".info-content > .class-count > .intro");
