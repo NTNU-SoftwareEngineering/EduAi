@@ -716,7 +716,7 @@ function initialise_fullme() {
         return;
     }
 
-    $rurl['scheme'] = 'https'
+    $rurl['scheme'] = 'https';
 
     // $CFG->sslproxy specifies if external SSL appliance is used
     // (That is, the Moodle server uses http, with an external box translating everything to https).
