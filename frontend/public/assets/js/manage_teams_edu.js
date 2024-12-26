@@ -100,6 +100,16 @@ selectActivityList.addEventListener('change', function () {
     if ( !desc ) desc = "";
     // console.log(desc);
     document.querySelector('#question-content-text').innerHTML = desc;
+
+    // Change button color
+    const sendBtn = document.querySelector(".send-button");
+    const sendBtnText = document.querySelector(".send-button > .send");
+    const sendBtnIcon = document.querySelector(".send-button > .send-icon");
+    const questionText = document.querySelector(".question-content > input");
+
+    sendBtn.style.backgroundColor = "#8665CD";
+    sendBtnText.style.color = "white";
+    sendBtnIcon.style.backgroundImage = "url(../assets/images/teacher_management/teacher_management_Paper_light_white.svg)";
 })
 
 const submitBtn = document.querySelector('#send-button');
@@ -423,36 +433,6 @@ teamsNumInput.addEventListener('input', function(){
         teamsNumButton.style.backgroundColor = "#8665CD";
         teamsNumText.style.color = "white";
         teamsNumIcon.style.backgroundImage = "url(../assets/images/teacher_management/group_share_light_white.svg)";
-    }
-});
-
-const timeInput = document.querySelector(".discuss-time > select");
-timeInput.addEventListener('change', function(){
-    const sendBtn = document.querySelector(".send-button");
-    const sendBtnText = document.querySelector(".send-button > .send");
-    const sendBtnIcon = document.querySelector(".send-button > .send-icon");
-    const questionText = document.querySelector(".question-content > input");
-    if(questionText.value == "" || timeInput.value == ""){
-        sendBtn.style.backgroundColor = "#D3D3D3";
-    }else if(timeInput.value != ""){
-        sendBtn.style.backgroundColor = "#8665CD";
-        sendBtnText.style.color = "white";
-        sendBtnIcon.style.backgroundImage = "url(../assets/images/teacher_management/teacher_management_Paper_light_white.svg)";
-    }
-});
-
-const questionInput = document.querySelector(".question-content > textarea");
-questionInput.addEventListener('input', function(){
-    const sendBtn = document.querySelector(".send-button");
-    const sendBtnText = document.querySelector(".send-button > .send");
-    const sendBtnIcon = document.querySelector(".send-button > .send-icon");
-    const timeInput = document.querySelector(".discuss-time > select");
-    if(questionInput.value == ""){
-        sendBtn.style.backgroundColor = "#D3D3D3";
-    }else if(timeInput.value != ""){
-        sendBtn.style.backgroundColor = "#8665CD";
-        sendBtnText.style.color = "white";
-        sendBtnIcon.style.backgroundImage = "url(../assets/images/teacher_management/teacher_management_Paper_light_white.svg)";
     }
 });
 
