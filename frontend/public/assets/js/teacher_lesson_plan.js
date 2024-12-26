@@ -160,7 +160,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
 
             if (activityElement.querySelector(".event-answer") != null) {
                 act_answer = activityElement.querySelector(".event-answer").value;
-                last_check = true;
+                
             }
             last_check = true;
 
