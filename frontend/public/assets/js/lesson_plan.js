@@ -2,7 +2,6 @@ let core_toggle = 0;
 let core_select = -1;
 
 let core_select_btns = document.getElementsByClassName("core-btn");
-let eventList  = [0 , 0 , 0 , 0 , 0]
 let student_list = [{number : 3 , name:"王小明"} , {number : 12 , name:"小美"}] // 這邊留給後端之後抓班級回傳用
 
 //console.log(core_select_btns)
@@ -106,20 +105,30 @@ function core_expand_toggle(){
 }
 
 
-function eventDelete(idx){
-    eventList[idx] = 0
-    toDelete = document.querySelectorAll("#event" + idx)
+async function eventDelete(idx){
+
+    console.log(idx)
+    toDelete = document.querySelectorAll('#' + idx)
   
     for(var i=0;i<toDelete.length;i++) toDelete[i].remove()
 
-    var cnt = 0
-    for(var i=0;i<5;i++) if(eventList[i]) cnt += 1
-    if(cnt == 0) document.querySelector(".event-row").style.display = "none"
+    var q = await cnt_event()
+
+    for(var i=q;i<5;i++){
+        while(document.getElementById("event"+Number(i+1))){
+            document.getElementById("event"+Number(i+1)).id = "event"+Number(i)
+            document.getElementById("event"+Number(i+1)).id = "event"+Number(i)
+        }
+        
+    }
+    
     
 }
 
 async function cnt_event(){
-  for(var i=0;i<5;i++) if(!eventList[i]) return i
+  for(var i=0;i<5;i++){
+    if(!document.getElementById("event"+i)) return i
+  }
   return 5
 }
 
@@ -130,7 +139,6 @@ async function eventAdd(){
   
   if(idx == 5) return
 
-  eventList[idx] = 1
 
   document.querySelector(".event-row").style.display = "flex"
 
@@ -148,7 +156,8 @@ async function eventAdd(){
 
   var button1 = document.createElement('button');
   button1.className = 'event-delete-btn';
-  button1.onclick = function() { eventDelete(idx); };
+  button1.id = 'event' + idx;
+  button1.onclick = function() { eventDelete(this.id); };
 
   div1.appendChild(input1);
   div1.appendChild(button1);

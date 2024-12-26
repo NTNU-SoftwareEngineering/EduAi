@@ -106,7 +106,7 @@ function showLessonPlanData(lessonPlanData) {
         activityElement.innerHTML += `
             <div class="event-row" id="event${idx}" style="background: rgb(255, 255, 255);">
                 <input class="event-row-title-textarea event-name" placeholder="請輸入活動名稱" maxlength="20" value="${activity.name}">
-                <button class="event-delete-btn"></button>
+                <button class="event-delete-btn" id="event${idx}" onclick="eventDelete(this.id)"></button>
             </div>
             <div class="event-row" id="event${idx}">
                 <input class="event-row-title-textareacontent event-description" placeholder="請輸入學習內容及實施方式" maxlength="40" style="width: 45%;" value="${activity.description}">
@@ -115,10 +115,6 @@ function showLessonPlanData(lessonPlanData) {
             </div>
         `;
     }
-    // for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
-    //     activityElement.innerHTML += `
-    //         <div class="event-row" id="event${idx}">
-    //             <div class="event-name
 }
 
 function getIndex(indexAttr) {
