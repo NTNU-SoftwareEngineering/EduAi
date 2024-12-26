@@ -53,8 +53,71 @@ async function updateCourseId() {
             </div>
         `;
     });
+
+    let lessonPlanData = JSON.parse(selectedCourseObj.summary);
+    showLessonPlanData(lessonPlanData);
 }
 selectCourseList.addEventListener("change", updateCourseId);
+
+function showLessonPlanData(lessonPlanData) {
+    document.getElementById("lesson-plan-name").value = lessonPlanData.name;
+    document.getElementById("lesson-plan-author").value = lessonPlanData.author;
+    document.getElementById("lesson-plan-target").value = lessonPlanData.target;
+    document.getElementById("lesson-plan-time").value = lessonPlanData.time;
+    document.getElementById("lesson-plan-motivation").value = lessonPlanData.motivation;
+    document.getElementById("lesson-plan-place").value = lessonPlanData.place;
+    document.getElementById("lesson-plan-core_value").value = lessonPlanData.coreValue;
+    document.getElementById("lesson-plan-core_importance").value = lessonPlanData.coreImportance;
+    document.getElementById("lesson-plan-source").value = lessonPlanData.source;
+    document.getElementById("lesson-plan-facilities").value = lessonPlanData.facilities;
+    document.getElementById("lesson-plan-goal").value = lessonPlanData.goal;
+
+    let core_select_btns = document.getElementsByClassName("core-btn");
+
+    for (let i = 0; i < core_select_btns.length; i++) {
+        core_select_btns[i].classList.remove("core-btn-selected");
+    }
+
+    for (let i = 0; i < core_select_btns.length; i++) {
+        let check = core_select_btns[i].parentElement.getElementsByClassName("core-label")[0].textContent;
+
+        if (check !== lessonPlanData.mainCoreValue) {
+            core_select_btns[i].style.backgroundImage = "";
+            core_select_btns[i].classList.remove("core-btn-selected");
+        }
+        else {
+            core_select_btns[i].style.backgroundImage = "url('./assets/images/teacher_lesson_plan/Checkbox.svg')";
+            core_select_btns[i].classList.add("core-btn-selected");
+        }
+    }
+
+    let activityElement = document.getElementById("lesson-plan-activity");
+    activityElement.innerHTML = `
+        <div class="event-row" style="display: flex;">
+            <div class="event-row-title" style="width: 45%;">學習內容及實施方式</div>
+            <div class="event-row-title" style="width: 17.5%;">時間</div>
+            <div class="event-row-title" style="width: 37.5%;">標準答案</div>
+        </div>
+    `;
+
+    for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
+        activityElement.innerHTML += `
+            <div class="event-row" id="event0" style="background: rgb(255, 255, 255);">
+                <input class="event-row-title-textarea event-name" placeholder="請輸入活動名稱" maxlength="20" value="${activity.name}">
+                <button class="event-delete-btn"></button>
+            </div>
+            <div class="event-row" id="event0">
+                <input class="event-row-title-textareacontent event-description" placeholder="請輸入學習內容及實施方式" maxlength="40" style="width: 45%;" value="${activity.description}">
+                <input class="event-row-title-textareacontent event-time" placeholder="請輸入時間(min)，ex. 5" type="number" min="0" max="99" style="width: 17.5%;" value="${activity.time}">
+                <input class="event-row-title-textareacontent event-answer" placeholder="請輸入標準答案" maxlength="50" style="width: 37.5%;" value="${activity.answer}">
+            </div>
+        `;
+    }
+    // for (const [idx, activity] of Object.entries(lessonPlanData.activities)) {
+    //     activityElement.innerHTML += `
+    //         <div class="event-row" id="event${idx}">
+    //             <div class="event-name
+}
 
 function getIndex(indexAttr) {
     return parseInt(indexAttr.replace('event', ''));
