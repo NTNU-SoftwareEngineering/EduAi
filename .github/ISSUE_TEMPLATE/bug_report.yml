@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a reproducible problem in EduAi
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include API keys, credentials, student data, recordings, or
+        security vulnerabilities. Report vulnerabilities privately through the
+        repository Security page.
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start ...
+        2. Open ...
+        3. Select ...
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: EduAi commit or version
+      description: A commit SHA is preferred.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - Frontend
+        - Flask service
+        - Moodle backend
+        - Docker Compose or deployment
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, browser, Docker version, and relevant service versions.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs or screenshots
+      description: Remove all credentials and personal or student information.

@@ -189,7 +189,7 @@ app.post('/llm', async function(req, res){
     var input = "";
     try {
         input = req.body.message; // 這個是逐字稿
-        lesson_plan = req.body.lesson_plan; // 這個是課程大綱
+        const lesson_plan = req.body.lesson_plan; // 這個是課程大綱
         const prompt = 'prompt.txt';
 
         if (input === undefined) {
