@@ -1,50 +1,98 @@
-## EduAi
+# EduAi
 
-**EduAi** is a web application based on **Moodle** backend that allows teachers and students to access and manage their Moodle data through a web interface. It provides a user-friendly interface for students to view their **course information**, **discussion**, and even **interact with LLM**. <br><br>At the same time, **teachers** can upload **teaching plans**, get the **feedback**, and **analysis** of students' speech in the discussion. Which means teachers can easily understand the **students' learning status** and **adjust the teaching plan** in time.
+EduAi is a web application built around a Moodle backend. It gives students a
+simpler interface for course discussions and LLM-assisted conversations, while
+teachers can manage classes, upload teaching plans, and review learning
+feedback. The project originated in the 2024 NTNU Software Engineering course.
 
-This project is also derived from **NTNU Software Engineering Course**.
+> [!NOTE]
+> EduAi is an educational and research project. Review the example credentials,
+> API access, privacy requirements, and network exposure before deploying it
+> outside a local development environment.
 
-#### Features
+## Features
 
-- **Student Discussion**: View the current discussing problems in **real-time**, and analyze the speech of students with **speech-to-text** and LLM analysis.
-- **Conversation**: Interact with large language models (LLMs) to get answers to questions or generate content.
+- Real-time student discussions with speech-to-text and LLM analysis
+- Course-aware conversations with an LLM assistant
+- Class, group, question, and user management through Moodle
+- Teaching-plan upload and feedback
+- Student learning and discussion analysis
 
-- **Class Management**: Manage student **groups**, modify the **current question for discussion**, and get the **feedback** analyzed by **LLM** of the class.
-- **Teaching Plan**: Upload teaching plans, and get the **feedback** analyzed by **LLM**.
-- **Speech Analysis**: Analyze the speech of students in the discussion, and get the **feedback** analyzed by **LLM**.
-- **User Management**: Manage user information, including **username**, **fullname**, **email**, and **password**.
-- **Student Learning Analysis**: Analyze the learning status of students by **LLM**.
+![EduAi login screen](readme_assets/login.png)
 
+## Architecture
 
-#### Getting Started
+The repository contains these project services:
 
-![Login](readme_assets/login.png)
+| Service | Implementation | Default local URL |
+| --- | --- | --- |
+| Web application | Node.js and Express | <http://localhost:3000> |
+| Reverse proxy | Nginx | <http://localhost:8088> |
+| Learning platform | Moodle and Apache | <http://localhost:8080/moodle> |
+| Speech-to-text API | Python and Flask | <http://localhost:5001> |
+| Database administration | phpMyAdmin | <http://localhost:8081> |
 
-Developers or schools can easily build the server by **cloning** / **downloading** the whole repo, and run the server by 
-`docker compose up -d`
+The `moodle-backend/` directory is a vendored Moodle distribution. Project-
+specific application work normally belongs in `frontend/`, `flask_server/`,
+the Compose configuration, or project documentation.
 
-You can interact the frontend at `localhost:3000`
+## Getting started
 
-backstage management system will be at `localhost:8080/moodle`
+### Prerequisites
 
-#### Technology Stack
+- Git
+- Docker with Docker Compose v2
+- A Groq API key for LLM-backed features
 
-- **Frontend**: **Node.js**
-- **Backend**: **Moodle** + **Python Flask** 
-- **Database**: **MySQL**
-- **Speech-to-Text**: **Google Speech-to-Text API**
-- **LLM Analysis**: **Groq API**
+### Run the stack
 
+```sh
+git clone https://github.com/NTNU-SoftwareEngineering/EduAi.git
+cd EduAi
+cp .env.example .env
+```
 
-#### License
+Set `GROQ_API_KEY` in `.env`, then start the services:
 
-This project is licensed under the [Apache-2.0 License](LICENSE).
+```sh
+docker compose up -d --build
+```
 
-#### Contribution
+Open <http://localhost:3000>. Moodle administration is available at
+<http://localhost:8080/moodle>.
 
-Contributions are welcome! Please submit a pull request.
+To inspect startup problems:
 
-#### Contact
+```sh
+docker compose ps
+docker compose logs --tail=100
+```
 
-For any questions or issues, please open an issue. 
+Stop the stack without deleting database volumes:
 
+```sh
+docker compose down
+```
+
+## Local checks
+
+Run the same lightweight checks used by continuous integration:
+
+```sh
+npm ci --prefix frontend
+npm run check --prefix frontend
+python3 -m compileall -q flask_server
+cp .env.example .env
+docker compose config --quiet
+```
+
+## Contributing and security
+
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before
+opening a pull request. Automated dependency update proposals are configured
+through Dependabot. Please report vulnerabilities through the process in
+[SECURITY.md](SECURITY.md), not through a public issue.
+
+## License
+
+EduAi is licensed under the [GNU General Public License v3.0](LICENSE).

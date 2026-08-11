@@ -1,0 +1,60 @@
+name: Quality
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/quality.yml"
+      - ".env.example"
+      - "docker-compose.yml"
+      - "flask_server/**"
+      - "frontend/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/quality.yml"
+      - ".env.example"
+      - "docker-compose.yml"
+      - "flask_server/**"
+      - "frontend/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  first-party-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix frontend
+
+      - name: Check frontend syntax
+        run: npm run check --prefix frontend
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Python syntax
+        run: python -m compileall -q flask_server
+
+      - name: Validate Docker Compose configuration
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
